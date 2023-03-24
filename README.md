@@ -41,10 +41,10 @@ There are some consideations when we build and digitalize the new process:
 - how do we glue different services together? (MAKE.com as middleware, self-scripted middleware)
 - how does the customer interact with the process, e.g. a chatbot or UI
 
-## Change Project
+## 🚀 Change Project
 
 ...
 
-## Implementation
+## ⚙️ Implementation
 
 ...
