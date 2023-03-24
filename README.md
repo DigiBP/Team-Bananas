@@ -28,7 +28,10 @@
 
 There are some consideations when we build and digitalize the new process:
 
-- error handlign in the process (e.g. implement one of the patterns, such as the Saga pattern)
+- error handling in the process
+    - what error handling pattern to use
+    - interrupting vs. non-interrupting
+    - at least 1 error scenario should be covered (and we can elaborate in the paper further)
 - service tasks:
     - are they synchronus or asynchronous
     - are they message producers or consumers
