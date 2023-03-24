@@ -39,6 +39,7 @@ There are some consideations when we build and digitalize the new process:
     - webhook, REST API call, messaging, ...
 - how do we trigger a new process instance (e.g. via a ```POST``` on the Camiunda REST API)
 - how do we glue different services together? (MAKE.com as middleware, self-scripted middleware)
+- how does the customer interact with the process, e.g. a chatbot or UI
 
 ## Change Project
 
