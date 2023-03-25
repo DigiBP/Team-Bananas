@@ -1,6 +1,9 @@
 # 🍌 Team Bananas
 
+## 🗂️ Table of Contents
+
 - [🍌 Team Bananas](#-team-bananas)
+  - [🗂️ Table of Contents](#️-table-of-contents)
   - [👥 Team Members](#-team-members)
   - [🔁 Business Process](#-business-process)
     - [🔍 Status Quo of the Business Process](#-status-quo-of-the-business-process)
