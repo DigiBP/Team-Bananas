@@ -1,5 +1,13 @@
 # 🍌 Team Bananas
 
+- [🍌 Team Bananas](#-team-bananas)
+  - [👥 Team Members](#-team-members)
+  - [🔁 Business Process](#-business-process)
+    - [🔍 Status Quo of the Business Process](#-status-quo-of-the-business-process)
+  - [💡 Considerations](#-considerations)
+  - [🚀 Change Project](#-change-project)
+  - [⚙️ Implementation](#️-implementation)
+
 ## 👥 Team Members
 
 - Afrodita Abdili
