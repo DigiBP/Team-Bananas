@@ -10,7 +10,7 @@
 
 ## 🔁 Business Process
 
-<img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/employee-recruitment-process.png" style="width:100%; height:auto;" />
+<img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
 
 ### 🔍 Status Quo of the Business Process
 
