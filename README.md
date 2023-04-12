@@ -26,14 +26,13 @@
 
 ### 🔍 As-Is Business Process
 
-We choose a mostly company-internal business process of filling a job vacancy as our process to digitalize. The process has 3 roles: hiring manager, HR staff, and candidates. The hiring manager is the person that initiates the process by filing a new job vacancy request. The HR manager receives the request and processes the request through aministrative stages (job posting, candidate screening, scheduling interviews, etc.). The candidate sends in his/her application for the job vacancy, participates the interview, and may recieve a job offer at the end of the process.
+We choose a mostly company-internal business process of filling a job vacancy as our process to digitalize. The process has 3 roles: hiring manager, HR staff, and candidates. The hiring manager is the person that initiates the process by filing a new job vacancy request. The HR staff receives the request and processes the job vacancy through aministrative stages (job posting, candidate screening, scheduling interviews, etc.). The candidate sends in his/her application for the job vacancy, participates the interview, and may recieve a job offer at the end of the process. The hiring manager particpates the shortlisting, the interviews and makes the final hiring decisions.
 
- - Each job vacancy is a process instance
- - Each internal candidate interview scheduling & interviewing will be a subtask
+Each job vacancy will be represented as a process instance and candidates that apply to the job will be treated in paralell as subtasks of the main process.
 
 <img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
 
-### ❓ Questions for the 1st Coaching
+### ❓ Questions for the 1st coaching session
 
 1. How to deal with the parallel subtasks, i.e., we need to model parallel subtasks for scheduling and holding interviews with the candidates
 1. How to deal with documents, i.e., each candiate has a CV (may be just simluate as a text field?)
