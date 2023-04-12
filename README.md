@@ -16,11 +16,11 @@
 
 ## 👥 Team Members
 
-- Afrodita Abdili
-- Dietrich Rordorf
-- Gabriela Caldeira Goncalves
-- Gezim Gjoklaj
-- Tim Käser
+- Afrodita Abdili <afrodita.abdili@students.fhnw.ch>
+- Dietrich Rordorf <dietrichhanspaul.rordorf@students.fhnw.ch>
+- Gabriela Caldeira Goncalves <gabriela.caldeiragoncalves@students.fhnw.ch>
+- Gezim Gjoklaj <gezim.gjoklaj@students.fhnw.ch>
+- Tim Käser <tim.kaeser@students.fhnw.ch>
 
 ## 🔁 Business Process
 
