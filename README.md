@@ -23,7 +23,7 @@
 
 <img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
 
-### ❓ Questions for the Coachings
+### ❓ Questions for the 1st Coaching
 
 1. How to deal with the parallel subtasks, i.e., we need to model parallel subtasks for scheduling and holding interviews with the candidates
 1. How to deal with documents, i.e., each candiate has a CV (may be just simluate as a text field?)
@@ -34,15 +34,14 @@
 
  - Each job vacancy is a process instance
  - Each internal candidate interview scheduling & interviewing will be a subtask
- 
 
-## ❌ Problems in current process:
+### ❌ Problems in current process:
 
 - everything is done manually, there are many process steps
 - some tasks like screening of CVs are standard tasks that can be automated
 - there is little support of the hiring manager in the current process (i.e., the hiring manager has to enter everything manually into a Word file for HR to process)
 
-## ✅ Potentials for process improvements and digitization:
+### ✅ Potentials for process improvements and digitization:
 
 - Google Form to start the process: via Integromat and Camunda API a new process instance can be started
   - form is prefilled with standard job description text
