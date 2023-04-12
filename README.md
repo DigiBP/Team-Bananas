@@ -23,7 +23,16 @@
 
 <img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
 
+### 🔍 Questions for the Coachings
+
+1. How to deal with the parallel subtasks, i.e., we need to model parallel subtasks for scheduling and holding interviews with the candidates
+1. How to deal with documents, i.e., each candiate
+
 ### 🔍 Status Quo of the Business Process
+
+ - Each job vacancy is a process instance
+ - Each internal candidate 
+ 
 
 ❌ Problems in current process:
 
@@ -32,8 +41,10 @@
 
 ✅ Potentials for process improvements and digitization:
 
-- ...
-- ...
+- Google Form to start the process: hiring manager enters job title, job description, salary range, required skills
+- Automate the internal candidate screening using a small database with test data and an API
+- Automate the job posting: we can simulate publishing the job ad by posting the job add via API to a Twitter account
+- iSaaS: Integromat possibly for starting process instances via a Google Form and posting the job ad to Twitter
 
 ## 💡 Considerations
 
