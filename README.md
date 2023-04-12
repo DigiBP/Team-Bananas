@@ -2,27 +2,27 @@
 
 ## 🗂️ Table of Contents
 
-- [🍌 Team Bananas](#-team-bananas)
-  * [🗂️ Table of Contents](#-table-of-contents)
-  * [👥 Team Members](#-team-members)
-  * [🔁 Business Process](#-business-process)
-    + [❓ Questions for the 1st Coaching](#-questions-for-the-1st-coaching)
-    + [🔍 Status Quo of the Business Process](#-status-quo-of-the-business-process)
-    + [❌ Problems in current process:](#-problems-in-current-process-)
-    + [✅ Potentials for process improvements and digitization:](#-potentials-for-process-improvements-and-digitization-)
-  * [💡 Considerations](#-considerations)
-  * [🚀 Change Project](#-change-project)
-  * [⚙️ Implementation](#-implementation)
+* [👥 Team Members](#-team-members)
+* [🔁 Business Process](#-business-process)
+  - [🔍 As-Is Business Process](#-as-is-business-process)
+  - [❓ Questions for the 1st Coaching](#-questions-for-the-1st-coaching-session)
+  - [❌ Problems in current process](#-problems-in-current-process)
+  - [✅ Potentials for process improvements and digitization](#-potentials-for-process-improvements-and-digitization)
+ * [💡 Considerations](#-considerations)
+ * [🚀 Change Project](#-change-project)
+ * [⚙️ Implementation](#%EF%B8%8F-implementation)
 
 ## 👥 Team Members
 
-| Name.                       | Email                                         |
+| Name                        | Email                                         |
 | --------------------------- | --------------------------------------------- |
 | Afrodita Abdili             | <afrodita.abdili@students.fhnw.ch>            |
 | Dietrich Rordorf            | <dietrichhanspaul.rordorf@students.fhnw.ch>.  |
 | Gabriela Caldeira Goncalves | <gabriela.caldeiragoncalves@students.fhnw.ch> |
 | Gezim Gjoklaj               | <gezim.gjoklaj@students.fhnw.ch>              |
 | Tim Käser                   | <tim.kaeser@students.fhnw.ch>                 |
+
+Our marvellous coach is Charuta Pande.
 
 ## 🔁 Business Process
 
