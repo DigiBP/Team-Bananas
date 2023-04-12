@@ -36,15 +36,20 @@
 
 ❌ Problems in current process:
 
-- ...
-- ...
+- everything is done manually, there are many process steps
+- some tasks like screening of CVs are standard tasks that can be automated
+- there is little support of the hiring manager in the current process (i.e., the hiring manager has to enter everything manually into a Word file for HR to process)
 
 ✅ Potentials for process improvements and digitization:
 
-- Google Form to start the process: hiring manager enters job title, job description, salary range, required skills
+- Google Form to start the process: via Integromat and Camunda API a new process instance can be started
+  - form is prefilled with standard job description text
+  - hiring manager enters job title, job description
+  - hiring manager selects required skills, maturity level, proposed salary range from dropdowns or checkboxes in the form
 - Automate the internal candidate screening using a small database with test data and an API
 - Automate the job posting: we can simulate publishing the job ad by posting the job add via API to a Twitter account
-- iSaaS: Integromat possibly for starting process instances via a Google Form and posting the job ad to Twitter
+- Error handling scenario: job can not be posted on Twitter, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
+- iSaaS: Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
 
 ## 💡 Considerations
 
@@ -59,7 +64,7 @@ There are some consideations when we build and digitalize the new process:
     - are they message producers or consumers
     - what data is exchanged
     - webhook, REST API call, messaging, ...
-- how do we trigger a new process instance (e.g. via a ```POST``` on the Camiunda REST API)
+- how do we trigger a new process instance (e.g. via a ```POST``` on the Camunda REST API)
 - how do we glue different services together? (MAKE.com as middleware, self-scripted middleware)
 - how does the customer interact with the process, e.g. a chatbot or UI
 
