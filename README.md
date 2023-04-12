@@ -26,12 +26,12 @@
 ### 🔍 Questions for the Coachings
 
 1. How to deal with the parallel subtasks, i.e., we need to model parallel subtasks for scheduling and holding interviews with the candidates
-1. How to deal with documents, i.e., each candiate
+1. How to deal with documents, i.e., each candiate has a CV (may be just simluate as a text field?)
 
 ### 🔍 Status Quo of the Business Process
 
  - Each job vacancy is a process instance
- - Each internal candidate 
+ - Each internal candidate interview scheduling & interviewing will be a subtask
  
 
 ❌ Problems in current process:
