@@ -24,6 +24,13 @@
 
 ## 🔁 Business Process
 
+### 🔍 As-Is Business Process
+
+We choose a mostly company-internal business process of filling a job vacancy as our process to digitalize. The process has 3 roles: hiring manager, HR staff, and candidates. The hiring manager is the person that initiates the process by filing a new job vacancy request. The HR manager receives the request and processes the request through aministrative stages (job posting, candidate screening, scheduling interviews, etc.). The candidate sends in his/her application for the job vacancy, participates the interview, and may recieve a job offer at the end of the process.
+
+ - Each job vacancy is a process instance
+ - Each internal candidate interview scheduling & interviewing will be a subtask
+
 <img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
 
 ### ❓ Questions for the 1st Coaching
@@ -32,11 +39,6 @@
 1. How to deal with documents, i.e., each candiate has a CV (may be just simluate as a text field?)
 1. How to deal with emails / messages in the workflow (i.e., applicaiton received or rejected message). Shall we simulate a small email server such as mailcatcher?
 1. Based on the suggested list of "potentials for process improvements" further down, is the scope of the project enough / too much?
-
-### 🔍 Status Quo of the Business Process
-
- - Each job vacancy is a process instance
- - Each internal candidate interview scheduling & interviewing will be a subtask
 
 ### ❌ Problems in current process:
 
