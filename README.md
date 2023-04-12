@@ -2,14 +2,17 @@
 
 ## 🗂️ Table of Contents
 
-- [🍌 Team Bananas](#-team-bananas)
-  - [🗂️ Table of Contents](#️-table-of-contents)
-  - [👥 Team Members](#-team-members)
-  - [🔁 Business Process](#-business-process)
-    - [🔍 Status Quo of the Business Process](#-status-quo-of-the-business-process)
-  - [💡 Considerations](#-considerations)
-  - [🚀 Change Project](#-change-project)
-  - [⚙️ Implementation](#️-implementation)
+- [🍌 Team Bananas](#---team-bananas)
+  * [🗂️ Table of Contents](#----table-of-contents)
+  * [👥 Team Members](#---team-members)
+  * [🔁 Business Process](#---business-process)
+    + [❓ Questions for the 1st Coaching](#--questions-for-the-1st-coaching)
+    + [🔍 Status Quo of the Business Process](#---status-quo-of-the-business-process)
+    + [❌ Problems in current process:](#--problems-in-current-process-)
+    + [✅ Potentials for process improvements and digitization:](#--potentials-for-process-improvements-and-digitization-)
+  * [💡 Considerations](#---considerations)
+  * [🚀 Change Project](#---change-project)
+  * [⚙️ Implementation](#---implementation)
 
 ## 👥 Team Members
 
