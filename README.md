@@ -27,6 +27,8 @@
 
 1. How to deal with the parallel subtasks, i.e., we need to model parallel subtasks for scheduling and holding interviews with the candidates
 1. How to deal with documents, i.e., each candiate has a CV (may be just simluate as a text field?)
+1. How to deal with emails / messages in the workflow (i.e., applicaiton received or rejected message). Shall we simulate a small email server such as mailcatcher?
+1. Based on the suggested list of "potentials for process improvements" further down, is the scope of the project enough / too much?
 
 ### 🔍 Status Quo of the Business Process
 
@@ -49,6 +51,8 @@
 - Automate the internal candidate screening using a small database with test data and an API
 - Automate the job posting: we can simulate publishing the job ad by posting the job add via API to a Twitter account
 - Error handling scenario: job can not be posted on Twitter, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
+- Automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
+- If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process isntance is left without candidates 
 - iSaaS: Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
 
 ## 💡 Considerations
