@@ -1,4 +1,4 @@
-# 🍌 Team Bananas
+# 🍌 Team Bananas - Job Vacancy & Hiring Process
 
 ## 🗂️ Table of Contents
 
