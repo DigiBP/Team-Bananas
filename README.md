@@ -50,8 +50,9 @@ Each job vacancy will be represented as a process instance and candidates that a
 - next step is to define the to-be process
 - email communication can be done via MAKE / Integromat (Integromat can deal with emails sending, receiveing, saving attachments) 
 - update the as-is process:
-    - we have 3 roles
-    - for as-is process we do not identify the markers (service task, user task, etc) as
+    - we have 3 roles (hiring manager, HR staff, candidate)
+    - for as-is process we do not identify the markers (service task, user task, etc) as this would indicate that we already use a workflow engine (use a simple task instead)
+- for parallel subtasks: ues expanded subprocess in Camunda and use parallel or sequential multi-instance (we need to check the Camunda 8 platform docs)
 
 
 ### ❌ Problems in current process:
@@ -67,6 +68,7 @@ Each job vacancy will be represented as a process instance and candidates that a
   - hiring manager enters job title, job description
   - hiring manager selects required skills, maturity level, proposed salary range from dropdowns or checkboxes in the form
 - Automate the internal candidate screening using a small database with test data and an API
+- Google Form to simulate the application of candidates: the Google Form submission triggers the event-base, multi-instance expanded subtask is triggered for the candidate 
 - Automate the job posting: we can simulate publishing the job ad by posting the job add via API to a Twitter account
 - We should add an extra step for the job advertisment: e.g., use ChatGTP to create the job add
 - Use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
