@@ -41,6 +41,15 @@ Each job vacancy will be represented as a process instance and candidates that a
 1. How to deal with emails / messages in the workflow (i.e., applicaiton received or rejected message). Shall we simulate a small email server such as mailcatcher?
 1. Based on the suggested list of "potentials for process improvements" further down, is the scope of the project enough / too much?
 
+
+Feedback:
+
+- the process should be extended a bit
+- the process is pretty standard now (it is the most commonly choosed by students), we should make it a bit more unique and innovative when we design the to-be process
+- we should add 1-2 more service tasks
+- next step is to define the to-be process
+
+
 ### ❌ Problems in current process:
 
 - everything is done manually, there are many process steps
@@ -55,6 +64,9 @@ Each job vacancy will be represented as a process instance and candidates that a
   - hiring manager selects required skills, maturity level, proposed salary range from dropdowns or checkboxes in the form
 - Automate the internal candidate screening using a small database with test data and an API
 - Automate the job posting: we can simulate publishing the job ad by posting the job add via API to a Twitter account
+- We should add an extra step for the job advertisment: e.g., use ChatGTP to create the job add
+- Use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
+- Scheduling integration (e.g., Calendly)
 - Error handling scenario: job can not be posted on Twitter, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
 - Automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
 - If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process isntance is left without candidates 
