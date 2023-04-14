@@ -43,14 +43,14 @@ Each job vacancy will be represented as a process instance and candidates that a
 
 🔴 **TODO** describe the rules that we can later use in decision table for candidate screening (Gezim) 🔴
 
-We defined 19 Business Rules, which uses the following criterias with the possible inputs:
--Years of relevant experience (<=5, [6..10], 11<)
--Degree level
--Years of working experience
--Can you speak english and german?
--Age
--Is the application complete?
--Gender
+We defined 19 Business Rules, which uses the following criterias with the possible inputs in the brackets:
+- Years of relevant experience ("<=5","[6..10]","11<")
+- Degree level ("Elementary school","Higher Technical School","Bachelor","Master","Doctorate")
+- Years of working experience ("<=5","[6..20]",">21")
+- Can you speak english and german? ("yes","no")
+- Age ("<=25","[26..45]","[46..65]")
+- Is the application complete? ("yes","no")
+- Gender ("Man","Woman","Other"
 
 We defined 3 longlist categories:
 - A, this is the highest category, which means 3 stars.
