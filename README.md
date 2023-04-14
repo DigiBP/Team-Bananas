@@ -66,10 +66,16 @@ Each job vacancy will be represented as a process instance and candidates that a
 
 ## ⚙️ Implementation
 
-...
+### Deployment
+
+🔴 **TODO** deploy to-be process model (Didi) 🔴
+
+### Google Form to Start the Process Instance
+
+🔴 **TODO** create google form to start process instance and connect with Camunda workflow engine (Didi) 🔴
 
 
-====
+----
 
 
 ## 💡 Considerations
