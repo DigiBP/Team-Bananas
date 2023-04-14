@@ -28,6 +28,8 @@ Our marvellous coach is Charuta Pande.
 
 ### 🔍 As-Is Business Process
 
+🔴 **TODO** rewrite as a process profiles according to BPM lecture 🔴
+
 We choose a mostly company-internal business process of filling a job vacancy as our process to digitalize.
 
 Description of the process/use case: A typical use case for an employee recruitment process in a company involves identifying the need for a new employee, creating a job description and job advertisement, posting the advertisement on various job boards, receiving and reviewing resumes and cover letters from candidates, conducting phone and in-person interviews, selecting the most suitable candidate, making an offer of employment, and onboarding the new employee. During the process, the recruitment team may also conduct background checks, reference checks, and skill assessments to ensure the candidate is qualified and suitable for the role. The entire process may be managed through a recruitment software or applicant tracking system, which allows for efficient tracking and communication with candidates throughout the process. The ultimate goal of the process is to attract, evaluate, and hire the best possible candidate for the position while ensuring fairness, efficiency, and compliance with relevant laws and regulations.
@@ -38,35 +40,22 @@ Each job vacancy will be represented as a process instance and candidates that a
 
 <img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
 
-### ❓ Questions for the 1st coaching session
-
-1. How to deal with the parallel subtasks, i.e., we need to model parallel subtasks for scheduling and holding interviews with the candidates
-1. How to deal with documents, i.e., each candiate has a CV (may be just simluate as a text field?)
-1. How to deal with emails / messages in the workflow (i.e., applicaiton received or rejected message). Shall we simulate a small email server such as mailcatcher?
-1. Based on the suggested list of "potentials for process improvements" further down, is the scope of the project enough / too much?
-
-
-#### Feedback from Coaching
-
-- the process should be extended a bit
-- the process is pretty standard now (it is the most commonly choosed by students), we should make it a bit more unique and innovative when we design the to-be process
-- we should add 1-2 more service tasks
-- next step is to define the to-be process
-- email communication can be done via MAKE / Integromat (Integromat can deal with emails sending, receiveing, saving attachments) 
-- update the as-is process:
-    - we have 3 roles (hiring manager, HR staff, candidate)
-    - for as-is process we do not identify the markers (service task, user task, etc) as this would indicate that we already use a workflow engine (use a simple task instead)
-- for parallel subtasks: ues expanded subprocess in Camunda and use parallel or sequential multi-instance (we need to check the Camunda 8 platform docs)
-- for CVs we can simply store into a Google Drive and use MAKE integration (in MAKE we can also use the HTTP and the Web Hook)
-- goal by next week: udpate the as-is process, define the to-be process, deploy to Camunda (we have a tenant ID for Team Bananas), business rules for the rules-based task, and may be try to have the Google Form ready that can trigger a new process instance. 
-
 ### ❌ Problems in current process:
 
 - everything is done manually, there are many process steps
 - some tasks like screening of CVs are standard tasks that can be automated
 - there is little support of the hiring manager in the current process (i.e., the hiring manager has to enter everything manually into a Word file for HR to process)
 
-### ✅ Potentials for process improvements and digitization:
+### To-Be Process
+
+🔴 **TODO** draw the to be process (Tim) 🔴
+
+🔴 **TODO** describe the to-be process (Afrodita) 🔴
+
+
+## 🚀 Change Project
+
+### ✅ Scope of the process improvements and digitization:
 
 - Google Form to start the process: via Integromat and Camunda API a new process instance can be started
   - form is prefilled with standard job description text
@@ -83,6 +72,14 @@ Each job vacancy will be represented as a process instance and candidates that a
 - If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process isntance is left without candidates 
 - iSaaS: Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
 - Video interview: we only do a form for HR to leave the interview feedback (but do not automate the integration with video call tools)
+
+## ⚙️ Implementation
+
+...
+
+
+====
+
 
 ## 💡 Considerations
 
@@ -101,10 +98,17 @@ There are some consideations when we build and digitalize the new process:
 - how do we glue different services together? (MAKE.com as middleware, self-scripted middleware)
 - how does the customer interact with the process, e.g. a chatbot or UI
 
-## 🚀 Change Project
+#### ❓ Feedback from 1st Coaching
 
-...
+- the process should be extended a bit
+- the process is pretty standard now (it is the most commonly choosed by students), we should make it a bit more unique and innovative when we design the to-be process
+- we should add 1-2 more service tasks
+- next step is to define the to-be process
+- email communication can be done via MAKE / Integromat (Integromat can deal with emails sending, receiveing, saving attachments) 
+- update the as-is process:
+    - we have 3 roles (hiring manager, HR staff, candidate)
+    - for as-is process we do not identify the markers (service task, user task, etc) as this would indicate that we already use a workflow engine (use a simple task instead)
+- for parallel subtasks: ues expanded subprocess in Camunda and use parallel or sequential multi-instance (we need to check the Camunda 8 platform docs)
+- for CVs we can simply store into a Google Drive and use MAKE integration (in MAKE we can also use the HTTP and the Web Hook)
+- goal by next week: udpate the as-is process, define the to-be process, deploy to Camunda (we have a tenant ID for Team Bananas), business rules for the rules-based task, and may be try to have the Google Form ready that can trigger a new process instance. 
 
-## ⚙️ Implementation
-
-...
