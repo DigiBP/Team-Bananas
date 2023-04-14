@@ -42,12 +42,16 @@ Each job vacancy will be represented as a process instance and candidates that a
 1. Based on the suggested list of "potentials for process improvements" further down, is the scope of the project enough / too much?
 
 
-Feedback:
+#### Feedback from Coaching
 
 - the process should be extended a bit
 - the process is pretty standard now (it is the most commonly choosed by students), we should make it a bit more unique and innovative when we design the to-be process
 - we should add 1-2 more service tasks
 - next step is to define the to-be process
+- email communication can be done via MAKE / Integromat (Integromat can deal with emails sending, receiveing, saving attachments) 
+- update the as-is process:
+    - we have 3 roles
+    - for as-is process we do not identify the markers (service task, user task, etc) as
 
 
 ### ❌ Problems in current process:
@@ -71,6 +75,7 @@ Feedback:
 - Automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
 - If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process isntance is left without candidates 
 - iSaaS: Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
+- Video interview: we only do a form for HR to leave the interview feedback (but do not automate the integration with video call tools)
 
 ## 💡 Considerations
 
