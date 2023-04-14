@@ -1,16 +1,5 @@
 # 🍌 Team Bananas - Job Vacancy & Hiring Process
 
-## 🗂️ Table of Contents
-
-* [👥 Team Members](#-team-members)
-* [🔁 Business Process](#-business-process)
-  - [🔍 As-Is Business Process](#-as-is-business-process)
-  - [❓ Questions for the 1st Coaching](#-questions-for-the-1st-coaching-session)
-  - [❌ Problems in current process](#-problems-in-current-process)
-  - [✅ Potentials for process improvements and digitization](#-potentials-for-process-improvements-and-digitization)
- * [💡 Considerations](#-considerations)
- * [🚀 Change Project](#-change-project)
- * [⚙️ Implementation](#%EF%B8%8F-implementation)
 
 ## 👥 Team Members
 
@@ -28,7 +17,7 @@ Our marvellous coach is Charuta Pande.
 
 ### 🔍 As-Is Business Process
 
-🔴 **TODO** rewrite as a process profiles according to BPM lecture 🔴
+🔴 **TODO** rewrite as a process profiles according to BPM lecture (Gabriela) 🔴
 
 We choose a mostly company-internal business process of filling a job vacancy as our process to digitalize.
 
@@ -51,6 +40,8 @@ Each job vacancy will be represented as a process instance and candidates that a
 🔴 **TODO** draw the to be process (Tim) 🔴
 
 🔴 **TODO** describe the to-be process (Afrodita) 🔴
+
+🔴 **TODO** describe the rules that we can later use in decision table for candidate screening (Gezim) 🔴
 
 
 ## 🚀 Change Project
