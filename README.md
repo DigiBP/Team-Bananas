@@ -46,6 +46,11 @@ Each job vacancy will be represented as a process instance and candidates that a
 
 ## 🚀 Change Project
 
+
+### Service Architecture
+
+<img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/service-architecture.png" style="width:100%; height:auto;" />
+
 ### ✅ Scope of the process improvements and digitization:
 
 - Google Form to start the process: via Integromat and Camunda API a new process instance can be started
