@@ -45,13 +45,21 @@ Each job vacancy will be represented as a process instance and candidates that a
 
 Description of ToBe Process:
 Job Posting: The recruitment process starts with creating a job posting that outlines the job requirements, responsibilities, and qualifications. This job posting is then shared on the company's career website, job boards, and social media platforms.
+
 Candidate Application: When a candidate applies for the job, they are required to fill out an online application form. The form captures the candidate's personal information, work history, education, and other relevant details. The system then automatically parses and extracts relevant data from the application.
+
 Resume Review: The system automatically evaluates the candidate's application and resume against the job requirements and filters out the unqualified candidates. This automated screening process saves time and effort for recruiters.
+
 Automated Assessment: The next step in the process is an automated assessment that tests the candidate's skills, knowledge, and cognitive abilities. This could include a series of tests, simulations, or other online assessments.
+
 Video Interview: The system can then schedule a video interview with qualified candidates. During the interview, the system uses AI-powered tools to analyze the candidate's responses and facial expressions to assess their fit for the job.
+
 Technical Interview: After the video interview, the system can then schedule a technical interview with the candidate to assess their skills and experience in a particular domain.
+
 Background Check: Once the technical interview is complete, the system can conduct a background check on the candidate to verify their employment history, education, and criminal record.
+
 Offer Letter: Finally, the system can generate an offer letter for the selected candidate. The offer letter is sent to the candidate through the system, and the candidate can accept or reject the offer online.
+
 Overall, this automated and innovative HR recruitment process saves time and effort for recruiters and ensures that the hiring process is fair, consistent, and objective. It also provides a positive experience for candidates, which can help to improve the company's reputation and attract top talent in the future.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
