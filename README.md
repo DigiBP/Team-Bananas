@@ -65,7 +65,8 @@ Overall, this automated and innovative HR recruitment process saves time and eff
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
-We defined the below 15 Business Rules: 
+We defined the below 15 Business Rules:
+
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/dmn_points_list.png" style="width:50%; height:auto;" />
 
 Which uses the following criterias with the possible inputs in the brackets:
