@@ -62,7 +62,7 @@ The process is initiated by the hiring manager, who requests a recruitment and c
 
 - Offer Letter: Finally, if the background check has been successful, the system generates an offer letter for the selected candidate. The systems automatically sends the offer letter to the candidate by offering an online form to accept or reject the offer directly online. 
 
-Overall, several process steps in this HR recruitment process are automated and complemented with innovative technology with the aim to save time and effort for recruiters. Furthermore, the to-be process ensures that the hiring process is fair, consistent, and objective. By automating the evaluation of a candidate's application, unconscious biases can be eliminated. Providing these services in a digital way also provides a positive experience and fast application journey for candidates. All these factors can help to improve the company's reputation and attract top talents in the future.
+Overall, several process steps in this HR recruitment process are automated and complemented with innovative technology with the aim to save time and effort for recruiters. Furthermore, the to-be process ensures that the hiring process is fair, consistent, and objective. By automating the evaluation of a candidate's application, unconscious biases can be eliminated. Providing these services in a digital way also provides a positive experience and fast application journey for candidates. All these factors can help to improve the company's reputation and attract top talents in the future while saving costs internally and making the process more efficient. 
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
