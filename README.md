@@ -65,7 +65,10 @@ Overall, this automated and innovative HR recruitment process saves time and eff
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
-We defined 19 Business Rules, which uses the following criterias with the possible inputs in the brackets:
+We defined the below 15 Business Rules: 
+<img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/dmn_points_list.png" style="width:50%; height:auto;" />
+
+Which uses the following criterias with the possible inputs in the brackets:
 - Years of relevant experience ("<=5", [6..10], "11<")
 - Degree level ("Elementary school", "Higher Technical School", "Bachelor", "Master", "Doctorate")
 - Years of working experience ("<=5", [6..20], ">21")
@@ -78,6 +81,7 @@ We defined 3 longlist categories:
 - A, this is the highest category, which means 3 stars. The assigned candidates are invited directly to the first interview.
 - B, this is the medium category, which means 2 stars. These assigned candidates will be placed on the waiting list.
 - C, this is the lowest category, which means 1 star. These assigned candidates are rejected directly.
+- R, means return for application completation.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/longlist_category.png" style="width:50%; height:auto;" />
 
