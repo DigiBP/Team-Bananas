@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_1ntrkmw" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
-  <decision id="Decision_1gmgawx" name="Decision 1">
-    <decisionTable id="DecisionTable_1ajwj5j">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1ntrkmw" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <decision id="Decision_1gmgawx" name="Points">
+    <informationRequirement id="InformationRequirement_0vgtqu5">
+      <requiredInput href="#InputData_0oz88nv" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0wz0rtg">
+      <requiredInput href="#InputData_06e0oyj" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_18eu8vl">
+      <requiredInput href="#InputData_0gt25tg" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_16llj1l">
+      <requiredInput href="#InputData_0ce66r6" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0japkz2">
+      <requiredInput href="#InputData_1rrhs5h" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1c1ioc3">
+      <requiredInput href="#InputData_0nmewj9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_05t2nh5">
+      <requiredInput href="#InputData_0c1jpm3" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1ajwj5j" hitPolicy="COLLECT" aggregation="SUM">
       <input id="Input_1" label="Years of relevant experience">
         <inputExpression id="InputExpression_1" typeRef="integer">
           <text></text>
@@ -37,194 +58,9 @@
           <text></text>
         </inputExpression>
       </input>
-      <output id="Output_1" label="Longlist Category" typeRef="string">
-        <outputValues id="UnaryTests_0ymzfum">
-          <text>"A","B","C","return"</text>
-        </outputValues>
-      </output>
-      <rule id="DecisionRule_0cam3zj">
-        <inputEntry id="UnaryTests_05p6yiy">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0ilni7v">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_14nu2ng">
-          <text>&lt;=4</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0qozlly">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1pgcy1z">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0r59nfz">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_184ib0g">
-          <text>-</text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_1u3h9vc">
-          <text>"C"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_1578ktj">
-        <inputEntry id="UnaryTests_03czpc2">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_135458q">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0trer26">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0lv7h3f">
-          <text>false</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1djsuhn">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1eky91b">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_06x43f8">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_1azhv5n">
-          <text>"C"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_1yqnajh">
-        <inputEntry id="UnaryTests_18fxun0">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0c2cetg">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0pw4fby">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1kjoxq5">
-          <text>true</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_09gt1iz">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_19r2t73">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0ez6mv1">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0mpjgrh">
-          <text>"B"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0oc7gm6">
-        <inputEntry id="UnaryTests_14tgs3e">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0xmwio1">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1cyn2n0">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1ft46fb">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_057rqtn">
-          <text>[18..25]</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0cfd5x6">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0ifdjbe">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_1lwgak4">
-          <text>"B"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_1r2m5jj">
-        <inputEntry id="UnaryTests_1qn45hu">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0wi2ygh">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_02xoie7">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0uagoqa">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1vtrm90">
-          <text>[26..45]</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0dl8h47">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1gokm64">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_194313d">
-          <text>"A"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_006ok5l">
-        <inputEntry id="UnaryTests_0fg74jj">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_00zrbpk">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_19vm4wh">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1nakhfq">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0y3tgol">
-          <text>[46..65]</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0wzybko">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0faq4e4">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_1oxogc7">
-          <text>"C"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_1tc7m4x">
-        <inputEntry id="UnaryTests_1ulrelo">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1q66i6a">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1wh00nl">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1899y67">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_13vib96">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_11tmrn3">
-          <text>true</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0kpn2vt">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0ap6s87">
-          <text>"B"</text>
-        </outputEntry>
-      </rule>
+      <output id="OutputClause_1ozl68z" label="Points" typeRef="integer" />
       <rule id="DecisionRule_16amusv">
+        <description>If the application is not complete, than we return it for completion. Therefore 10'000, which is assigned to the R (return) category during categorization.</description>
         <inputEntry id="UnaryTests_0h65tuc">
           <text></text>
         </inputEntry>
@@ -246,89 +82,93 @@
         <inputEntry id="UnaryTests_0ngm764">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_00n0s0f">
-          <text>"return"</text>
+        <outputEntry id="LiteralExpression_0f1k314">
+          <text>10010</text>
         </outputEntry>
       </rule>
-      <rule id="DecisionRule_0qfatf4">
-        <inputEntry id="UnaryTests_19081bi">
+      <rule id="DecisionRule_1578ktj">
+        <description>Our candidate must be proficient in german and english.</description>
+        <inputEntry id="UnaryTests_03czpc2">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1qor21s">
-          <text>"Elementary school", "Higher Technical School"</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0j6r3zw">
+        <inputEntry id="UnaryTests_135458q">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0vet0w4">
+        <inputEntry id="UnaryTests_0trer26">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0e79qid">
+        <inputEntry id="UnaryTests_0lv7h3f">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1djsuhn">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1rcncan">
+        <inputEntry id="UnaryTests_1eky91b">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1hor26l">
+        <inputEntry id="UnaryTests_06x43f8">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_0wtmlnh">
-          <text>"C"</text>
+        <outputEntry id="LiteralExpression_0mjkg1t">
+          <text>-1000</text>
         </outputEntry>
       </rule>
-      <rule id="DecisionRule_0sslmrs">
-        <inputEntry id="UnaryTests_0c5ku4m">
+      <rule id="DecisionRule_07xjdaw">
+        <description>If our applicants are of the same score or category, then the woman will be preferred due to diversity.</description>
+        <inputEntry id="UnaryTests_0v11u3t">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0809xdu">
-          <text>"Bachelor", "Master"</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0p59tp8">
+        <inputEntry id="UnaryTests_1g2ztew">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1vfbdwj">
+        <inputEntry id="UnaryTests_099wo1x">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0f5air8">
+        <inputEntry id="UnaryTests_0ng3z2x">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_016vsqc">
+        <inputEntry id="UnaryTests_0wa3kqa">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1da47ts">
+        <inputEntry id="UnaryTests_0ywv0nj">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_1r52e94">
-          <text>"B"</text>
+        <inputEntry id="UnaryTests_03414hm">
+          <text>"Woman"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cw2fkf">
+          <text>5</text>
         </outputEntry>
       </rule>
-      <rule id="DecisionRule_1rqqfvf">
-        <inputEntry id="UnaryTests_0znqvtt">
+      <rule id="DecisionRule_006ok5l">
+        <description>Our preferred candidate is younger than 46, therefore -10 points.</description>
+        <inputEntry id="UnaryTests_0fg74jj">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0kuiivz">
-          <text>"Doctorate"</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1hrjkzq">
+        <inputEntry id="UnaryTests_00zrbpk">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0h1ehpj">
+        <inputEntry id="UnaryTests_19vm4wh">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0oybxvm">
+        <inputEntry id="UnaryTests_1nakhfq">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0avciv7">
+        <inputEntry id="UnaryTests_0y3tgol">
+          <text>[46..65]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wzybko">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0zr9v0k">
+        <inputEntry id="UnaryTests_0faq4e4">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_0fmsxfq">
-          <text>"A"</text>
+        <outputEntry id="LiteralExpression_08tbgqy">
+          <text>-10</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0aozs3g">
+        <description>Little to no relevant work experience is rated 0.</description>
         <inputEntry id="UnaryTests_1ld5kt2">
           <text>"&lt;=5"</text>
         </inputEntry>
@@ -350,141 +190,39 @@
         <inputEntry id="UnaryTests_1tzmtv7">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_1mwuu9g">
-          <text>"C"</text>
+        <outputEntry id="LiteralExpression_0m1jn0p">
+          <text>0</text>
         </outputEntry>
       </rule>
-      <rule id="DecisionRule_1c92lrm">
-        <inputEntry id="UnaryTests_1fw3ar2">
-          <text>[6..10]</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_19x8dtr">
+      <rule id="DecisionRule_0qfatf4">
+        <description>Low school level is rated 0.</description>
+        <inputEntry id="UnaryTests_19081bi">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0w6zlfm">
+        <inputEntry id="UnaryTests_1qor21s">
+          <text>"Elementary school", "Higher Technical School"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j6r3zw">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1bdchjb">
+        <inputEntry id="UnaryTests_0vet0w4">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_0oi4hdu">
+        <inputEntry id="UnaryTests_0e79qid">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_1bib4h5">
+        <inputEntry id="UnaryTests_1rcncan">
           <text></text>
         </inputEntry>
-        <inputEntry id="UnaryTests_08nfmue">
+        <inputEntry id="UnaryTests_1hor26l">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_1mm68r9">
-          <text>"B"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0fbcpyc">
-        <inputEntry id="UnaryTests_0pl0pzh">
-          <text>"11&lt;"</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0dul04h">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0n38g6g">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1q8a4a4">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1ica917">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0konjfx">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_10b1fss">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_00cqe7d">
-          <text>"A"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_0x9affq">
-        <inputEntry id="UnaryTests_0vy9scl">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1898e1b">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1gcb6h8">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0gkzfxm">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0sc8et3">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1vcuihz">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1yclsrd">
-          <text>"Man"</text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0veed0r">
-          <text>"B"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_07xjdaw">
-        <inputEntry id="UnaryTests_0v11u3t">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1g2ztew">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_099wo1x">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0ng3z2x">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0wa3kqa">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0ywv0nj">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_03414hm">
-          <text>"Woman", "Other"</text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_1eooei8">
-          <text>"A"</text>
-        </outputEntry>
-      </rule>
-      <rule id="DecisionRule_01qdpe8">
-        <inputEntry id="UnaryTests_1haqmsv">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0vbzwyf">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0cz7chy">
-          <text>"&gt;21"</text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1ey7t8v">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1xw9iz2">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_1w51n1z">
-          <text></text>
-        </inputEntry>
-        <inputEntry id="UnaryTests_0ggbmzz">
-          <text></text>
-        </inputEntry>
-        <outputEntry id="LiteralExpression_0xrnbmw">
-          <text>"B"</text>
+        <outputEntry id="LiteralExpression_011up1a">
+          <text>0</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_11mwlu9">
+        <description>Little to no working experience is rated 0.</description>
         <inputEntry id="UnaryTests_0szputd">
           <text></text>
         </inputEntry>
@@ -506,11 +244,201 @@
         <inputEntry id="UnaryTests_0611bnr">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_1dgy5fu">
-          <text>"C"</text>
+        <outputEntry id="LiteralExpression_0n0zuug">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0oc7gm6">
+        <description>Young applicants usually also have less life experience, so it is rated 0.</description>
+        <inputEntry id="UnaryTests_14tgs3e">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xmwio1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cyn2n0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ft46fb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_057rqtn">
+          <text>&lt;= 25</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cfd5x6">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ifdjbe">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09dp1y2">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01qdpe8">
+        <description>Very high maturity of work experience, serves to methodological and social skills.</description>
+        <inputEntry id="UnaryTests_1haqmsv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vbzwyf">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cz7chy">
+          <text>"&gt;21"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ey7t8v">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xw9iz2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w51n1z">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ggbmzz">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0n7e03i">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sslmrs">
+        <description>There are 20 points for a college degree, whether bachelor's or master's.</description>
+        <inputEntry id="UnaryTests_0c5ku4m">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0809xdu">
+          <text>"Bachelor", "Master"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0p59tp8">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vfbdwj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f5air8">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_016vsqc">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1da47ts">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0e0bh8v">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1c92lrm">
+        <description>There, the learned could already be applied and consolidated.</description>
+        <inputEntry id="UnaryTests_1fw3ar2">
+          <text>[6..10]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19x8dtr">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0w6zlfm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bdchjb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oi4hdu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bib4h5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08nfmue">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05dxqou">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1r2m5jj">
+        <description>Our desired candidate is between 26 and 45 years old, so here are 20 points for that.</description>
+        <inputEntry id="UnaryTests_1qn45hu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wi2ygh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02xoie7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0uagoqa">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vtrm90">
+          <text>[26..45]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dl8h47">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gokm64">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0i1scxw">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1rqqfvf">
+        <description>A doctorate gives you the maximum score from this criteria of 40.</description>
+        <inputEntry id="UnaryTests_0znqvtt">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kuiivz">
+          <text>"Doctorate"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hrjkzq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0h1ehpj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oybxvm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0avciv7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zr9v0k">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ns98el">
+          <text>40</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fbcpyc">
+        <description>Very high maturity of professional competence.</description>
+        <inputEntry id="UnaryTests_0pl0pzh">
+          <text>"11&lt;"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dul04h">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0n38g6g">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1q8a4a4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ica917">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0konjfx">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10b1fss">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06v8o76">
+          <text>40</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1vv6p6m">
+        <description>General professional experience could be gained and the applicant is not yet "rusty" in his behavior pattern.</description>
         <inputEntry id="UnaryTests_0qm29th">
           <text></text>
         </inputEntry>
@@ -532,8 +460,66 @@
         <inputEntry id="UnaryTests_0vw7otu">
           <text></text>
         </inputEntry>
-        <outputEntry id="LiteralExpression_1tvbd1a">
+        <outputEntry id="LiteralExpression_07qksy5">
+          <text>40</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0ce66r6" name="Relevant experience" />
+  <inputData id="InputData_0gt25tg" name="Degree level" />
+  <inputData id="InputData_06e0oyj" name="Working experience" />
+  <inputData id="InputData_0oz88nv" name="Language" />
+  <inputData id="InputData_1rrhs5h" name="Age" />
+  <inputData id="InputData_0c1jpm3" name="Gender" />
+  <inputData id="InputData_0nmewj9" name="Completeness" />
+  <decision id="Decision_1xtr55x" name="Longlist">
+    <informationRequirement id="InformationRequirement_13xu37k">
+      <requiredDecision href="#Decision_1gmgawx" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1ju0mny">
+      <input id="InputClause_0aclj7p" label="Points">
+        <inputExpression id="LiteralExpression_10gd8jz" typeRef="integer" />
+      </input>
+      <output id="OutputClause_115u47u" label="Longlist Category" typeRef="string">
+        <outputValues id="UnaryTests_0aots6i">
+          <text>"A","B","C","R"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_095af84">
+        <description>A, this is the highest category, which means 3 stars. The assigned candidates are invited directly to the first interview.</description>
+        <inputEntry id="UnaryTests_0bbqyjg">
+          <text>&gt; 90</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bnv6n7">
           <text>"A"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1n13e8p">
+        <description>B, this is the medium category, which means 2 stars. These assigned candidates will be placed on the waiting list.</description>
+        <inputEntry id="UnaryTests_1mgsnuw">
+          <text>[30..90]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0mz4ucq">
+          <text>"B"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pf2llt">
+        <description>C, this is the lowest category, which means 1 star. These assigned candidates are rejected directly.</description>
+        <inputEntry id="UnaryTests_11bhso0">
+          <text>[0..30[</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1x9f7de">
+          <text>"C"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gihohq">
+        <description>Return for completation.</description>
+        <inputEntry id="UnaryTests_1w9nde8">
+          <text>&gt;= 9000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0syl7zm">
+          <text>"R"</text>
         </outputEntry>
       </rule>
     </decisionTable>
@@ -541,8 +527,72 @@
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
       <dmndi:DMNShape dmnElementRef="Decision_1gmgawx">
-        <dc:Bounds height="80" width="180" x="160" y="100" />
+        <dc:Bounds height="80" width="180" x="310" y="310" />
       </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0vyh1gz" dmnElementRef="InputData_0ce66r6">
+        <dc:Bounds height="45" width="125" x="-53" y="538" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0t8agmg" dmnElementRef="InputData_0gt25tg">
+        <dc:Bounds height="45" width="125" x="77" y="538" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ik226r" dmnElementRef="InputData_06e0oyj">
+        <dc:Bounds height="45" width="125" x="207" y="538" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ygd72f" dmnElementRef="InputData_0oz88nv">
+        <dc:Bounds height="45" width="125" x="337" y="538" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ag9ot0" dmnElementRef="InputData_1rrhs5h">
+        <dc:Bounds height="45" width="125" x="467" y="538" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03ovbtw" dmnElementRef="InputData_0c1jpm3">
+        <dc:Bounds height="45" width="125" x="727" y="537" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0gb1t73" dmnElementRef="InputData_0nmewj9">
+        <dc:Bounds height="45" width="125" x="597" y="537" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0l1in9g" dmnElementRef="Decision_1xtr55x">
+        <dc:Bounds height="80" width="180" x="310" y="140" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0nuueu4" dmnElementRef="InformationRequirement_0vgtqu5">
+        <di:waypoint x="400" y="538" />
+        <di:waypoint x="400" y="410" />
+        <di:waypoint x="400" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1psawos" dmnElementRef="InformationRequirement_0wz0rtg">
+        <di:waypoint x="270" y="538" />
+        <di:waypoint x="378" y="410" />
+        <di:waypoint x="378" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_109vpn5" dmnElementRef="InformationRequirement_18eu8vl">
+        <di:waypoint x="140" y="538" />
+        <di:waypoint x="355" y="410" />
+        <di:waypoint x="355" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1mphto4" dmnElementRef="InformationRequirement_16llj1l">
+        <di:waypoint x="10" y="538" />
+        <di:waypoint x="333" y="410" />
+        <di:waypoint x="333" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0qggvzv" dmnElementRef="InformationRequirement_0japkz2">
+        <di:waypoint x="530" y="538" />
+        <di:waypoint x="423" y="410" />
+        <di:waypoint x="423" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1t3m2sn" dmnElementRef="InformationRequirement_1c1ioc3">
+        <di:waypoint x="660" y="537" />
+        <di:waypoint x="445" y="410" />
+        <di:waypoint x="445" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1oip2r9" dmnElementRef="InformationRequirement_05t2nh5">
+        <di:waypoint x="790" y="537" />
+        <di:waypoint x="468" y="410" />
+        <di:waypoint x="468" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0yuf2aa" dmnElementRef="InformationRequirement_13xu37k">
+        <di:waypoint x="400" y="310" />
+        <di:waypoint x="400" y="240" />
+        <di:waypoint x="400" y="220" />
+      </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
 </definitions>
