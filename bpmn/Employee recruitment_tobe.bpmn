@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14erl2k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14erl2k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:collaboration id="Collaboration_0xwygy9">
     <bpmn:participant id="Participant_0glx47l" name="Perform recrutment" processRef="Process_002n2jr" />
     <bpmn:participant id="Participant_1qke3h6" name="Candidate" />
@@ -57,7 +57,7 @@
       <bpmn:outgoing>Flow_1ngoccn</bpmn:outgoing>
       <bpmn:outgoing>Flow_0zngeeh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:businessRuleTask id="Activity_12vu6dy" name="Identify potential internal candidates">
+    <bpmn:businessRuleTask id="Activity_12vu6dy" name="Identify potential internal candidates" camunda:decisionRef="">
       <bpmn:incoming>Flow_0f4xv8c</bpmn:incoming>
       <bpmn:outgoing>Flow_1mkl8p1</bpmn:outgoing>
     </bpmn:businessRuleTask>
@@ -67,17 +67,29 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0zhv3g4" sourceRef="StartEvent_1" targetRef="Activity_07kdy16" />
     <bpmn:sequenceFlow id="Flow_1mkl8p1" sourceRef="Activity_12vu6dy" targetRef="Gateway_10pintv" />
-    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Yes" sourceRef="Gateway_10pintv" targetRef="Activity_1doqifq" />
-    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No" sourceRef="Gateway_10pintv" targetRef="Activity_0i9xfx8" />
+    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Yes" sourceRef="Gateway_10pintv" targetRef="Activity_1doqifq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No" sourceRef="Gateway_10pintv" targetRef="Activity_0i9xfx8">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0ntcx9k" sourceRef="Activity_00o8ytm" targetRef="Gateway_1qsofoq" />
     <bpmn:sequenceFlow id="Flow_17ythku" name="For candidates not considered further" sourceRef="Gateway_1qsofoq" targetRef="Activity_0vj6zr7" />
     <bpmn:sequenceFlow id="Flow_03kwsxs" name="For suitable candidates" sourceRef="Gateway_1qsofoq" targetRef="Activity_1vq2492" />
     <bpmn:sequenceFlow id="Flow_0ugsqdr" sourceRef="Activity_0q56gz5" targetRef="Gateway_1jmxqrz" />
-    <bpmn:sequenceFlow id="Flow_1j8uwqm" name="Yes" sourceRef="Gateway_1jmxqrz" targetRef="Activity_00o8ytm" />
-    <bpmn:sequenceFlow id="Flow_0pwpy01" name="No" sourceRef="Gateway_1jmxqrz" targetRef="Activity_1vq2492" />
+    <bpmn:sequenceFlow id="Flow_1j8uwqm" name="Yes" sourceRef="Gateway_1jmxqrz" targetRef="Activity_00o8ytm">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0pwpy01" name="No" sourceRef="Gateway_1jmxqrz" targetRef="Activity_1vq2492">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0afdzsn" sourceRef="Activity_1doqifq" targetRef="Gateway_00wrceu" />
-    <bpmn:sequenceFlow id="Flow_1ngoccn" name="No" sourceRef="Gateway_00wrceu" targetRef="Activity_0i9xfx8" />
-    <bpmn:sequenceFlow id="Flow_0zngeeh" name="Yes" sourceRef="Gateway_00wrceu" targetRef="Activity_1vq2492" />
+    <bpmn:sequenceFlow id="Flow_1ngoccn" name="No" sourceRef="Gateway_00wrceu" targetRef="Activity_0i9xfx8">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0zngeeh" name="Yes" sourceRef="Gateway_00wrceu" targetRef="Activity_1vq2492">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1kpdv48" sourceRef="Activity_0i9xfx8" targetRef="Event_1un204y" />
     <bpmn:sequenceFlow id="Flow_16p58mg" sourceRef="Event_1un204y" targetRef="Activity_152p9yw" />
     <bpmn:sequenceFlow id="Flow_0xfxt1y" sourceRef="Activity_152p9yw" targetRef="Gateway_1y0te3f" />
@@ -102,9 +114,9 @@
     <bpmn:intermediateCatchEvent id="Event_1un204y" name="Job applications received">
       <bpmn:incoming>Flow_1kpdv48</bpmn:incoming>
       <bpmn:outgoing>Flow_16p58mg</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_01ar447" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_01ar447" messageRef="Message_0nhtitb" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:businessRuleTask id="Activity_152p9yw" name="Perform screening (longlist)">
+    <bpmn:businessRuleTask id="Activity_152p9yw" name="Perform screening (longlist)" camunda:decisionRef="">
       <bpmn:incoming>Flow_16p58mg</bpmn:incoming>
       <bpmn:outgoing>Flow_0xfxt1y</bpmn:outgoing>
     </bpmn:businessRuleTask>
@@ -116,7 +128,7 @@
     <bpmn:intermediateCatchEvent id="Event_0bz2sid" name="Receive results of video interviews / language tests">
       <bpmn:incoming>Flow_0rcee0f</bpmn:incoming>
       <bpmn:outgoing>Flow_0yskkdq</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0aikexu" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0aikexu" messageRef="Message_2qechud" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_08eylh5" sourceRef="Activity_1fb7pmz" targetRef="Gateway_1tumx18" />
     <bpmn:exclusiveGateway id="Gateway_1jmxqrz" name="Shortlist necessary?">
@@ -130,12 +142,17 @@
     <bpmn:intermediateCatchEvent id="Event_0qonv08" name="Acceptance / Confirmation received">
       <bpmn:incoming>Flow_08300rf</bpmn:incoming>
       <bpmn:outgoing>Flow_18qhkqb</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1aku338" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1aku338" messageRef="Message_0edq9hu" />
     </bpmn:intermediateCatchEvent>
     <bpmn:endEvent id="Event_0d7zga7" name="Recruitment completed">
       <bpmn:incoming>Flow_1vzkg2l</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Activity_1vq2492" name="Interview Scheduling">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Interview Scheduling</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0zngeeh</bpmn:incoming>
       <bpmn:incoming>Flow_03kwsxs</bpmn:incoming>
       <bpmn:incoming>Flow_0pwpy01</bpmn:incoming>
@@ -152,14 +169,27 @@
     <bpmn:userTask id="Activity_0bhbc1a" name="Conduct personal interview">
       <bpmn:incoming>Flow_1xfsk7i</bpmn:incoming>
       <bpmn:outgoing>Flow_1vy5itv</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_0vj6zr7" name="Create rejection for unsuccessful candidates">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Create rejection for unsuccessful candidates</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_09nz2j2</bpmn:incoming>
       <bpmn:incoming>Flow_0oec268</bpmn:incoming>
       <bpmn:incoming>Flow_17ythku</bpmn:incoming>
       <bpmn:outgoing>Flow_02b2pho</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_1h8auxb" name="Communicate acceptances and rejections">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Communicate acceptances and rejections</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_09t8df9</bpmn:incoming>
       <bpmn:outgoing>Flow_08300rf</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -178,15 +208,30 @@
       <bpmn:outgoing>Flow_0egobai</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:serviceTask id="Activity_0i9xfx8" name="Advertise position">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Advertise position</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vcq9tr</bpmn:incoming>
       <bpmn:incoming>Flow_1ngoccn</bpmn:incoming>
       <bpmn:outgoing>Flow_1kpdv48</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_07kdy16" name="Clarify recruitment assignment">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Clarify recruitment assignment</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0zhv3g4</bpmn:incoming>
       <bpmn:outgoing>Flow_0f4xv8c</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0b3ntry" name="Arrange pre-check">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Arrange pre-check</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0h5rwpd</bpmn:incoming>
       <bpmn:outgoing>Flow_0rcee0f</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -195,6 +240,11 @@
       <bpmn:outgoing>Flow_08eylh5</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="Activity_0fplu0u" name="Send invitation to live video interview">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Send invitation to live video interview</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0egobai</bpmn:incoming>
       <bpmn:outgoing>Flow_1l87hgs</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -203,6 +253,9 @@
       <bpmn:outgoing>Flow_09t8df9</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
+  <bpmn:message id="Message_0edq9hu" name="Acceptance / Confirmation" />
+  <bpmn:message id="Message_2qechud" name="Results of video interviews / language tests" />
+  <bpmn:message id="Message_0nhtitb" name="Job Application" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0xwygy9">
       <bpmndi:BPMNShape id="Participant_0glx47l_di" bpmnElement="Participant_0glx47l" isHorizontal="true">
@@ -256,7 +309,7 @@
       <bpmndi:BPMNShape id="Event_18uradf_di" bpmnElement="Event_0bz2sid">
         <dc:Bounds x="1652" y="502" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1625.5" y="548" width="89" height="40" />
+          <dc:Bounds x="1626" y="548" width="89" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1jmxqrz_di" bpmnElement="Gateway_1jmxqrz" isMarkerVisible="true">
@@ -285,6 +338,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0hyiat7_di" bpmnElement="Activity_1vq2492">
         <dc:Bounds x="2910" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_06gai6i_di" bpmnElement="Activity_00o8ytm">
         <dc:Bounds x="2570" y="480" width="100" height="80" />
@@ -298,9 +352,11 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1avya2h_di" bpmnElement="Activity_0vj6zr7">
         <dc:Bounds x="3060" y="290" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qogagl_di" bpmnElement="Activity_1h8auxb">
         <dc:Bounds x="3660" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_15jgsfl_di" bpmnElement="Activity_1ixpalu">
         <dc:Bounds x="3900" y="480" width="100" height="80" />
@@ -313,18 +369,22 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0w2qceo_di" bpmnElement="Activity_0i9xfx8">
         <dc:Bounds x="1010" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1a3fwhy_di" bpmnElement="Activity_07kdy16">
         <dc:Bounds x="340" y="880" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0macwo8_di" bpmnElement="Activity_0b3ntry">
         <dc:Bounds x="1520" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0y3t116_di" bpmnElement="Activity_1fb7pmz">
         <dc:Bounds x="1790" y="880" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ji6hjt_di" bpmnElement="Activity_0fplu0u">
         <dc:Bounds x="2170" y="480" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0kwy62b_di" bpmnElement="Activity_03xul49">
         <dc:Bounds x="3330" y="880" width="100" height="80" />
