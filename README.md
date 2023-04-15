@@ -27,7 +27,7 @@ The process has 3 roles: hiring manager, HR staff, and candidates. The hiring ma
 
 Each job vacancy will be represented as a process instance and candidates that apply to the job will be treated in paralell as subtasks of the main process.
 
-<img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/employee-recruitment-process.png" style="width:100%; height:auto;" />
+<img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_asis.png" style="width:100%; height:auto;" />
 
 ### ❌ Problems in current process:
 
