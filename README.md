@@ -83,7 +83,7 @@ The following criterias were defined with the possible inputs in the brackets:
 - Is the application complete? ("yes", "no")
 - Gender ("Man", "Woman", "Other")
 
-Our 3 longlist categories:
+Our 4 longlist categories:
 - A, this is the highest category, which means 3 stars. The assigned candidates are invited directly to the first interview.
 - B, this is the medium category, which means 2 stars. These assigned candidates will be placed on the waiting list.
 - C, this is the lowest category, which means 1 star. These assigned candidates are rejected directly.
