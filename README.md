@@ -35,13 +35,15 @@ Each job vacancy will be represented as a process instance and candidates that a
 - some tasks like screening of CVs are standard tasks that can be automated
 - there is little support of the hiring manager in the current process (i.e., the hiring manager has to enter everything manually into a Word file for HR to process)
 
-### To-Be Process
+### 🔍To-Be Process
 
 🔴 **TODO** draw the to be process (Tim) 🔴
 
 🔴 **TODO** describe the to-be process (Afrodita) 🔴
 
 🔴 **TODO** describe the rules that we can later use in decision table for candidate screening (Gezim) 🔴
+
+<img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
 We defined 19 Business Rules, which uses the following criterias with the possible inputs in the brackets:
 - Years of relevant experience ("<=5", [6..10], "11<")
