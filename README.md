@@ -132,7 +132,7 @@ Our 3 longlist categories:
 
 ## 💡 Considerations
 
-There are some consideations when we build and digitalize the new process:
+There are some considerations when we build and digitalize the new process:
 
 - error handling in the process
     - what error handling pattern to use
