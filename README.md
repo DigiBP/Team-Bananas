@@ -79,7 +79,7 @@ We defined 3 longlist categories:
 - B, this is the medium category, which means 2 stars. These assigned candidates will be placed on the waiting list.
 - C, this is the lowest category, which means 1 star. These assigned candidates are rejected directly.
 
-<img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/longlist_category.png" style="width:100%; height:auto;" />
+<img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/longlist_category.png" style="width:50%; height:auto;" />
 
 ## 🚀 Change Project
 
