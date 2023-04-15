@@ -50,19 +50,19 @@ The process is initiated by the hiring manager, who requests a recruitment and c
 
 - Candidate Application: As soon as a candidate applies for the job, the candidates are required to fill out an online application form. The form captures the candidate's personal information, work history, education, and other relevant details indicated by the form. The system then automatically parses and extracts relevant data from the application.
 
-- Resume Review: The system then automatically evaluates the candidate's application details and resume against the job requirements and filters out the unqualified candidates. This automated screening process saves time and effort for recruiters.
+- Resume Review: After receipt of the application, the system automatically evaluates the candidate's application details and resume against the stated job requirements and filters out unqualified candidates. This automated screening process of the application saves time and effort for recruiters compared to evaluating it manually.
 
-- Automated Assessment: The next step in the process is an automated assessment that tests the candidate's skills, knowledge, and cognitive abilities. This could include a series of tests, simulations, or other online assessments.
+- Automated Assessment: The next step in the process is an automated assessment where candidates are invited to perform online assessments that tests their skills, knowledge, and cognitive abilities within a series of different tests, simulations, or other assessments.
 
-- Video Interview: The system can then schedule a video interview with qualified candidates. During the interview, the system uses AI-powered tools to analyze the candidate's responses and facial expressions to assess their fit for the job.
+- Video Interview: If a qualified candidate is identified during the automated assessments, the system will schedule video interviews. During these video interviews, the system uses AI-powered tools to analyze the candidate's responses and facial expressions to assess their fit for the job.
 
-- Technical Interview: After the video interview, the system can then schedule a technical interview with the candidate to assess their skills and experience in a particular domain.
+- Technical Interview: To evaluate the skills of the qualified candidate further, the system will schedule a technical interview as as a second step. These predefined technical inerviews assesses the candidate's skills and experience in a particular domain.
 
-- Background Check: Once the technical interview is completed, the system can conduct a background check on the candidate to verify their employment history, education, and criminal record.
+- Background Check: Once the technical interview is completed, the system conducts a background check on the candidate to verify their employment history, education, and criminal record or other needed information for a specific job.
 
-- Offer Letter: Finally, the system can generate an offer letter for the selected candidate. The offer letter is sent to the candidate through the system, and the candidate can accept or reject the offer online.
+- Offer Letter: Finally, if the background check has been successful, the system generates an offer letter for the selected candidate. The systems automatically sends the offer letter to the candidate by offering an online form to accept or reject the offer directly online. 
 
-Overall, this automated and innovative HR recruitment process saves time and effort for recruiters and ensures that the hiring process is fair, consistent, and objective. It also provides a positive experience for candidates, which can help to improve the company's reputation and attract top talent in the future.
+Overall, several process steps in this HR recruitment process are automated and complemented with innovative technology with the aim to save time and effort for recruiters. Furthermore, the to-be process ensures that the hiring process is fair, consistent, and objective. By automating the evaluation of a candidate's application, unconscious biases can be eliminated. Providing these services in a digital way also provides a positive experience and fast application journey for candidates. All these factors can help to improve the company's reputation and attract top talents in the future.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
