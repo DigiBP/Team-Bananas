@@ -44,12 +44,13 @@ Each job vacancy will be represented as a process instance and candidates that a
 🔴 **TODO** describe the rules that we can later use in decision table for candidate screening (Gezim) 🔴
 
 Description of ToBe Process:
+The process is initiated by the hiring manager, who requests a recruitment and clarifies the recruitment assignment. The the following process steps are occurring:
 
 Job Posting: The recruitment process starts with creating a job posting that outlines the job requirements, responsibilities, and qualifications. This job posting is then shared on the company's career website, job boards, and social media platforms.
 
-Candidate Application: When a candidate applies for the job, they are required to fill out an online application form. The form captures the candidate's personal information, work history, education, and other relevant details. The system then automatically parses and extracts relevant data from the application.
+Candidate Application: As soon as a candidate applies for the job, the candidates are required to fill out an online application form. The form captures the candidate's personal information, work history, education, and other relevant details indicated by the form. The system then automatically parses and extracts relevant data from the application.
 
-Resume Review: The system automatically evaluates the candidate's application and resume against the job requirements and filters out the unqualified candidates. This automated screening process saves time and effort for recruiters.
+Resume Review: The system then automatically evaluates the candidate's application details and resume against the job requirements and filters out the unqualified candidates. This automated screening process saves time and effort for recruiters.
 
 Automated Assessment: The next step in the process is an automated assessment that tests the candidate's skills, knowledge, and cognitive abilities. This could include a series of tests, simulations, or other online assessments.
 
@@ -57,7 +58,7 @@ Video Interview: The system can then schedule a video interview with qualified c
 
 Technical Interview: After the video interview, the system can then schedule a technical interview with the candidate to assess their skills and experience in a particular domain.
 
-Background Check: Once the technical interview is complete, the system can conduct a background check on the candidate to verify their employment history, education, and criminal record.
+Background Check: Once the technical interview is completed, the system can conduct a background check on the candidate to verify their employment history, education, and criminal record.
 
 Offer Letter: Finally, the system can generate an offer letter for the selected candidate. The offer letter is sent to the candidate through the system, and the candidate can accept or reject the offer online.
 
