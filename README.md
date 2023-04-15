@@ -65,6 +65,10 @@ Overall, this automated and innovative HR recruitment process saves time and eff
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
+In the DRD-Decision are the "Longlist" and "Points" decision tables.
+
+<img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/drd_decision.png" style="width:50%; height:auto;" />
+
 Our 15 Business Rules are defined below:
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/dmn_points_list.png" style="width:100%; height:auto;" />
