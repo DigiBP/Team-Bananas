@@ -44,9 +44,9 @@ Each job vacancy will be represented as a process instance and candidates that a
 🔴 **TODO** describe the rules that we can later use in decision table for candidate screening (Gezim) 🔴
 
 Description of ToBe Process:
-The process is initiated by the hiring manager, who requests a recruitment and clarifies the recruitment assignment. The the following process steps are occurring:
+The process is initiated by the hiring manager, who requests a recruitment and clarifies the recruitment assignment. Then the following process steps are initialized:
 
-Job Posting: The recruitment process starts with creating a job posting that outlines the job requirements, responsibilities, and qualifications. This job posting is then shared on the company's career website, job boards, and social media platforms.
+- Job Posting: The recruitment process starts with creating a job posting that outlines the job requirements, responsibilities, and qualifications. This job posting is then shared on the company's career website, job boards, and social media platforms.
 
 Candidate Application: As soon as a candidate applies for the job, the candidates are required to fill out an online application form. The form captures the candidate's personal information, work history, education, and other relevant details indicated by the form. The system then automatically parses and extracts relevant data from the application.
 
