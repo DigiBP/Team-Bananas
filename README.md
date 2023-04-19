@@ -19,7 +19,9 @@ Our marvellous coach is Charuta Pande.
 
 🔴 **TODO** rewrite as a process profiles according to BPM lecture (Gabriela) 🔴
 
-A company that wants to achieve success should demonstrate quality, high standards, and innovation in different ways. This depends on many factors, being one of them, its employees. Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, the vision, and the long-term goals of the organization.
+A company that wants to achieve success should demonstrate quality, high standards, and innovation in different ways. This depends on many factors, being one of them, its employees.
+
+Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, the vision, and the long-term goals of the organization.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/71529d2a6fc7e9ae21bdab02a429a52be8eb6111/docs/Process%20Profile%20-%20Employee%20recruitment.png"/>
 
