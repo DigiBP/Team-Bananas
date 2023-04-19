@@ -23,7 +23,7 @@ A company that wants to achieve success should demonstrate quality, high standar
 
 Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, the vision, and the long-term goals of the organization.
 
-<img src="https://github.com/DigiBP/Team-Bananas/blob/c69191be54700e1eb8f141ba64c7e5841267caeb/docs/Process%20Profile%20-%20Employee%20recruitment.png"/>
+<img src="https://github.com/DigiBP/Team-Bananas/blob/c629f70c34942f9a79b2590a34978be624ba9e47/docs/Process%20Profile%20-%20Employee%20recruitment.png"/>
 
 In that case, we choose the employee recruitment process as our business process to digitalize, where each job vacancy will be represented as a process instance and candidates that apply to the job will be treated in paralell as subtasks of the main process.
 
