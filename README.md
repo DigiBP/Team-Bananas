@@ -19,6 +19,10 @@ Our marvellous coach is Charuta Pande.
 
 🔴 **TODO** rewrite as a process profiles according to BPM lecture (Gabriela) 🔴
 
+A company that wants to achieve success should demonstrate quality, high standards, and innovation in different ways. This depends on many factors, being one of them, its employees. Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, the vision, and the long-term goals of the organization.
+
+
+
 We choose a mostly company-internal business process of filling a job vacancy as our process to digitalize.
 
 Description of the process/use case: A typical use case for an employee recruitment process in a company involves identifying the need for a new employee, creating a job description and job advertisement, posting the advertisement on various job boards, receiving and reviewing resumes and cover letters from candidates, conducting phone and in-person interviews, selecting the most suitable candidate, making an offer of employment, and onboarding the new employee. During the process, the recruitment team may also conduct background checks, reference checks, and skill assessments to ensure the candidate is qualified and suitable for the role. The entire process may be managed through a recruitment software or applicant tracking system, which allows for efficient tracking and communication with candidates throughout the process. The ultimate goal of the process is to attract, evaluate, and hire the best possible candidate for the position while ensuring fairness, efficiency, and compliance with relevant laws and regulations.
