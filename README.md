@@ -137,10 +137,31 @@ Our 4 longlist categories:
 
 🔴 **TODO** deploy to-be process model (Didi) 🔴
 
+
 ### Google Form to Start the Process Instance
 
 🔴 **TODO** create google form to start process instance and connect with Camunda workflow engine (Didi) 🔴
 
+
+### Profiles of the internal candidates and questions for the precheck
+
+🔴 **TODO** internal candidates: prepare 20 different profiles of people (IT Manager, Engineer,...) (Gabriela) 🔴
+🔴 **TODO** questions for the precheck (Gezim) 🔴
+
+Here are a few pre-screening questions that we can use for the precheck:
+1. Can you confirm your eligibility to work in [country/region]?
+2. Are you comfortable with the salary range provided in the job description?
+3. Are you available to work the required hours/schedule for this position?
+4. Are you willing to undergo a background check and/or drug test if required?
+5. Do you have any upcoming commitments or planned absences that may impact your ability to start working within the next [timeframe]?
+
+These questions can help the company gather essential information about each applicant's qualifications and compatibility with the job requirements. It can also help to narrow down the candidate pool before conducting in-depth interviews.
+
+### API Interfaces
+
+🔴 **TODO** sceleton of the user interface (openAI API) & connect with camunda API (Didi) 🔴
+🔴 **TODO** Twitter API (Tim) 🔴
+🔴 **TODO** Google API (Gabriela) 🔴
 
 ----
 
