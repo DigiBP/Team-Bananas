@@ -1,0 +1,77 @@
+version: '3'
+
+services:
+
+  ##### NGINX REVERSE PROXY #####
+  nginx-proxy:
+    container_name: ds-nginx-proxy
+    image: nginxproxy/nginx-proxy
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      - DEFAULT_HOST=ediqo.io
+    volumes:
+      - ./htpasswd:/etc/nginx/htpasswd
+      - ds_certs:/etc/nginx/certs
+      - ds_vhost:/etc/nginx/vhost.d
+      - ds_html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  ##### PROXY COMPANION FOR LETSENCRYPT AUTOMATION #####
+  nginx-proxy-companion:
+    container_name: ds-nginx-proxy-acme
+    image: nginxproxy/acme-companion
+    restart: always
+    environment:
+      - DEFAULT_EMAIL=dr@ediqo.com
+    volumes_from:
+      - ds-nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ds_acme:/etc/acme.sh
+
+  ##### Weviate VECTOR SEARCH ENGINE #####
+  weaviate:
+    container_name: ds-weaviate
+    image: semitechnologies/weaviate:1.17.3
+    restart: always
+    ports:
+      - 8080:8080
+    expose:
+      - '8080'
+    environment:
+      - VIRTUAL_HOST=search.ediqo.io
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=search.ediqo.io
+      - QUERY_DEFAULTS_LIMIT=25
+      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
+      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+      - DEFAULT_VECTORIZER_MODULE=none
+      - CLUSTER_HOSTNAME=node1
+    volumes:
+      - ds_weviate_data:/var/lib/weaviate 
+
+  ##### Nuxt FRONTEND APPLICATION #####
+  node:
+    container_name: ds-node
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    expose:
+      - '3000'
+    environment:
+      - VIRTUAL_HOST=ediqo.io
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=ediqo.io
+
+volumes:
+  ds_certs:
+  ds_vhost:
+  ds_html:
+  ds_acme:
+  ds_weviate_data:
