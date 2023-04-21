@@ -146,6 +146,7 @@ Our 4 longlist categories:
 ### Profiles of the internal candidates and questions for the precheck
 
 🔴 **TODO** internal candidates: prepare 20 different profiles of people (IT Manager, Engineer,...) (Gabriela) 🔴
+
 🔴 **TODO** questions for the precheck (Gezim) 🔴
 
 Here are a few pre-screening questions that we can use for the precheck:
@@ -160,7 +161,9 @@ These questions can help the company gather essential information about each app
 ### API Interfaces
 
 🔴 **TODO** sceleton of the user interface (openAI API) & connect with camunda API (Didi) 🔴
+
 🔴 **TODO** Twitter API (Tim) 🔴
+
 🔴 **TODO** Google API (Gabriela) 🔴
 
 ----
