@@ -1,17 +1,5 @@
 # 🍌 Team Bananas
 
-## HR Recruitment Process for Digisailors
-
-Digisailors is a fictive consulting company that provides digital transformation services to enterprise
-clients in the banking and insurance industries. The company has a team of 45 employees with different
-backgrounds and expertise. The company has been founded in 2015 and has since then grown steadily. The
-company has a good reputation in the market and has a high customer satisfaction rate. Due to the rapid
-growth of the company, the management team has decided to invest in better HR processes. As first
-proof-of-concept, the recruiting process shall be improved by means of digitalization.
-
-
-
-
 ## 👥 Team Members
 
 | Name                        | Email                                         |
@@ -23,6 +11,15 @@ proof-of-concept, the recruiting process shall be improved by means of digitaliz
 | Tim Käser                   | <tim.kaeser@students.fhnw.ch>                 |
 
 Our marvellous coach is Charuta Pande.
+
+## HR Recruitment Process for Digisailors
+
+Digisailors is a fictive consulting company that provides digital transformation services to enterprise
+clients in the banking and insurance industries. The company has a team of 45 employees with different
+backgrounds and expertise. The company has been founded in 2015 and has since then grown steadily. The
+company has a good reputation in the market and has a high customer satisfaction rate. Due to the rapid
+growth of the company, the management team has decided to invest in better HR processes. As first
+proof-of-concept, the recruiting process shall be improved by means of digitalization.
 
 ## 🔁 Business Process
 
