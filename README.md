@@ -73,7 +73,7 @@ Overall, several process steps in this HR recruitment process are automated and 
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/Employee%20recruitment_tobe.png" style="width:100%; height:auto;" />
 
-In the DRD-Decision are the "Longlist" and "Points" decision tables.
+In the DRD (Decision Requirements Diagram) are the "Longlist" and "Points" decision tables.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/drd_decision.png" style="width:50%; height:auto;" />
 
