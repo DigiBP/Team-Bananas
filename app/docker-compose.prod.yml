@@ -11,7 +11,7 @@ services:
   #     - '80:80'
   #     - '443:443'
   #   environment:
-  #     - DEFAULT_HOST=ediqo.io
+  #     - DEFAULT_HOST=digisailors.ch
   #   volumes:
   #     - ./htpasswd:/etc/nginx/htpasswd
   #     - ds_certs:/etc/nginx/certs
@@ -42,9 +42,9 @@ services:
     expose:
       - '8090'
     environment:
-      - VIRTUAL_HOST=search.ediqo.io
+      - VIRTUAL_HOST=search.digisailors.ch
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=search.ediqo.io
+      - LETSENCRYPT_HOST=search.digisailors.ch
       - QUERY_DEFAULTS_LIMIT=25
       - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
       - PERSISTENCE_DATA_PATH=/var/lib/weaviate
@@ -65,9 +65,9 @@ services:
     expose:
       - '8091'
     environment:
-      - VIRTUAL_HOST=ediqo.io
+      - VIRTUAL_HOST=digisailors.ch
       - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=ediqo.io
+      - LETSENCRYPT_HOST=digisailors.ch
 
 volumes:
   ds_certs:
