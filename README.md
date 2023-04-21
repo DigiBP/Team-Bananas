@@ -1,4 +1,11 @@
-# 🍌 Team Bananas - Employee Recruitment Process
+# 🍌 Team Bananas - Employee Recruitment Process for Digisailors
+
+Digisailors is a fictive consulting company that provides digital transformation services to enterprise
+clients in the banking and insurance industries. The company has a team of 20 employees with different
+backgrounds and expertise. The company has been founded in 2015 and has since then grown steadily. The
+company has a good reputation in the market and has a high customer satisfaction rate.
+
+
 
 
 ## 👥 Team Members
