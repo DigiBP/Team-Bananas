@@ -9,6 +9,9 @@ RUN npm install
 RUN npm run build
 
 WORKDIR /app
+
+ENV OPENAI_API_KEY sk-xxx
+
 ENV HOST 0.0.0.0
 ENV PORT 3100
 EXPOSE 3100

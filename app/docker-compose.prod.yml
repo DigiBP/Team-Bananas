@@ -66,6 +66,8 @@ services:
       - 3100:3100
     expose:
       - '3100'
+    env_file:
+      - .env
     environment:
       - VIRTUAL_HOST=digisailors.ch
       - VIRTUAL_PORT=3100
