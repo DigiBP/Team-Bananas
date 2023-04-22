@@ -18,6 +18,7 @@
           <font-awesome-icon v-if="loadingJobAd" :icon="['fas', 'spinner']" spin />
           <span>Generate Job Ad</span>
         </div>
+        <span class="inline-block ml-4 text-gray-400">(can take up to 1 minute)</span>
       </div>
     </div>
     <div v-if="jobAd">

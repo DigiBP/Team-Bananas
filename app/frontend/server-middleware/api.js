@@ -14,25 +14,24 @@ const openai = new OpenAIApi(configuration)
 
 // API endpoint 1: generate job ad via OpenAI API
 app.all('/generate-job-ad', async (req, res) => {
-  const about = 'Digisailors aims to bring businesses into the digital age through innovative and cutting-edge solutions. We empower companies to embrace digitalisation and provide a range of services that help businesses thrive in the digital landscape. By joining Digisailors, you will embark on a journey of digitalisation and help take your clients\' business new heights in the digital realm. Join us today!'
+  const about = 'Digisailors aims to bring businesses into the digital age through innovative and cutting-edge solutions. We empower companies to embrace digitalisation and provide a range of services that help businesses thrive in the digital landscape. By joining Digisailors, you will embark on a journey of digitalisation and help take your clients\' business to new heights in the digital realm. Join us today!'
   const skills = req.body.skills.replace(/\n/g, ', ')
-  const prompt = 'Please write a job ad with basic html formatting (allowd tags: <h1>, <h2>, <ul>, <li>, <p>). ' +
+  const prompt = 'Please write a job ad with basic html formatting (allowd tags: h1, h2, ul, li, p). ' +
   'The job ad should follow this format: Position Title, About Digisailors, Job Description, Requirements, Application. ' +
   `The job ad is for the company "Digisailors" based in Olten and is for a position as "${req.body.title}". ` +
   `The job add should include a section "About Digisailors" with the following text: "${about}". ` +
-  `The job add should inlcude skills related to "${skills}" and extend to related and common skills for a "${req.body.title}". ` +
+  (skills ? `The job add should inlcude skills related to "${skills}" and extend to related and common skills for a "${req.body.title}". ` : '') +
   'The applicants should apply online via "HR Buddy" on https://digisailors.ch/:'
 
   console.log(prompt) // eslint-disable-line no-console
 
-  const response = await openai.createCompletion({
-    model: 'text-davinci-003',
-    max_tokens: 2048,
-    prompt
+  const response = await openai.createChatCompletion({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: prompt }]
   })
 
-  console.log(response.data) // eslint-disable-line no-console
-  res.json({ text: response.data.choices[0].text })
+  console.log(response.data.choices[0]) // eslint-disable-line no-console
+  res.json({ message: response.data.choices[0].content })
 })
 
 module.exports = app
