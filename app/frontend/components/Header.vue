@@ -7,8 +7,8 @@
             <img src="logo.svg" alt="Digisailors HR Buddy">
           </NuxtLink>
         </div>
-        <div class="w-full flex-grow flex-shrink pt-2.5 pl-12 text-xl text-white">
-          HR Buddy
+        <div class="w-full flex-grow flex-shrink pt-2 pl-4 text-xl font-light text-white">
+          <sup>ai</sup>HR Buddy
         </div>
       </div>
     </div>
@@ -30,13 +30,13 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  @apply top-0 left-0 w-screen bg-digisailor-default bg-opacity-90 backdrop-blur-lg drop-shadow-md shadow-sm;
+  @apply top-0 left-0 w-screen bg-digisailor-default bg-opacity-95 backdrop-blur-lg drop-shadow-md shadow-sm;
 
   &-inner {
-    @apply w-full max-w-screen-lg flex-grow m-auto py-2 px-8;
+    @apply w-full max-w-screen-lg flex-grow m-auto py-4 px-4;
 
     img {
-      @apply h-16 w-auto;
+      @apply h-16 pt-2 w-auto;
     }
   }
 }

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://api.reviewers.ch/' // on prod use: https://api.reviewers.ch/ and on local use http://localhost:5000/
+const API_BASE_URL = 'https://digisailors.ch/'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Reviewer Resolver',
+    title: 'Digisailors aiHR Buddy',
     htmlAttrs: {
       lang: 'en'
     },
@@ -19,7 +19,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Reviewer Resolver is a prototypical software to match bias-free reviewers for scholarly documents.'
+        content: 'Digisailors aiHR Buddy is a HR an assistant agent for a fictive company.'
       }
     ],
     link: [

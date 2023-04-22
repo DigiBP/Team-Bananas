@@ -4,9 +4,7 @@ FROM node:fermium-buster as builder
 WORKDIR /app
 COPY ./frontend .
 
-# install dependencies, prune for production
-RUN rm -rf ./node_modules/*
-RUN npm cache clean --force
+# install dependencies
 RUN npm install --unsafe-perm -g node-sass@4.14.0
 RUN npm install
 RUN npm run build
@@ -16,4 +14,4 @@ ENV HOST=0.0.0.0
 
 EXPOSE 3010
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "start" ]
