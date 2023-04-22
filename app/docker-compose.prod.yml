@@ -63,12 +63,12 @@ services:
       dockerfile: ./docker/node/Dockerfile
     restart: always
     ports:
-      - 3010:3010
+      - 3100:3100
     expose:
-      - '3010'
+      - '3100'
     environment:
       - VIRTUAL_HOST=digisailors.ch
-      - VIRTUAL_PORT=3010
+      - VIRTUAL_PORT=3100
       - LETSENCRYPT_HOST=digisailors.ch
     networks:
       - front
