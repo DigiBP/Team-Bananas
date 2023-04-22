@@ -52,6 +52,8 @@ services:
       - CLUSTER_HOSTNAME=node1
     volumes:
       - ds_weviate_data:/var/lib/weaviate 
+    networks:
+      - front
 
   ##### Nuxt FRONTEND APPLICATION #####
   node:
@@ -68,6 +70,8 @@ services:
       - VIRTUAL_HOST=digisailors.ch
       - VIRTUAL_PORT=3010
       - LETSENCRYPT_HOST=digisailors.ch
+    networks:
+      - front
 
 volumes:
   ds_certs:
@@ -75,3 +79,8 @@ volumes:
   ds_html:
   ds_acme:
   ds_weviate_data:
+
+networks:
+  front:
+    external:
+      name: front
