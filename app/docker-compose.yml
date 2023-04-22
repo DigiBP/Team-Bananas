@@ -20,7 +20,7 @@ services:
 
   ##### Nuxt FRONTEND APPLICATION #####
   node:
-    container_name: node
+    container_name: ds_node
     build:
       context: ./
       dockerfile: ./docker/node/Dockerfile
