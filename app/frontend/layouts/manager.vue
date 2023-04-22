@@ -18,7 +18,14 @@
           </p>
           <div class="flex">
             <label for="password" class="block font-light pt-2 mr-4">Password</label>
-            <input id="password" v-model="password" type="password" placeholder="Password" class="p-2 border border-1">
+            <input
+              id="password"
+              v-model="password"
+              type="password"
+              placeholder="Password"
+              class="p-2 border border-1"
+              @keyup.enter="login"
+            >
           </div>
           <input type="submit" value="Login" class="bg-digisailor-default hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded mt-4" @click="login">
         </div>

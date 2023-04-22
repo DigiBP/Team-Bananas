@@ -68,6 +68,12 @@ export default {
     '@nuxtjs/toast'
   ],
 
+  // server middleware with API proxies
+  serverMiddleware: [
+    // Will register file from project server-middleware directory to handle /server-middleware/* requires
+    { path: '/api', handler: '~/server-middleware/api.js' }
+  ],
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
