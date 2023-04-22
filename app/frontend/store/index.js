@@ -7,7 +7,10 @@ export const state = () => ({
 
   /* auth flags */
   authenticated: false, // user is authenticated as hiring manager
-  authFailed: false // user provided wrong password
+  authFailed: false, // user provided wrong password
+
+  /* jobAd */
+  jobAd: ''
 })
 
 export const getters = {
@@ -37,6 +40,10 @@ export const mutations = {
 
   SET_AUTH_FAILED: (state, authFailed) => {
     state.authFailed = (authFailed === true)
+  },
+
+  SET_JOB_AD: (state, jobAd) => {
+    state.jobAd = jobAd.replace(/\n/g, '<br />')
   }
 }
 
@@ -60,6 +67,7 @@ export const actions = {
         skills
       })
         .then((response) => {
+          commit('SET_JOB_AD', response.data.text)
           resolve(response)
         })
         .catch((error) => {

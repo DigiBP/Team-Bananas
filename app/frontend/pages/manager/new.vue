@@ -15,10 +15,14 @@
       </div>
       <div>
         <div class="inline-block cursor-pointer bg-digisailor-default hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded mt-4" @click="generate">
-          <i v-if="loadingJobAd" class="fa fa-spinner fa-spin" />
+          <font-awesome-icon v-if="loadingJobAd" :icon="['fas', 'spinner']" spin />
           <span>Generate Job Ad</span>
         </div>
       </div>
+    </div>
+    <div v-if="jobAd">
+      <h2>Job Ad</h2>
+      <div v-html="jobAd" />
     </div>
   </div>
 </template>
@@ -35,7 +39,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['loadingJobAd'])
+    ...mapState(['loadingJobAd', 'jobAd'])
   },
   methods: {
     generate () {
