@@ -2,7 +2,7 @@ const API_BASE_URL = 'https://api.reviewers.ch/' // on prod use: https://api.rev
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'server', // currently we use 'server' target as the app needs to run over Node.js with middleware proxy for Solr until Scilit.net backend has the API endpoints ready
+  target: 'server', // we use 'server' target so that the app has a server-side that can run a http-proxy for API requests
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -115,7 +115,7 @@ export default {
     position: 'top-right' // default position for toasts
   },
 
-  // Nuxt router config (because we deploy the web-app into Scilit Symfony app, we can use a base routing)
+  // Nuxt router config
   router: {
     base: '/'
   },

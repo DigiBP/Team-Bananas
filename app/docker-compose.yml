@@ -19,18 +19,21 @@ services:
       - ds_weviate_data:/var/lib/weaviate
 
   ##### Nuxt FRONTEND APPLICATION #####
-#  node:
-#    container_name: node
-#    build:
-#      context: ./
-#      dockerfile: ./docker/node/Dockerfile
-#    restart: always
-#    ports:
-#      - 3000:3000
-#    expose:
-#      - 3000
-#    volumes:
-#      - ./frontend:/app
+  node:
+    container_name: node
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    restart: always
+    ports:
+      - 3010:3010
+    expose:
+      - 3010
+    environment:
+      PORT: 3010
+      HOST: 0.0.0.0
+    volumes:
+      - ./frontend:/app
 
 volumes:
   ds_weviate_data:

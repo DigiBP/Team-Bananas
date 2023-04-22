@@ -61,12 +61,12 @@ services:
       dockerfile: ./docker/node/Dockerfile
     restart: always
     ports:
-      - 8091:3000
+      - 3010:3010
     expose:
-      - '8091'
+      - '3010'
     environment:
       - VIRTUAL_HOST=digisailors.ch
-      - VIRTUAL_PORT=8091
+      - VIRTUAL_PORT=3010
       - LETSENCRYPT_HOST=digisailors.ch
 
 volumes:
