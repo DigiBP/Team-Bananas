@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Digisailors <sup>ai</sup>HR Buddy / Virtual HR Assistant</h1>
+    <h1>Digisailors <sup>ai</sup>HR Buddy &mdash; Your Virtual HR Assistant</h1>
     <p class="font-light text-base">
       Digisailors aims to bring businesses into the digital age through innovative and cutting-edge solutions.
       We empower companies to embrace digitalisation and provide a range of services that help businesses thrive
@@ -8,10 +8,10 @@
       take your clients' business new heights in the digital realm. Join us today!
     </p>
     <div class="flex space-x-4 mt-12">
-      <NuxtLink to="/" class="block w-1/2 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-default hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
-          For Hiring Managers
+      <NuxtLink to="/manager" class="block w-1/2 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-default hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
+        For Hiring Managers
       </NuxtLink>
-      <NuxtLink to="/" class="block w-1/2 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-accent hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
+      <NuxtLink to="/applicant" class="block w-1/2 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-accent hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
         For Applicants
       </NuxtLink>
     </div>

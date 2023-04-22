@@ -16,6 +16,8 @@ export const state = () => ({
   loadingReviewers: false, // loading indicator for refining search results anf loading reviewer data
   loadingResolutions: false, // loading indicator while the async / background job is running on the server and COIs are resolved
 
+  authenticated: false, // user is authenticated as hiring manager
+
   step: STEP_SEARCH,
 
   search: {
@@ -30,6 +32,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  isAuthenticated: state => state.authenticated === true,
   isStepSearch: state => state.step === STEP_SEARCH,
   isStepRefine: state => state.step === STEP_REFINE_RESULTS,
   isStepResolve: state => state.step === STEP_RESOLVE,
@@ -46,6 +49,12 @@ export const mutations = {
   SET_LOADING: (state, loading) => {
     state.loading = (loading === true)
   },
+
+  SET_AUTHENTICATED: (state, authenticated) => {
+    state.authenticated = (authenticated === true)
+  },
+
+  /* old exmaples below */
 
   SET_LOADING_PUBLICATIONS: (state, loading) => {
     state.loadingPublications = (loading === true)
@@ -68,7 +77,6 @@ export const mutations = {
   },
 
   SET_PUBLICATIONS: (state, publications) => {
-    // add the 'checked' prop
     state.publications = publications.map(o => ({ ...o, checked: true }))
   },
 
@@ -89,7 +97,6 @@ export const mutations = {
   },
 
   SET_CHECKED: (state, { doi, checked }) => {
-    // add the 'checked' prop
     state.publications = state.publications.map((o) => {
       if (o.doi === doi) {
         return { ...o, checked: !o.checked }
@@ -100,6 +107,15 @@ export const mutations = {
 }
 
 export const actions = {
+
+  login ({ commit, state }, { secret }) {
+    if (secret === 'secret') {
+      commit('SET_AUTHENTICATED', true)
+    }
+  },
+
+  /* old exmaples below */
+
   searchPublications ({ commit, state }) {
     commit('RESET', '')
     commit('SET_LOADING_PUBLICATIONS', true)
