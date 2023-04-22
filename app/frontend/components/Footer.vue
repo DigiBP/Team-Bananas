@@ -2,11 +2,8 @@
   <div class="footer">
     <div class="footer-inner">
       <div class="flex flex-row">
-        <div class="w-1/2 p-4">
+        <div class="w-full p-4">
           &copy; 2023 Digisailors, a fictive company.
-        </div>
-        <div class="w-1/2 p-4 text-right">
-          Built on top of Nuxt, Weaviate, ....
         </div>
       </div>
     </div>
@@ -21,7 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  @apply bg-gray-600 p-16 font-light text-xs text-gray-200;
+  @apply bg-gray-600 p-8 font-light text-xs text-gray-200;
 
   &-inner {
     @apply w-full max-w-screen-lg flex-grow m-auto;

@@ -7,7 +7,7 @@
             <img src="logo.svg" alt="Digisailors HR Buddy">
           </NuxtLink>
         </div>
-        <div class="w-full flex-grow flex-shrink pt-2 pl-4 text-xl font-light text-white">
+        <div class="w-full flex-grow flex-shrink pt-4 pl-8 text-xl font-light text-white">
           <sup>ai</sup>HR Buddy
         </div>
       </div>

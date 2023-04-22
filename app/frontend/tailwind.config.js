@@ -16,16 +16,16 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ['Oswald', 'sans-serif']
+      sans: ['Inter', 'sans-serif']
     },
     fontSize: {
       // [font-size, line-height]
-      xs: ['15px', '20px'],
-      sm: ['16px', '24px'],
-      base: ['20px', '30px'],
-      lg: ['24px', '36px'],
-      xl: ['28px', '42px'],
-      '2xl': ['28px', '42px']
+      xs: ['12px', '18px'],
+      sm: ['13px', '22px'],
+      base: ['16px', '24px'],
+      lg: ['20px', '28px'],
+      xl: ['24px', '30px'],
+      '2xl': ['30px', '36px']
     },
     extend: {
       colors: {

@@ -17,6 +17,7 @@ export const state = () => ({
   loadingResolutions: false, // loading indicator while the async / background job is running on the server and COIs are resolved
 
   authenticated: false, // user is authenticated as hiring manager
+  authFailed: false, // user provided wrong password
 
   step: STEP_SEARCH,
 
@@ -33,6 +34,8 @@ export const state = () => ({
 
 export const getters = {
   isAuthenticated: state => state.authenticated === true,
+  isAuthFailed: state => state.authFailed === true,
+
   isStepSearch: state => state.step === STEP_SEARCH,
   isStepRefine: state => state.step === STEP_REFINE_RESULTS,
   isStepResolve: state => state.step === STEP_RESOLVE,
@@ -52,6 +55,10 @@ export const mutations = {
 
   SET_AUTHENTICATED: (state, authenticated) => {
     state.authenticated = (authenticated === true)
+  },
+
+  SET_AUTH_FAILED: (state, authFailed) => {
+    state.authFailed = (authFailed === true)
   },
 
   /* old exmaples below */
@@ -111,6 +118,9 @@ export const actions = {
   login ({ commit, state }, { secret }) {
     if (secret === 'secret') {
       commit('SET_AUTHENTICATED', true)
+      commit('SET_AUTH_FAILED', false)
+    } else {
+      commit('SET_AUTH_FAILED', true)
     }
   },
 

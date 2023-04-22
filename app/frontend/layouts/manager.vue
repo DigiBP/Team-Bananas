@@ -7,17 +7,20 @@
           Loading application...
         </div>
         <div v-else-if="!isAuthenticated()">
-          <h1 class="text-xl font-light">
+          <h1 class="text-xl">
             Login
           </h1>
-          <p class="font-light my-8 p-2 rounded-lg bg-gray-300">
+          <p v-if="isAuthFailed()" class="my-8 p-2 rounded-lg text-red-800 bg-red-100">
+            Invalid password. Please try again.
+          </p>
+          <p v-else class="my-8 p-2 rounded-lg bg-gray-300">
             You are not logged in. Please login to continue.
           </p>
           <div class="flex">
             <label for="password" class="block font-light pt-2 mr-4">Password</label>
             <input id="password" v-model="password" type="password" placeholder="Password" class="p-2 border border-1">
           </div>
-          <input type="submit" value="Login" class="bg-digisailor-default hover:bg-opacity-90 font-light text-white font-bold py-2 px-4 rounded mt-4" @click="login">
+          <input type="submit" value="Login" class="bg-digisailor-default hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded mt-4" @click="login">
         </div>
         <div v-else>
           <Nuxt />
@@ -48,10 +51,13 @@ export default {
   },
   methods: {
     ...mapGetters({
-      isAuthenticated: 'isAuthenticated'
+      isAuthenticated: 'isAuthenticated',
+      isAuthFailed: 'isAuthFailed'
     }),
     login () {
-      this.$store.dispatch('login', { secret: this.password })
+      this.$store.dispatch('login', { secret: this.password }).then(() => {
+        this.password = ''
+      })
     }
   }
 }

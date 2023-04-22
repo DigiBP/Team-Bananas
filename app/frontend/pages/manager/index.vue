@@ -19,7 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  @apply text-2xl font-light pt-4 pb-8;
+  @apply text-2xl pt-4 pb-8;
 }
 
 h2 {

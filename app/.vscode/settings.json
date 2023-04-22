@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "**/.nuxt": true,
+        "**/.output": true
+    }
+}
