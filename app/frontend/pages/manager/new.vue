@@ -55,7 +55,7 @@
 
         <div v-if="processInstance.jobAd">
           <h2>Job Ad</h2>
-          <div v-html="jobAd" />
+          <div v-html="processInstance.jobAd" />
         </div>
       </div>
     </div>

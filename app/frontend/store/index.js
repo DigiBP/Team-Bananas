@@ -99,6 +99,7 @@ export const actions = {
         skills
       })
         .then((response) => {
+          console.log(response.data) // eslint-disable-line no-console
           commit('SET_PROCESS_INSTANCE_JOB_AD', response.data.message)
           resolve(response)
         })
