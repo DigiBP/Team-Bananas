@@ -133,14 +133,19 @@ Our 4 longlist categories:
 
 ## ⚙️ Implementation
 
-### Deployment
+### Process Model
 
-🔴 **TODO** deploy to-be process model (Didi) 🔴
-
-
-### Google Form to Start the Process Instance
-
-🔴 **TODO** create google form to start process instance and connect with Camunda workflow engine (Didi) 🔴
+1. The process model is deployed on Camunda Platform 
+1. The Digisailor HR Buddy is a self-service web platform for the Hiring Manager, HR Staff and the Applicants:
+    - The app is accessed via [https://digisailors.ch/](https://digisailors.ch/)
+    - Hiring Manager and HR Staff need to login (Password: ```secret```) 
+    - A new process instances is created via Camunda REST Engine API as soon as the hiring manager enter a new position title:
+        - The logic is in [./app/frontend/server-middleware/camunda/api.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/frontend/server-middleware/camunda/api.js)
+        - A business key is created for each position using current year, month and the slug of the position title
+    - Once the process instance is created the process starts, i.e., the token is moved to the first task ```generate_job_ad```
+    - The first task ```generate_job_ad``` is waiting for message via topic brokerage
+    - The Hiring Manager continues in the HR Buddy App by enter key skills for the position, which are fed into the OpenAI API to auto-generate a job ad text via GPT-4
+    - 🔴 **TODO** to be continued... save business data to Google Sheet, publish job ad text to the topic exchange 🔴
 
 
 ### Profiles of the internal candidates and questions for the precheck
@@ -160,7 +165,27 @@ These questions can help the company gather essential information about each app
 
 ### API Interfaces
 
-🔴 **TODO** sceleton of the user interface (openAI API) & connect with camunda API (Didi) 🔴
+#### Camunda REST Engine
+
+The Camunda REST Engine API is used to create a new process instance.
+
+The implementation is in [./app/frontend/server-middleware/camunda/api.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/frontend/server-middleware/camunda/api.js)
+
+#### OpenAI API 
+
+The OpenAI API is used to generate the job ad text automatically.
+
+The implementaion of the OpenAI API is in [./app/frontend/server-middleware/ai/api.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/frontend/server-middleware/ai/api.js). We use GPT-4 model via the ```createChatCompletion``` enpoint, which is included in the OpenAI JavaScript client. The prompt is the following:
+
+```js
+  const prompt = 'Please write a job ad with basic html formatting (allowd tags: h1, h2, ul, li, p). ' +
+                 'The job ad should follow this format: Position Title, About Digisailors, Job Description, Requirements, Application. ' +
+                 `The job ad is for the company "Digisailors" based in Olten and is for a position as "${req.body.title}". ` +
+                 `The job add should include a section "About Digisailors" with the following text: "${about}". ` +
+                 (skills ? `The job add should inlcude skills related to "${skills}" and extend to related and common skills for a "${req.body.title}". ` : '') +
+                 'The applicants should apply online via "HR Buddy" on https://digisailors.ch/:'
+```
+
 
 🔴 **TODO** Twitter API (Tim) 🔴
 
