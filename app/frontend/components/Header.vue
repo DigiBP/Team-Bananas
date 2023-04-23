@@ -33,7 +33,7 @@ export default {
   @apply top-0 left-0 w-screen bg-digisailor-default bg-opacity-95 backdrop-blur-lg drop-shadow-md shadow-sm;
 
   &-inner {
-    @apply w-full max-w-screen-lg flex-grow m-auto py-4 px-4;
+    @apply w-full max-w-screen-xl flex-grow m-auto py-4 px-4;
 
     img {
       @apply h-16 pt-2 w-auto;

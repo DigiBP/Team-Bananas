@@ -3,34 +3,41 @@ const bodyParser = require('body-parser')
 const app = require('express')()
 app.use(bodyParser.json())
 
-// axios for making requests to Camunda API
+// axios to make requests against Camunda REST Engine API
 const axios = require('axios')
 
 // Camunda API config
-const tenantId = '{tenant-id}'
-const processKey = '{key}'
-const baseUrl = 'http://localhost:8080/engine-rest'
+const tenantId = 'bananas'
+const processKey = 'employee_recruitment_to_be'
+const baseUrl = 'https://digibp.herokuapp.com/engine-rest'
+const commonHeaders = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json'
+}
 
 /* API endpoints */
 
-// API endpoint 1: generate job ad via OpenAI API
+function generateBusinessKey (title) {
+  const today = new Date()
+  const date = today.getFullYear() + ('0' + (today.getMonth() + 1)).slice(-2) // 2023-04 --> 202304
+  return date + '_' + title.replace(/ /g, '_').toLowerCase()
+}
+
+// API endpoint 1: start new process instance in Camunda by passing the job title
 app.all('/start-instance', async (req, res) => {
   const url = `${baseUrl}/process-definition/key/${processKey}/tenant-id/${tenantId}/start`
 
+  console.log('POST', url) // eslint-disable-line no-console
   const response = await axios.post(url, {
-    variables: {
-      title: {
-        value: req.body.title,
-        type: 'String'
-      },
-      skills: {
-        value: req.body.skills,
-        type: 'String'
-      }
-    }
+    businessKey: generateBusinessKey(req.body.title)
+  }, {
+    headers: commonHeaders
   })
-
   console.log(response.data) // eslint-disable-line no-console
+  res.json({
+    id: response.data.id,
+    businessKey: response.data.businessKey
+  })
 })
 
 module.exports = app

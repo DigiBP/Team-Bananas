@@ -31,7 +31,7 @@ app.all('/generate-job-ad', async (req, res) => {
   })
 
   console.log(response.data.choices[0]) // eslint-disable-line no-console
-  res.json({ message: response.data.choices[0].content })
+  res.json({ message: response.data.choices[0].content.message })
 })
 
 module.exports = app

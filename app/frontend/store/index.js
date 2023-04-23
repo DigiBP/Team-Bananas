@@ -1,9 +1,8 @@
 import axios from 'axios'
 
 export const state = () => ({
-  /* loading flags */
-  loading: true, // app starts in loading mode
-  loadingJobAd: false, // job ad is being generated
+  /* loading flag */
+  loading: true, // global lading flag on app init
 
   /* auth flags */
   auth: {
@@ -11,8 +10,13 @@ export const state = () => ({
     managerFailed: false // user provided wrong password
   },
 
-  /* jobAd */
-  jobAd: ''
+  /* current process instance data for UI */
+  processInstance: {
+    id: '',
+    businessKey: '',
+    title: '',
+    jobAd: ''
+  }
 })
 
 export const getters = {
@@ -32,9 +36,7 @@ export const mutations = {
     state.loading = (loading === true)
   },
 
-  SET_LOADING_JOB_AD: (state, loadingJobAd) => {
-    state.loadingJobAd = (loadingJobAd === true)
-  },
+  /* auth mutations */
 
   SET_MANAGER_AUTHENTICATED: (state, authenticated) => {
     state.auth.manager = (authenticated === true)
@@ -44,8 +46,22 @@ export const mutations = {
     state.auth.managerFailed = (failed === true)
   },
 
-  SET_JOB_AD: (state, jobAd) => {
-    state.jobAd = jobAd.replace(/\n/g, '<br />')
+  /* process instance mutations */
+
+  SET_PROCESS_INSTANCE_ID: (state, id) => {
+    state.processInstance.id = id
+  },
+
+  SET_PROCESS_INSTANCE_BUSINESS_KEY: (state, businessKey) => {
+    state.processInstance.businessKey = businessKey
+  },
+
+  SET_PROCESS_INSTANCE_TITLE: (state, title) => {
+    state.processInstance.title = title
+  },
+
+  SET_PROCESS_INSTANCE_JOB_AD: (state, jobAd) => {
+    state.processInstance.jobAd = jobAd
   }
 }
 
@@ -60,8 +76,22 @@ export const actions = {
     }
   },
 
+  startProcessInstance ({ commit, state }, { title }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/start-instance'
+      axios.post(url, { title })
+        .then((response) => {
+          commit('SET_PROCESS_INSTANCE_ID', response.data.id)
+          commit('SET_PROCESS_INSTANCE_BUSINESS_KEY', response.data.businessKey)
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+
   generateJobAd ({ commit, state }, { title, skills }) {
-    commit('SET_LOADING_JOB_AD', true)
     return new Promise((resolve, reject) => {
       const url = '/api/ai/generate-job-ad'
       axios.post(url, {
@@ -69,14 +99,11 @@ export const actions = {
         skills
       })
         .then((response) => {
-          commit('SET_JOB_AD', response.data.text)
+          commit('SET_PROCESS_INSTANCE_JOB_AD', response.data.message)
           resolve(response)
         })
         .catch((error) => {
           reject(error)
-        })
-        .finally(() => {
-          commit('SET_LOADING_JOB_AD', false)
         })
     })
   }

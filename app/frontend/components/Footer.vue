@@ -21,7 +21,7 @@ export default {
   @apply bg-gray-600 p-8 font-light text-xs text-gray-200;
 
   &-inner {
-    @apply w-full max-w-screen-lg flex-grow m-auto;
+    @apply w-full max-w-screen-xl flex-grow m-auto;
 
     svg {
       @apply w-36;

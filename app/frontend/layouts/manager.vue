@@ -80,7 +80,7 @@ export default {
 }
 
 .wrapper {
-  @apply w-full max-w-screen-lg flex-grow my-16 pt-8 pb-8 pl-12 pr-12 m-auto;
+  @apply w-full max-w-screen-xl flex-grow my-16 pt-8 pb-8 pl-12 pr-12 m-auto;
   @apply bg-white bg-opacity-90 backdrop-blur-lg drop-shadow-md shadow-sm;
   @apply rounded-lg;
 }
