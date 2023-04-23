@@ -91,12 +91,13 @@ export const actions = {
     })
   },
 
-  generateJobAd ({ commit, state }, { title, skills }) {
+  generateJobAd ({ commit, state }, { title, skills, fancy }) {
     return new Promise((resolve, reject) => {
       const url = '/api/ai/generate-job-ad'
       axios.post(url, {
         title,
-        skills
+        skills,
+        fancy
       })
         .then((response) => {
           console.log(response.data) // eslint-disable-line no-console

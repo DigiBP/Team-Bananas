@@ -18,10 +18,12 @@ app.all('/generate-job-ad', async (req, res) => {
   const skills = req.body.skills.replace(/\n/g, ', ')
   const prompt = 'Please write a job ad with basic html formatting (allowd tags: h1, h2, ul, li, p). ' +
   'The job ad should follow this format: Position Title, About Digisailors, Job Description, Requirements, Application. ' +
-  `The job ad is for the company "Digisailors" based in Olten and is for a position as "${req.body.title}". ` +
-  `The job add should include a section "About Digisailors" with the following text: "${about}". ` +
-  (skills ? `The job add should inlcude skills related to "${skills}" and extend to related and common skills for a "${req.body.title}". ` : '') +
-  'The applicants should apply online via "HR Buddy" on https://digisailors.ch/:'
+  `The job ad is for the company "Digisailors" and is for a position as "${req.body.title}". ` +
+  'Tho job is located in Olten and requires a calid Swiss working permit.' +
+  `The job add should include a section "About Digisailors" similar to: ${about}" ` +
+  (skills ? `The job add should inlcude skills similar to ${skills} and extended to common skills for a "${req.body.title}". ` : '') +
+  'The applicants should apply online via "HR Buddy" on https://digisailors.ch/. ' +
+  (req.body.fancy ? `Rewrite the entire job ad ${req.body.fancy}` : '') + ':'
 
   console.log(prompt) // eslint-disable-line no-console
 

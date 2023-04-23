@@ -32,6 +32,26 @@
             <label for="skills" class="block w-32 font-light pt-2 mr-4">Skills</label>
             <textarea id="skills" v-model="skills" type="text" placeholder="List 3-5 skills" class="w-full p-2 border border-1" />
           </div>
+          <div class="flex mb-4">
+            <label for="fancy" class="block w-32 font-light pt-2 mr-4">Fancy Factor</label>
+            <select id="fancy" v-model="fancy" class="w-full p-2 border border-1">
+              <option value="in English" selected>
+                in English
+              </option>
+              <option value="as Yoda would have written it">
+                in Yoda English
+              </option>
+              <option value="in Pirate English">
+                in Pirate English
+              </option>
+              <option value="in Lolcat English">
+                in Lolcat English
+              </option>
+              <option value="in 13th century English">
+                in 13th century English
+              </option>
+            </select>
+          </div>
           <Button @clicked="generateJobAd()">
             <font-awesome-icon v-if="loadingJobAd" :icon="['fas', 'spinner']" spin />
             <span>Generate Job Ad</span>
@@ -55,7 +75,9 @@
 
         <div v-if="processInstance.jobAd">
           <h2>Job Ad</h2>
-          <div v-html="processInstance.jobAd" />
+          <JobAd>
+            <div v-html="processInstance.jobAd" />
+          </JobAd>
         </div>
       </div>
     </div>
@@ -65,14 +87,16 @@
 <script>
 import { mapState } from 'vuex'
 import Button from '~/components/Button'
+import JobAd from '~/components/JobAd'
 
 export default {
-  components: { Button },
+  components: { Button, JobAd },
   layout: 'manager',
   data () {
     return {
       title: '',
       skills: '',
+      fancy: 'in English',
       startingProcess: false,
       loadingJobAd: false
     }
@@ -95,7 +119,8 @@ export default {
       this.loadingJobAd = true
       this.$store.dispatch('generateJobAd', {
         title: this.title,
-        skills: this.skills
+        skills: this.skills,
+        fancy: this.fancy
       }).catch(() => {
         this.loadingJobAd = false
       }).finally(() => {
