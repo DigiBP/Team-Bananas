@@ -71,7 +71,9 @@ export default {
   // server middleware with API proxies
   serverMiddleware: [
     // Will register file from project server-middleware directory to handle /server-middleware/* requires
-    { path: '/api', handler: '~/server-middleware/api.js' }
+    { path: '/api/ai', handler: '~/server-middleware/ai/api.js' },
+    { path: '/api/camunda', handler: '~/server-middleware/camunda/api.js' }
+
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

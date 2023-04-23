@@ -6,8 +6,10 @@ export const state = () => ({
   loadingJobAd: false, // job ad is being generated
 
   /* auth flags */
-  authenticated: false, // user is authenticated as hiring manager
-  authFailed: false, // user provided wrong password
+  auth: {
+    manager: false, // user is authenticated as hiring manager
+    managerFailed: false // user provided wrong password
+  },
 
   /* jobAd */
   jobAd: ''
@@ -15,8 +17,8 @@ export const state = () => ({
 
 export const getters = {
   /* augh getters */
-  isAuthenticated: state => state.authenticated === true,
-  isAuthFailed: state => state.authFailed === true
+  isManagerAuthenticated: state => state.auth.manager === true,
+  isManagerAuthFailed: state => state.auth.managerFailed === true
 }
 
 export const mutations = {
@@ -34,12 +36,12 @@ export const mutations = {
     state.loadingJobAd = (loadingJobAd === true)
   },
 
-  SET_AUTHENTICATED: (state, authenticated) => {
-    state.authenticated = (authenticated === true)
+  SET_MANAGER_AUTHENTICATED: (state, authenticated) => {
+    state.auth.manager = (authenticated === true)
   },
 
-  SET_AUTH_FAILED: (state, authFailed) => {
-    state.authFailed = (authFailed === true)
+  SET_MANAGER_AUTH_FAILED: (state, failed) => {
+    state.auth.managerFailed = (failed === true)
   },
 
   SET_JOB_AD: (state, jobAd) => {
@@ -49,19 +51,19 @@ export const mutations = {
 
 export const actions = {
 
-  login ({ commit, state }, { secret }) {
+  loginManager ({ commit, state }, { secret }) {
     if (secret === 'secret') {
-      commit('SET_AUTHENTICATED', true)
-      commit('SET_AUTH_FAILED', false)
+      commit('SET_MANAGER_AUTHENTICATED', true)
+      commit('SET_MANAGER_AUTH_FAILED', false)
     } else {
-      commit('SET_AUTH_FAILED', true)
+      commit('SET_MANAGER_AUTH_FAILED', true)
     }
   },
 
   generateJobAd ({ commit, state }, { title, skills }) {
     commit('SET_LOADING_JOB_AD', true)
     return new Promise((resolve, reject) => {
-      const url = '/api/generate-job-ad'
+      const url = '/api/ai/generate-job-ad'
       axios.post(url, {
         title,
         skills

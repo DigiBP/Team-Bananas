@@ -58,11 +58,11 @@ export default {
   },
   methods: {
     ...mapGetters({
-      isAuthenticated: 'isAuthenticated',
-      isAuthFailed: 'isAuthFailed'
+      isAuthenticated: 'isManagerAuthenticated',
+      isAuthFailed: 'isManagerAuthFailed'
     }),
     login () {
-      this.$store.dispatch('login', { secret: this.password }).then(() => {
+      this.$store.dispatch('loginManager', { secret: this.password }).then(() => {
         this.password = ''
       })
     }
