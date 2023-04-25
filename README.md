@@ -145,6 +145,7 @@ Our 4 longlist categories:
     - Once the process instance is created the process starts, i.e., the token is moved to the first task ```generate_job_ad```
     - The first task ```generate_job_ad``` is waiting for message via topic brokerage
     - The Hiring Manager continues in the HR Buddy App by enter key skills for the position, which are fed into the OpenAI API to auto-generate a job ad text via GPT-4
+    - The Hiring Manager can edit the generated job ad until satiefied. When confirming the job ad, this will fetch the external service task ```job_ad``` for given process instance from the Camdunda REST API, lock the external task, and mark it as completed.
     - 🔴 **TODO** to be continued... save business data to Google Sheet, publish job ad text to the topic exchange 🔴
 
 
@@ -167,7 +168,7 @@ These questions can help the company gather essential information about each app
 
 #### Camunda REST Engine
 
-The Camunda REST Engine API is used to create a new process instance.
+The Camunda REST Engine API is used to create a new process instance and handle external tasks (fetch external task for process instance, lock and mark as completed).
 
 The implementation is in [./app/frontend/server-middleware/camunda/api.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/frontend/server-middleware/camunda/api.js)
 
