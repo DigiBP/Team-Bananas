@@ -1,5 +1,12 @@
 import axios from 'axios'
 
+const processInstance = {
+  id: '',
+  businessKey: '',
+  title: '',
+  jobAd: ''
+}
+
 export const state = () => ({
   /* loading flag */
   loading: true, // global lading flag on app init
@@ -11,12 +18,7 @@ export const state = () => ({
   },
 
   /* current process instance data for UI */
-  processInstance: {
-    id: '',
-    businessKey: '',
-    title: '',
-    jobAd: ''
-  }
+  processInstance
 })
 
 export const getters = {
@@ -48,6 +50,10 @@ export const mutations = {
 
   /* process instance mutations */
 
+  RESET_PROCESS_INSTANCE: (state) => {
+    state.processInstance = processInstance
+  },
+
   SET_PROCESS_INSTANCE_ID: (state, id) => {
     state.processInstance.id = id
   },
@@ -67,7 +73,7 @@ export const mutations = {
 
 export const actions = {
 
-  loginManager ({ commit, state }, { secret }) {
+  loginManager ({ commit }, { secret }) {
     if (secret === 'secret') {
       commit('SET_MANAGER_AUTHENTICATED', true)
       commit('SET_MANAGER_AUTH_FAILED', false)
@@ -76,8 +82,11 @@ export const actions = {
     }
   },
 
-  startProcessInstance ({ commit, state }, { title }) {
+  startProcessInstance ({ commit }, { title }) {
     return new Promise((resolve, reject) => {
+      commit('RESET_PROCESS_INSTANCE')
+      commit('SET_PROCESS_INSTANCE_TITLE', title)
+
       const url = '/api/camunda/start-instance'
       axios.post(url, { title })
         .then((response) => {
@@ -91,7 +100,7 @@ export const actions = {
     })
   },
 
-  generateJobAd ({ commit, state }, { title, skills, fancy }) {
+  generateJobAd ({ commit }, { title, skills, fancy }) {
     return new Promise((resolve, reject) => {
       const url = '/api/ai/generate-job-ad'
       axios.post(url, {
@@ -108,5 +117,19 @@ export const actions = {
           reject(error)
         })
     })
+  },
+
+  confirmJobAd ({ commit }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/confirm-job-ad'
+      axios.post(url, {
+        ...this.state.processInstance
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
   }
+
 }
