@@ -19,23 +19,36 @@
       <div class="w-1/2 flex-grow-1 flex-shrink-1">
         <Transition>
           <StepPositionTitle v-if="step === 0" @completed="step = 1" />
-        </Transition>
-        <Transition>
           <StepGenerateJobAd v-if="step === 1" @completed="step = 2" />
-        </Transition>
-        <Transition>
           <StepConfirmJobAd v-if="step === 2" @completed="step = 3" />
+          <div v-if="step === 3" class="mb-12">
+            <h2 class="text-md font-bold mb-4">
+              Nice Job!
+            </h2>
+            <p>
+              We will keep you posted on the progress of the recruitment.
+            </p>
+            <p>
+              <NuxtLink to="/">
+                <Button>
+                  Back to Dashboard
+                </Button>
+              </NuxtLink>
+            </p>
+          </div>
         </Transition>
       </div>
       <div class="w-1/2 flex-grow-1 flex-shrink-1">
-        <div v-if="processInstance.jobAd">
-          <h2 class="text-md font-bold mb-4">
+        <Transition>
+          <div v-if="step === 2">
+            <h2 class="text-md font-bold mb-4">
               Job Ad Preview
             </h2>
-          <JobAd>
-            <div v-html="processInstance.jobAd" />
-          </JobAd>
-        </div>
+            <JobAd>
+              <div v-html="processInstance.jobAd" />
+            </JobAd>
+          </div>
+        </Transition>
       </div>
     </div>
   </div>

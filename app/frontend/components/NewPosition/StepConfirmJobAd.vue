@@ -66,6 +66,8 @@ export default {
       this.confirmingJobAd = true
       this.$store.dispatch('confirmJobAd', {}).catch(() => {
         this.confirmingJobAd = false
+      }).then(() => {
+        this.$emit('completed')
       }).finally(() => {
         this.confirmingJobAd = false
       })
