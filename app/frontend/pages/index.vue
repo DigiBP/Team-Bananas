@@ -8,10 +8,13 @@
       take your clients' business new heights in the digital realm. Join us today!
     </p>
     <div class="flex space-x-4 mt-12">
-      <NuxtLink to="/manager" class="block w-1/2 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-default hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
-        For Hiring Managers
+      <NuxtLink to="/manager" class="block w-1/3 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-default hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
+        For Managers
       </NuxtLink>
-      <NuxtLink to="/applicant" class="block w-1/2 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-accent hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
+      <NuxtLink to="/recruiter" class="block w-1/3 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-main hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
+        For HR Staff
+      </NuxtLink>
+      <NuxtLink to="/applicant" class="block w-1/3 flex-grow-0 flex-shirk-0 rounded-lg bg-digisailor-accent hover:bg-opacity-90 text-white text-lg shadow-lg p-6 text-center">
         For Applicants
       </NuxtLink>
     </div>

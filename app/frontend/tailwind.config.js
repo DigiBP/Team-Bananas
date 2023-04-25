@@ -31,7 +31,8 @@ module.exports = {
       colors: {
         digisailor: {
           default: '#6e4843',
-          accent: '#43696e'
+          accent: '#43696e',
+          main: '#5c5f54'
         }
       }
     }

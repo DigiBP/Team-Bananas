@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div :class="`header bg-digisailor-${color}`">
     <div class="header-inner">
       <div class="flex flex-row flex-nowrap justify-between justify-items-center">
         <div class="w-auto flex-grow-0 flex-shrink-0 text-white">
@@ -20,6 +20,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Header',
+  props: {
+    color: {
+      type: String,
+      default: 'default'
+    }
+  },
   methods: {
     ...mapGetters({
       isStepSearch: 'isStepSearch'
@@ -30,7 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  @apply top-0 left-0 w-screen bg-digisailor-default bg-opacity-95 backdrop-blur-lg drop-shadow-md shadow-sm;
+  @apply top-0 left-0 w-screen bg-opacity-95 backdrop-blur-lg drop-shadow-md shadow-sm;
 
   &-inner {
     @apply w-full max-w-screen-xl flex-grow m-auto py-4 px-4;

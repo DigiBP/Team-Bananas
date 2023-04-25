@@ -2,7 +2,7 @@
   <div>
     <div>
       <h1>Welcome, Hiring Manager 👋</h1>
-      <p class="mb-12">
+      <p class="max-w-4xl mb-12">
         This is the Digisailors hiring portal. Here, you can request new positions to be filled by our
         applicants. You can also view the status of your current positions and the applicants who have
         applied for them.

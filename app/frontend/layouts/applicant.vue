@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main">
-      <Header color="default" />
+      <Header color="accent" />
       <div class="wrapper">
         <div v-if="loading">
           Loading application...

@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="main">
-      <Header color="default" />
+      <Header color="main" />
       <div class="wrapper">
         <div v-if="loading">
           Loading application...
         </div>
         <div v-else-if="!isAuthenticated()">
           <h1 class="text-xl">
-            Manager Login
+            HR Staff Login
           </h1>
           <p v-if="isAuthFailed()" class="my-8 p-2 rounded-lg text-red-800 bg-red-100">
             Invalid password. Please try again.
@@ -27,7 +27,7 @@
               @keyup.enter="login"
             >
           </div>
-          <input type="submit" value="Login" class="bg-digisailor-default hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded mt-4" @click="login">
+          <input type="submit" value="Login" class="bg-digisailor-main hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded mt-4" @click="login">
         </div>
         <div v-else>
           <Nuxt />

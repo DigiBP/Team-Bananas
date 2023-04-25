@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>Welcome, Applicant 🤝</h1>
+    <p>
+      Nothing to do here yet. Please check back later.
+    </p>
   </div>
 </template>
 
@@ -8,7 +11,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  layout: 'default',
+  layout: 'applicant',
   methods: {
     ...mapGetters({})
   }
