@@ -1,0 +1,170 @@
+[
+    {
+      "name": "Seraphine Ashworth",
+      "age": 27,
+      "position": "Software Developer",
+      "degree": "Computer Science",
+      "level": "Bachelor",
+      "experience": "Seraphine has a Bachelor's degree in Computer Science and has 5 years of experience in software development. She specializes in web development and has worked on several large-scale projects using various programming languages and frameworks. She has experience working in both startup and corporate environments and is passionate about creating user-friendly and efficient applications."
+    },
+    {
+      "name": "Cyprian Blackwood",
+      "age": 35,
+      "position": "Project Manager",
+      "degree": "Business Administration",
+      "level": "Master",
+      "experience": "Cyprian has a Master's degree in Business Administration and has over 10 years of experience in project management. He has led several successful projects in various industries, including finance, healthcare, and education. He is skilled in stakeholder management, risk analysis, and resource allocation and is known for his ability to deliver projects on time and within budget."
+    },
+    {
+      "name": "Rowena Caelum",
+      "age": 44,
+      "position": "Data Scientist",
+      "degree": "Physics",
+      "level": "PhD",
+      "experience": "Rowena has a PhD in Physics and has over 20 years of experience in research and development. She has worked on several groundbreaking projects in the fields of renewable energy and nanotechnology and has published numerous papers in leading scientific journals. She is skilled in experimental design, data analysis, and project management and is passionate about making a positive impact on the world through science."
+    },
+    {
+      "name": "Thaddeus Darkstone",
+      "age": 53,
+      "position": "Business Consultant",
+      "degree": "Journalism",
+      "level": "Bachelor",
+      "experience": "Thaddeus has a Bachelor's degree in Journalism and has over 30 years of experience in media and communication. He has worked as a journalist, editor, and public relations specialist for various organizations, including major news outlets and government agencies. He is skilled in storytelling, crisis communication, and media relations and is known for his ability to deliver clear and effective messages."
+    },
+    {
+      "name": "Eira Frostwood",
+      "age": 29,
+      "position": "Consultant",
+      "degree": "Environmental Science",
+      "level": "Master",
+      "experience": "Eira has a Master's degree in Environmental Science and has 7 years of experience in sustainability consulting. She has worked with clients in various industries, including manufacturing, construction, and hospitality, to develop and implement sustainability strategies that reduce environmental impact and improve social responsibility. She is skilled in life cycle assessment, carbon footprint analysis, and stakeholder engagement and is passionate about promoting sustainability in business."
+    },
+    {
+      "name": "Nicasius Greenwood",
+      "age": 40,
+      "position": "Business Analyst",
+      "degree": "Economics",
+      "level": "Bachelor",
+      "experience": "Nicasius has a Bachelor's degree in Economics and has over 15 years of experience in finance and investment. He has worked as a financial analyst, portfolio manager, and investment banker for various financial institutions and has managed portfolios worth millions of dollars. He is skilled in financial analysis, risk management, and investment strategy and is known for his ability to deliver solid returns for his clients."
+    },
+    {
+      "name": "Valentina Hawthorne",
+      "age": 48,
+      "position": "Consultant",
+      "degree": "Fine Arts",
+      "level": "Bachelor",
+      "experience": "Valentina has a Bachelor's degree in Fine Arts and has over 25 years of experience in graphic design. She has worked as a designer and art director for various advertising agencies and design studios and has worked with clients in various industries, including fashion, beauty, and food. She is skilled in branding, typography, and layout design and is known for her ability to create visually stunning and effective designs."
+    },
+    {
+      "name": "Adira Jade",
+      "age": 23,
+      "position": "Digital Marketer",
+      "degree": "Marketing",
+      "level": "Bachelor",
+      "experience": "Adira has a Bachelor's degree in Marketing and has 2 years of experience in digital marketing. She has worked with clients in various industries, including e-commerce, education, and entertainment, to develop and execute successful digital marketing campaigns. She is skilled in search engine optimization, social media marketing, and email marketing and is passionate about using data-driven strategies to drive business growth."
+    },
+    {
+      "name": "Sebastian Knight",
+      "age": 46,
+      "position": "Digital Consultant",
+      "degree": "Psychology",
+      "level": "PhD",
+      "experience": "Sebastian has a PhD in Psychology and has over 20 years of experience in counseling and therapy. He has worked with clients of all ages and backgrounds, helping them to overcome personal challenges and improve their mental health and well-being. He is skilled in cognitive-behavioral therapy, solution-focused therapy, and mindfulness-based approaches and is known for his ability to create a safe and supportive environment for his clients."
+    },
+    {
+      "name": "Lysandra Moonstone",
+      "age": 30,
+      "position": "Project Manager",
+      "degree": "Education",
+      "level": "Master",
+      "experience": "Lysandra has a Master's degree in Education and has 7 years of experience in teaching and curriculum development. She has taught students of all ages and has developed educational programs for various organizations, including schools and non-profits. She is skilled in instructional design, assessment, and student engagement and is passionate about creating innovative and effective learning experiences for her students."
+    },
+    {
+      "name": "Ezekiel Nightshade",
+      "age": 57,
+      "position": "Business Consultant",
+      "degree": "Law",
+      "level": "Bachelor",
+      "experience": "Ezekiel has a Bachelor's degree in Law and has over 30 years of experience in legal practice. He has worked as a lawyer and legal consultant for various clients, including individuals, small businesses, and large corporations. He is skilled in contract law, intellectual property law, and dispute resolution and is known for his ability to provide practical and effective legal solutions for his clients."
+    },
+    {
+      "name": "Lydia Oakwood",
+      "age": 25,
+      "position": "Content Creator",
+      "degree": "Journalism",
+      "level": "Bachelor",
+      "experience": "Lydia has a Bachelor's degree in Journalism and has 3 years of experience in content creation and marketing. She has worked with various clients, including media outlets, e-commerce sites, and non-profits, to develop and execute content strategies that drive engagement and brand awareness. She is skilled in writing, editing, and social media marketing and is passionate about using storytelling to connect with audiences."
+    },
+    {
+      "name": "Damon Quartz",
+      "age": 37,
+      "position": "Software Engineer",
+      "degree": "Computer Engineering",
+      "level": "Master",
+      "experience": "Damon has a Master's degree in Computer Engineering and has over 10 years of experience in software development. He has worked on several projects in various industries, including finance, healthcare, and telecommunications, and is skilled in full-stack development, cloud computing, and machine learning. He is known for his ability to deliver high-quality code and innovative solutions that meet client needs."
+    },
+    {
+      "name": "Niamh Redwood",
+      "age": 42,
+      "position": "Data Scientist",
+      "degree": "Environmental Science",
+      "level": "Bachelor",
+      "experience": "Niamh has a Bachelor's degree in Environmental Science and has over 15 years of experience in sustainability and corporate social responsibility. She has worked with various clients, including multinational corporations, to develop and implement sustainability strategies that improve environmental and social performance. She is skilled in stakeholder engagement, sustainability reporting, and supply chain management and is passionate about making a positive impact on the world through business."
+    },
+    {
+      "name": "Finnegan Stone",
+      "age": 31,
+      "position": "Project Manager",
+      "degree": "Business Administration",
+      "level": "Bachelor",
+      "experience": "Finnegan has a Bachelor's degree in Business Administration and has 8 years of experience in project management. He has worked with clients in various industries, including construction, technology, and healthcare, to successfully plan and execute complex projects. He is skilled in project planning, risk management, and stakeholder communication and is known for his ability to deliver projects on time and within budget."
+    },
+    {
+      "name": "Eleanor Thorne",
+      "age": 48,
+      "position": "Consultant",
+      "degree": "Social Work",
+      "level": "Master",
+      "experience": "Eleanor has a Master's degree in Social Work and has over 20 years of experience in counseling and therapy. She has worked with clients of all ages, backgrounds, and cultures, helping them to overcome mental health challenges and improve their overall well-being. She is skilled in trauma-informed care, mindfulness-based approaches, and family therapy and is known for her compassionate and client-centered approach to therapy."
+    },
+    {
+      "name": "Maximilian Underwood",
+      "age": 43,
+      "position": "Accountant",
+      "degree": "Accounting",
+      "level": "Bachelor",
+      "experience": "Maximilian has a Bachelor's degree in Accounting and has over 15 years of experience in finance and accounting. He has worked with clients in various industries, including real estate, hospitality, and retail, to provide accounting, tax, and financial consulting services. He is skilled in financial analysis, forecasting, and strategic planning and is known for his ability to provide valuable financial insights and solutions to his clients."
+    },
+    {
+      "name": "Violet Vega",
+      "age": 27,
+      "position": "Designer",
+      "degree": "Graphic Design",
+      "level": "Bachelor",
+      "experience": "Violet has a Bachelor's degree in Graphic Design and has 4 years of experience in visual design and branding. She has worked with clients in various industries, including fashion, food, and technology, to develop and execute branding strategies that elevate their visual identity and connect with their target audience. She is skilled in graphic design, branding, and user experience design and is passionate about using design to create meaningful and impactful experiences for her clients."
+    },
+    {
+      "name": "Wesley Wolf",
+      "age": 39,
+      "position": "Consultant",
+      "degree": "Public Health",
+      "level": "Master",
+      "experience": "Wesley has a Master's degree in Public Health and has over 12 years of experience in healthcare management and administration. He has worked with various healthcare organizations, including hospitals and clinics, to improve their operations and financial performance. He is skilled in healthcare strategy, operations management, and financial analysis and is known for his ability to lead teams and implement effective solutions in complex healthcare environments."
+    },
+    {
+      "name": "Xavier Yarrow",
+      "age": 52,
+      "position": "Data Scientist",
+      "degree": "Physics",
+      "level": "PhD",
+      "experience": "Xavier has a PhD in Physics and has over 25 years of experience in research and development. He has worked with various organizations, including universities and government agencies, to conduct research and develop new technologies in the fields of energy and environmental science. He is skilled in experimental design, data analysis, and project management and is known for his contributions to the development of sustainable energy technologies."
+    },
+    {
+      "name": "Zara Zenith",
+      "age": 33,
+      "position": "Consultant",
+      "degree": "Fashion Design",
+      "level": "Bachelor",
+      "experience": "Zara has a Bachelor's degree in Fashion Design and has 9 years of experience in the fashion industry. She has worked with various clients, including fashion brands and retailers, to develop and execute design strategies that meet consumer needs and drive business growth. She is skilled in trend analysis, product development, and supply chain management and is known for her ability to create innovative and sustainable fashion designs."
+    }
+  ]
