@@ -189,6 +189,19 @@ export const actions = {
           reject(error)
         })
     })
+  },
+
+  fetchJobAd ({ commit }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = `/api/store/job-ads/${processInstanceId}`
+      axios.get(url)
+        .then((response) => {
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
   }
 
 }

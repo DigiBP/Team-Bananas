@@ -1,13 +1,14 @@
 <template>
   <div>
     <div>
-      <h1>Job Ads</h1>
+      <h1>Recruitments</h1>
       <p class="max-w-4xl mb-12">
-        These are the previously generated job ads.
+        These are the recruitments.
       </p>
       <table>
         <thead>
           <tr>
+            <th>Action</th>
             <th>Process ID</th>
             <th>Business Key</th>
             <th>Position</th>
@@ -15,6 +16,13 @@
           </tr>
         </thead>
         <tr v-for="position in jobAds" :key="position._additional.id">
+          <td>
+            <NuxtLink :to="`/recruiter/recruitments/${position.processId}`">
+              <Button color="main" size="small">
+                View
+              </Button>
+            </NuxtLink>
+          </td>
           <td>
             <div>
               {{ position.processId }}

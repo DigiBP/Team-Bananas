@@ -34,10 +34,7 @@ export default {
 <style lang="scss" scoped>
 .main {
   @apply flex flex-col justify-center min-h-screen;
-
-  background-image: url('/brand.jpg');
-  background-size: cover;
-  background-position: center;
+  @apply bg-gradient-to-b from-digisailor-accent to-gray-600 bg-opacity-20;
 }
 
 .wrapper {

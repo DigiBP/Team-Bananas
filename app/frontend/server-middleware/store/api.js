@@ -118,7 +118,45 @@ app.all('/job-ads', (req, res) => {
     })
 })
 
-// API endpoint 3: store position details
+// API endpoint 4: get a single job ad by id
+app.all('/job-ads/:processId', (req, res) => {
+  const processId = req.params.processId
+  client.graphql
+    .get({
+      processId
+    })
+    .withClassName('JobAd')
+    .withFields('_additional { id vector } processId businessKey title jobAd')
+    .do()
+    .then((result) => {
+      return res.json(result.data.Get.JobAd)
+    })
+    .catch((err) => {
+      console.error(err) // eslint-disable-line no-console
+      return res.send('failed')
+    })
+})
+
+// API endpoint to find employees matching with a job ad's vector
+app.all('/find-employees', (req, res) => {
+  const vector = req.body.vector
+  client.graphql
+    .get()
+    .withClassName('Employee')
+    .withFields('_additional { id } name age position degree level experience')
+    .withNearVector({ vector })
+    .do()
+    .then((result) => {
+      console.log(result.data.Get) // eslint-disable-line no-console
+      return res.json(result.data.Get)
+    })
+    .catch((err) => {
+      console.error(err) // eslint-disable-line no-console
+      return res.send('failed')
+    })
+})
+
+// API endpoint 4: store position details
 app.all('/save-instance-data', (req, res) => {
   const processInstance = req.body
 

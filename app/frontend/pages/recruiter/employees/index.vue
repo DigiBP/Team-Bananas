@@ -9,6 +9,7 @@
         <thead>
           <tr>
             <th>Employee</th>
+            <th>Photo</th>
             <th>Age</th>
             <th>Position</th>
             <th>Experience</th>
@@ -16,6 +17,9 @@
         </thead>
         <tr v-for="employee in employees" :key="employee._additional.id">
           <td>{{ employee.name }}</td>
+          <td class="align-center">
+            <img :src="pictureSlug(employee.name)" class="block w-40 border border-1 rounded-full" />
+          </td>
           <td>{{ employee.age }}</td>
           <td>{{ employee.position }}</td>
           <td>{{ employee.experience }}</td>
@@ -49,7 +53,11 @@ export default {
     this.$store.dispatch('fetchEmployees')
   },
   methods: {
-    ...mapGetters({})
+    ...mapGetters({}),
+    pictureSlug (employeeName) {
+      const slug = employeeName.toLowerCase().replace(' ', '-')
+      return `employees/${slug}.png`
+    }
   }
 }
 </script>

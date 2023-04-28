@@ -12,9 +12,9 @@
             List of Employees
           </Button>
         </NuxtLink>
-        <NuxtLink to="/recruiter/job-ads">
+        <NuxtLink to="/recruiter/recruitments">
           <Button color="main">
-            List of Job Ads
+            List of Recruitments
           </Button>
         </NuxtLink>
       </div>
