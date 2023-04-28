@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div>
+    <div v-if="!loadingProcess">
       <h1>Recruitment Drive for {{ processInstance.title }}</h1>
-      <p>
-        {{ slug }}
-      </p>
+      <ProcessInstance />
       <p>
         <JobAd>
           <div v-html="processInstance.jobAd" class="max-w-xl" />
         </JobAd>
       </p>
+      <div v-if="loadingEmployees">
+        <font-awesome-icon icon="spinner" spin />
+      </div>
+      <div v-else>
+        ...employees...
+      </div>
       <p>
         <NuxtLink to="/recruiter/recruitments">
           <Button color="main">
@@ -26,15 +30,24 @@
 import { mapGetters, mapState } from 'vuex'
 import Button from '~/components/Button.vue'
 import JobAd from '~/components/JobAd.vue'
+import ProcessInstance from '~/components/ProcessInstance.vue'
 
 export default {
   components: {
-    Button, JobAd
+    Button,
+    JobAd,
+    ProcessInstance
   },
   layout: 'recruiter',
   asyncData ({ params }) {
     const slug = params.slug
     return { slug }
+  },
+  data () {
+    return {
+      loadingProcess: true,
+      loadingEmployees: false
+    }
   },
   computed: {
     ...mapState(['processInstance'])
@@ -43,7 +56,11 @@ export default {
     this.$store.dispatch('fetchJobAd', {
       processInstanceId: this.slug
     }).then(() => {
-      this.$store.dispatch('matchEmployees')
+      this.loadingProcess = false
+      this.loadingEmployees = true
+      this.$store.dispatch('matchEmployees').then(() => {
+        this.loadingEmployees = false
+      })
     })
   },
   methods: {

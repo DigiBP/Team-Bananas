@@ -65,7 +65,7 @@ app.all('/save-instance-data', (req, res) => {
     .withClassName('JobAd')
     .withId(generateUUID())
     .withProperties({
-      processId: processInstance.id,
+      processId: processInstance.processId,
       businessKey: processInstance.businessKey,
       title: processInstance.title,
       jobAd: processInstance.jobAd

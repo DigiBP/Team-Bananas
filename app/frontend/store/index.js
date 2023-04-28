@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const processInstance = {
-  id: '',
+  processId: '', // camunda id
   businessKey: '',
   title: '',
   jobAd: '',
   _additional: {
-    id: '',
+    id: '', // weaviate id
     vector: []
   }
 }
@@ -69,7 +69,7 @@ export const mutations = {
   },
 
   SET_PROCESS_INSTANCE_ID: (state, id) => {
-    state.processInstance.id = id
+    state.processInstance.processId = id
   },
 
   SET_PROCESS_INSTANCE_BUSINESS_KEY: (state, businessKey) => {

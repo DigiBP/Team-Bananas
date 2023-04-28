@@ -43,7 +43,7 @@ app.all('/start-instance', async (req, res) => {
 // API endpoint 2: confirm the job ad step by locking then completing the external service task for "job_ad"
 // @see https://camunda.com/blog/2022/01/qa-how-can-i-complete-a-service-task-via-the-rest-api/
 app.all('/confirm-job-ad', async (req, res) => {
-  const processInstanceId = req.body.id
+  const processInstanceId = req.body.processId
 
   // Step 1: get the external task ID for the processInstance's "job_ad" service task
   const getExternalTaskUrl = `${baseUrl}/external-task?processInstanceId=${processInstanceId}&topicName=job_ad`
