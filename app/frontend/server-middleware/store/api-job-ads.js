@@ -37,14 +37,18 @@ app.all('/job-ads', (req, res) => {
 app.all('/job-ads/:processId', (req, res) => {
   const processId = req.params.processId
   client.graphql
-    .get({
-      processId
-    })
+    .get('JobAd')
     .withClassName('JobAd')
     .withFields('_additional { id vector } processId businessKey title jobAd')
+    .withLimit(1)
+    .withWhere({
+      path: ['processId'],
+      operator: 'Equal',
+      valueText: processId
+    })
     .do()
     .then((result) => {
-      return res.json(result.data.Get.JobAd)
+      return res.json(result.data.Get.JobAd[0])
     })
     .catch((err) => {
       console.error(err) // eslint-disable-line no-console

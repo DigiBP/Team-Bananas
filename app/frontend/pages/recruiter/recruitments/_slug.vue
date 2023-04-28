@@ -1,9 +1,14 @@
 <template>
   <div>
     <div>
-      <h1>Recruitment Drive for {{ processInstance.businessKey }}</h1>
+      <h1>Recruitment Drive for {{ processInstance.title }}</h1>
       <p>
         {{ slug }}
+      </p>
+      <p>
+        <JobAd>
+          <div v-html="processInstance.jobAd" class="max-w-xl" />
+        </JobAd>
       </p>
       <p>
         <NuxtLink to="/recruiter/recruitments">
@@ -20,10 +25,11 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Button from '~/components/Button.vue'
+import JobAd from '~/components/JobAd.vue'
 
 export default {
   components: {
-    Button
+    Button, JobAd
   },
   layout: 'recruiter',
   asyncData ({ params }) {
@@ -36,6 +42,8 @@ export default {
   mounted () {
     this.$store.dispatch('fetchJobAd', {
       processInstanceId: this.slug
+    }).then(() => {
+      this.$store.dispatch('matchEmployees')
     })
   },
   methods: {

@@ -32,12 +32,15 @@ app.all('/employees', (req, res) => {
 })
 
 // API endpoint 1: find employees matching with a job ad's vector
-app.all('/find-employees', (req, res) => {
+app.all('/match-employees', (req, res) => {
   const vector = req.body.vector
+
+  console.log('vector', vector) // eslint-disable-line no-console
+
   client.graphql
     .get()
     .withClassName('Employee')
-    .withFields('_additional { id } name age position degree level experience')
+    .withFields('_additional { id certainty } name age position degree level experience')
     .withNearVector({ vector })
     .do()
     .then((result) => {

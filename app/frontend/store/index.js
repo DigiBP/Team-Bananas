@@ -4,7 +4,11 @@ const processInstance = {
   id: '',
   businessKey: '',
   title: '',
-  jobAd: ''
+  jobAd: '',
+  _additional: {
+    id: '',
+    vector: []
+  }
 }
 
 export const state = () => ({
@@ -57,6 +61,10 @@ export const mutations = {
   /* process instance mutations */
 
   RESET_PROCESS_INSTANCE: (state) => {
+    state.processInstance = processInstance
+  },
+
+  SET_PROCESS_INSTANCE: (state, processInstance) => {
     state.processInstance = processInstance
   },
 
@@ -196,11 +204,25 @@ export const actions = {
       const url = `/api/store/job-ads/${processInstanceId}`
       axios.get(url)
         .then((response) => {
+          commit('SET_PROCESS_INSTANCE', response.data)
           resolve(response)
         })
         .catch((error) => {
           reject(error)
         })
+    })
+  },
+
+  matchEmployees ({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/store/match-employees'
+      axios.post(url, {
+        vector: state.processInstance._additional.vector
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
     })
   }
 
