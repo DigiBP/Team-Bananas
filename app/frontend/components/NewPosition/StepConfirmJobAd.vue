@@ -10,7 +10,7 @@
         @keyup="$store.commit('SET_PROCESS_INSTANCE_JOB_AD', editedJobAd)"
       />
     </div>
-    <Button v-if="editedJobAd != originalJobAd" color="digisailor-accent" @clicked="resetJobAd()">
+    <Button v-if="editedJobAd != originalJobAd" color="accent" @clicked="resetJobAd()">
       <font-awesome-icon :icon="['fas', 'times']" />
       <span>Reset Changes</span>
     </Button>
@@ -67,9 +67,11 @@ export default {
       this.$store.dispatch('confirmJobAd', {}).catch(() => {
         this.confirmingJobAd = false
       }).then(() => {
-        this.$emit('completed')
-      }).finally(() => {
-        this.confirmingJobAd = false
+        this.$store.dispatch('saveInstanceData', {}).then(() => {
+          this.$emit('completed')
+        }).finally(() => {
+          this.confirmingJobAd = false
+        })
       })
     }
   }

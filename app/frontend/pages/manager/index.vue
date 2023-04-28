@@ -8,8 +8,11 @@
         applied for them.
       </p>
       <div>
-        <NuxtLink to="/manager/new" class="rounded-lg bg-digisailor-default hover:bg-opacity-90 text-white text-base px-4 py-2">
-          Request New Position
+        <NuxtLink to="/manager/new">
+          <Button>
+            <font-awesome-icon :icon="['fas', 'user-gear']" />
+            Request New Position
+          </Button>
         </NuxtLink>
       </div>
     </div>
@@ -18,8 +21,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Button from '~/components/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   layout: 'manager',
   methods: {
     ...mapGetters({})

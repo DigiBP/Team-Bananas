@@ -18,7 +18,13 @@ export const state = () => ({
   },
 
   /* current process instance data for UI */
-  processInstance
+  processInstance,
+
+  /* employee data from store */
+  employees: [],
+
+  /* job ad data from store */
+  jobAds: []
 })
 
 export const getters = {
@@ -68,6 +74,18 @@ export const mutations = {
 
   SET_PROCESS_INSTANCE_JOB_AD: (state, jobAd) => {
     state.processInstance.jobAd = jobAd
+  },
+
+  /* employee mutations */
+
+  SET_EMPLOYEES: (state, employees) => {
+    state.employees = employees
+  },
+
+  /* job ad mutations */
+
+  SET_JOB_ADS: (state, jobAds) => {
+    state.jobAds = jobAds
   }
 }
 
@@ -129,6 +147,47 @@ export const actions = {
       }).catch((error) => {
         reject(error)
       })
+    })
+  },
+
+  saveInstanceData ({ commit }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/store/save-instance-data'
+      axios.post(url, {
+        ...this.state.processInstance
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  fetchEmployees ({ commit }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/store/employees'
+      axios.get(url)
+        .then((response) => {
+          commit('SET_EMPLOYEES', response.data)
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+
+  fetchJobAds ({ commit }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/store/job-ads'
+      axios.get(url)
+        .then((response) => {
+          commit('SET_JOB_ADS', response.data)
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   }
 

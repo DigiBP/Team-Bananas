@@ -1,5 +1,5 @@
 <template>
-  <button :class="`button button-${color}`" @click="$emit('clicked')">
+  <button :class="`button bg-digisailor-${color}`" @click="$emit('clicked')">
     <slot />
   </button>
 </template>
@@ -10,7 +10,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'digisailor-default'
+      default: 'default'
     }
   }
 }
@@ -20,19 +20,10 @@ export default {
 .button {
   @apply inline-block;
   @apply cursor-pointer;
-  @apply bg-digisailor-default;
   @apply hover:bg-opacity-90;
   @apply text-white;
   @apply font-bold;
   @apply py-2 px-4 mt-4;
   @apply rounded;
-
-  &-digisailor-default {
-    @apply bg-digisailor-default;
-  }
-
-  &-digisailor-accent {
-    @apply bg-digisailor-accent;
-  }
 }
 </style>

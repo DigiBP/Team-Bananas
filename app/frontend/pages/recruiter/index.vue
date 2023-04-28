@@ -6,17 +6,30 @@
         This is the Digisailors HR Buddy. Here, you can check on new hiring requests, track the progress of
         ongoing hiring processes, view the applicants, and schedule interviews.
       </p>
-      <p>
-        Nothing to do here yet. Please check back later.
-      </p>
+      <div>
+        <NuxtLink to="/recruiter/employees">
+          <Button color="main">
+            List of Employees
+          </Button>
+        </NuxtLink>
+        <NuxtLink to="/recruiter/job-ads">
+          <Button color="main">
+            List of Job Ads
+          </Button>
+        </NuxtLink>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Button from '~/components/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   layout: 'recruiter',
   methods: {
     ...mapGetters({})

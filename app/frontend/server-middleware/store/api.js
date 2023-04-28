@@ -13,8 +13,14 @@ const client = weaviate.client({
   host
 })
 
-// axios to make requests against Weaviate API
-// const axios = require('axios')
+// helper function to generate UUIDs
+function generateUUID () {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
 
 /* API endpoints */
 
@@ -76,14 +82,65 @@ app.all('/init-data', (req, res) => {
         console.error(err) // eslint-disable-line no-console
       })
   })
+
+  return res.send('OK')
 })
 
-function generateUUID () {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = Math.random() * 16 | 0
-    const v = c === 'x' ? r : (r & 0x3 | 0x8)
-    return v.toString(16)
-  })
-}
+// API endpoint 2: get all employees
+app.all('/employees', (req, res) => {
+  client.graphql
+    .get()
+    .withClassName('Employee')
+    .withFields('_additional { id } name age position degree level experience')
+    .do()
+    .then((result) => {
+      return res.json(result.data.Get.Employee)
+    })
+    .catch((err) => {
+      console.error(err) // eslint-disable-line no-console
+      return res.send('failed')
+    })
+})
+
+// API endpoint 3: get all job ads
+app.all('/job-ads', (req, res) => {
+  client.graphql
+    .get()
+    .withClassName('JobAd')
+    .withFields('_additional { id } processId businessKey title jobAd')
+    .do()
+    .then((result) => {
+      return res.json(result.data.Get.JobAd)
+    })
+    .catch((err) => {
+      console.error(err) // eslint-disable-line no-console
+      return res.send('failed')
+    })
+})
+
+// API endpoint 3: store position details
+app.all('/save-instance-data', (req, res) => {
+  const processInstance = req.body
+
+  client.data
+    .creator()
+    .withClassName('JobAd')
+    .withId(generateUUID())
+    .withProperties({
+      processId: processInstance.id,
+      businessKey: processInstance.businessKey,
+      title: processInstance.title,
+      jobAd: processInstance.jobAd
+    })
+    .do()
+    .then((result) => {
+      console.log(result) // eslint-disable-line no-console
+      return res.send('OK')
+    })
+    .catch((err) => {
+      console.error(err) // eslint-disable-line no-console
+      return res.send('failed')
+    })
+})
 
 module.exports = app
