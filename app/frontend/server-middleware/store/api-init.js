@@ -79,4 +79,12 @@ app.all('/init-data', (req, res) => {
   return res.send('OK')
 })
 
+// API endpoint 2: return host and scheme from express app
+app.all('/host', (req, res) => {
+  return res.json({
+    scheme: req.protocol,
+    host: req.headers.host
+  })
+})
+
 module.exports = app

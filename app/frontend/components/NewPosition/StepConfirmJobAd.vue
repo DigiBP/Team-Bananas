@@ -6,7 +6,7 @@
     <div>
       <textarea
         v-model="editedJobAd"
-        class="w-full h-64"
+        class="w-full h-64 border border-1 p-2 text-sm"
         @keyup="$store.commit('SET_PROCESS_INSTANCE_JOB_AD', editedJobAd)"
       />
     </div>

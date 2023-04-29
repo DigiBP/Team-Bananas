@@ -7,16 +7,21 @@
       Please enter a few important skills or requirements to generate a job ad.
     </p>
     <div v-if="errors.length" class="text-sm bg-red-200 p-2 rounded-md mb-4">
-      {{ errors.join(', ') }}
+      <ul v-for="error in errors" :key="error">
+        <li>{{ error }}</li>
+      </ul>
     </div>
     <div class="flex mb-4">
       <label for="skills" class="block w-32 font-light pt-2 mr-4">Skills</label>
       <textarea id="skills" v-model="skills" type="text" placeholder="List 3-5 skills" class="w-full p-2 border border-1" />
     </div>
     <div class="flex mb-4">
-      <label for="fancy" class="block w-32 font-light pt-2 mr-4">Fancy Factor</label>
+      <label for="fancy" class="block w-32 font-light pt-2 mr-4">Language</label>
       <select id="fancy" v-model="fancy" class="w-full p-2 border border-1">
-        <option value="in formal business English" selected>
+        <option value="">
+          Select Language Option
+        </option>
+        <option value="in formal business English">
           in formal business English
         </option>
         <option value="in easily understandable English">
@@ -54,7 +59,7 @@ export default {
   data () {
     return {
       skills: '',
-      fancy: 'in English',
+      fancy: '',
       loadingJobAd: false,
       errors: []
     }
@@ -68,6 +73,10 @@ export default {
 
       if (!this.skills.trim()) {
         this.errors.push('Skills required.')
+      }
+
+      if (!this.fancy.trim()) {
+        this.errors.push('Language option required.')
       }
 
       if (this.errors.length) {

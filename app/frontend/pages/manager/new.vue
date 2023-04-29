@@ -2,7 +2,7 @@
   <div>
     <div class="w-full">
       <h1 class="text-xl font-bold mb-8">
-        New Position
+        Start New Hiring Process
       </h1>
     </div>
     <Transition>
@@ -26,7 +26,7 @@
               Nice Job!
             </h2>
             <p>
-              We will keep you posted on the progress of the recruitment.
+              We will keep you posted on the progress of the hiring process.
             </p>
             <p>
               <NuxtLink to="/">

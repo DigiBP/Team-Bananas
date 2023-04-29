@@ -11,7 +11,7 @@
         <NuxtLink to="/manager/new">
           <Button>
             <font-awesome-icon :icon="['fas', 'user-gear']" />
-            Request New Position
+            Start a Hiring Process
           </Button>
         </NuxtLink>
       </div>

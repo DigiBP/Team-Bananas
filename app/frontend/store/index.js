@@ -4,6 +4,9 @@ const processInstance = {
   processId: '', // camunda id
   businessKey: '',
   title: '',
+  office: '',
+  department: '',
+  manager: '',
   jobAd: '',
   _additional: {
     id: '', // weaviate id
@@ -80,6 +83,18 @@ export const mutations = {
     state.processInstance.title = title
   },
 
+  SET_PROCESS_INSTANCE_OFFICE: (state, office) => {
+    state.processInstance.office = office
+  },
+
+  SET_PROCESS_INSTANCE_DEPARTMENT: (state, department) => {
+    state.processInstance.department = department
+  },
+
+  SET_PROCESS_INSTANCE_MANAGER: (state, manager) => {
+    state.processInstance.manager = manager
+  },
+
   SET_PROCESS_INSTANCE_JOB_AD: (state, jobAd) => {
     state.processInstance.jobAd = jobAd
   },
@@ -108,29 +123,36 @@ export const actions = {
     }
   },
 
-  startProcessInstance ({ commit }, { title }) {
+  startProcessInstance ({ commit }, { title, manager, department, office }) {
     return new Promise((resolve, reject) => {
       commit('RESET_PROCESS_INSTANCE')
       commit('SET_PROCESS_INSTANCE_TITLE', title)
+      commit('SET_PROCESS_INSTANCE_OFFICE', office)
+      commit('SET_PROCESS_INSTANCE_MANAGER', manager)
+      commit('SET_PROCESS_INSTANCE_DEPARTMENT', department)
 
       const url = '/api/camunda/start-instance'
-      axios.post(url, { title })
-        .then((response) => {
-          commit('SET_PROCESS_INSTANCE_ID', response.data.id)
-          commit('SET_PROCESS_INSTANCE_BUSINESS_KEY', response.data.businessKey)
-          resolve(response)
-        })
-        .catch((error) => {
-          reject(error)
-        })
+      axios.post(url, {
+        title,
+        manager,
+        department,
+        office
+      }).then((response) => {
+        commit('SET_PROCESS_INSTANCE_ID', response.data.id)
+        commit('SET_PROCESS_INSTANCE_BUSINESS_KEY', response.data.businessKey)
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
     })
   },
 
-  generateJobAd ({ commit }, { title, skills, fancy }) {
+  generateJobAd ({ commit, state }, { skills, fancy }) {
     return new Promise((resolve, reject) => {
       const url = '/api/ai/generate-job-ad'
       axios.post(url, {
-        title,
+        title: state.processInstance.title,
+        office: state.processInstance.office,
         skills,
         fancy
       })

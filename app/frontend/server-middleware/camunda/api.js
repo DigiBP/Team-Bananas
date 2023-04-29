@@ -17,10 +17,31 @@ const commonHeaders = {
 
 /* API endpoints */
 
-function generateBusinessKey (title) {
+function generateBusinessKey (title, office) {
   const today = new Date()
-  const date = today.getFullYear() + ('0' + (today.getMonth() + 1)).slice(-2) // 2023-04 --> 202304
-  return date + '_' + title.replace(/ /g, '_').toLowerCase()
+  const date = today.toISOString().split('T')[0].replace(/-/g, '')
+  const acronym = title
+    .match(/[\p{Alpha}\p{Nd}]+/gu)
+    .reduce((previous, next) => previous + ((+next === 0 || parseInt(next)) ? parseInt(next) : next[0] || ''), '')
+    .toUpperCase()
+
+  let officeAcronym = 'ANY'
+  switch (office) {
+    case 'Basel':
+      officeAcronym = 'BSL'
+      break
+    case 'Bern':
+      officeAcronym = 'BRN'
+      break
+    case 'Olten':
+      officeAcronym = 'OLT'
+      break
+    case 'Zurich':
+      officeAcronym = 'ZRH'
+      break
+  }
+
+  return `${date}/${officeAcronym}/${acronym}`
 }
 
 // API endpoint 1: start new process instance in Camunda by passing the job title
@@ -28,8 +49,35 @@ app.all('/start-instance', async (req, res) => {
   const url = `${baseUrl}/process-definition/key/${processKey}/tenant-id/${tenantId}/start`
 
   console.log('POST', url) // eslint-disable-line no-console
+  const businessKey = generateBusinessKey(req.body.title, req.body.office)
   const response = await axios.post(url, {
-    businessKey: generateBusinessKey(req.body.title)
+    businessKey,
+    variables: {
+      env: {
+        value: process.env.ENV_NAME ?? 'dev',
+        type: 'String'
+      },
+      title: {
+        value: req.body.title,
+        type: 'String'
+      },
+      manager: {
+        value: req.body.manager,
+        type: 'String'
+      },
+      department: {
+        value: req.body.department,
+        type: 'String'
+      },
+      office: {
+        value: req.body.office,
+        type: 'String'
+      },
+      link: {
+        value: `${req.protocol}://${req.headers.host}/recruiter/lookup?key=${encodeURIComponent(businessKey)}`,
+        type: 'String'
+      }
+    }
   }, {
     headers: commonHeaders
   })
