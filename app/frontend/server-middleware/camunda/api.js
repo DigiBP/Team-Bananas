@@ -136,4 +136,37 @@ app.all('/confirm-job-ad', async (req, res) => {
   res.json({ success: true })
 })
 
+// API endpoint 3: list all process instances
+app.all('/list-instances', async (req, res) => {
+  // we filter by the env name to only show instances for the current environment
+  const envName = process.env.ENV_NAME ?? 'dev'
+  const url = `${baseUrl}/process-instance?tenantIdIn=${tenantId}&variables=env_eq_${envName}&active=true&sortBy=businessKey&sortOrder=desc&maxResults=200`
+
+  console.log('GET', url) // eslint-disable-line no-console
+  const response = await axios.get(url, {
+    headers: commonHeaders
+  })
+  console.log(response.data) // eslint-disable-line no-console
+
+  // fetch the process variables for each process instance
+  const processInstances = []
+  for (const processInstance of response.data) {
+    const processVariablesUrl = `${baseUrl}/process-instance/${processInstance.id}/variables`
+    console.log('GET', processVariablesUrl) // eslint-disable-line no-console
+    const processVariablesResponse = await axios.get(processVariablesUrl, {
+      headers: commonHeaders
+    })
+
+    const variables = {}
+    for (const [key, variable] of Object.entries(processVariablesResponse.data)) {
+      variables[key] = variable.value
+    }
+    const item = { ...processInstance, ...variables }
+    processInstances.push(item)
+  }
+
+  console.log(processInstances) // eslint-disable-line no-console
+  res.json(processInstances)
+})
+
 module.exports = app

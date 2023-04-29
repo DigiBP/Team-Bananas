@@ -2,8 +2,8 @@
   <div>
     <div>
       <h1>Recruitments</h1>
-      <p class="max-w-4xl mb-12">
-        These are the recruitments.
+      <p class="max-w-4xl mb-4">
+        These are the active recruitments.
       </p>
       <table>
         <thead>
@@ -12,12 +12,14 @@
             <th>Process ID</th>
             <th>Business Key</th>
             <th>Position</th>
-            <th>Job Ad</th>
+            <th>Office</th>
+            <th>Department</th>
+            <th>Manager</th>
           </tr>
         </thead>
-        <tr v-for="position in jobAds" :key="position._additional.id">
+        <tr v-for="position in instances" :key="position.id">
           <td>
-            <NuxtLink :to="`/recruiter/recruitments/${position.processId}`">
+            <NuxtLink :to="`/recruiter/recruitments/${position.id}`">
               <Button color="main" size="small">
                 View
               </Button>
@@ -25,20 +27,18 @@
           </td>
           <td>
             <div>
-              {{ position.processId }}
+              {{ position.id }}
             </div>
-            <a target="_blank" :href="`https://digibp.herokuapp.com/camunda/app/cockpit/default/#/process-instance/${position.processId}`" class="block p-1 text-xs text-red-500">
+            <a target="_blank" :href="`https://digibp.herokuapp.com/camunda/app/cockpit/default/#/process-instance/${position.id}`" class="block p-1 text-xs text-red-500">
               Open in Camunda
               <font-awesome-icon :icon="['fas', 'square-arrow-up-right']" />
             </a>
           </td>
           <td>{{ position.businessKey }}</td>
           <td>{{ position.title }}</td>
-          <td>
-            <JobAd>
-              <div v-html="position.jobAd" />
-            </JobAd>
-          </td>
+          <td>{{ position.office }}</td>
+          <td>{{ position.department }}</td>
+          <td>{{ position.manager }}</td>
         </tr>
       </table>
       <p>
@@ -56,19 +56,17 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Button from '~/components/Button.vue'
-import JobAd from '~/components/JobAd.vue'
 
 export default {
   components: {
-    Button,
-    JobAd
+    Button
   },
   layout: 'recruiter',
   computed: {
-    ...mapState(['jobAds'])
+    ...mapState(['instances'])
   },
   mounted () {
-    this.$store.dispatch('fetchJobAds')
+    this.$store.dispatch('fetchInstances')
   },
   methods: {
     ...mapGetters({})

@@ -30,6 +30,9 @@ export const state = () => ({
   /* employee data from store */
   employees: [],
 
+  /* instances from camunda */
+  instances: [],
+
   /* job ad data from store */
   jobAds: []
 })
@@ -97,6 +100,12 @@ export const mutations = {
 
   SET_PROCESS_INSTANCE_JOB_AD: (state, jobAd) => {
     state.processInstance.jobAd = jobAd
+  },
+
+  /* instances mutations */
+
+  SET_INSTANCES: (state, instances) => {
+    state.instances = instances
   },
 
   /* employee mutations */
@@ -190,6 +199,20 @@ export const actions = {
       }).catch((error) => {
         reject(error)
       })
+    })
+  },
+
+  fetchInstances ({ commit }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/list-instances'
+      axios.get(url)
+        .then((response) => {
+          commit('SET_INSTANCES', response.data)
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   },
 
