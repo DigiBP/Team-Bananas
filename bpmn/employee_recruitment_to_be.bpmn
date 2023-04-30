@@ -56,9 +56,7 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="has_internal_candidates" name="Internal candidates available?">
-      <bpmn:extensionElements>
-        <camunda:executionListener class="" event="start" />
-      </bpmn:extensionElements>
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1mkl8p1</bpmn:incoming>
       <bpmn:outgoing>Flow_0mzh1lf</bpmn:outgoing>
       <bpmn:outgoing>Flow_1vcq9tr</bpmn:outgoing>
