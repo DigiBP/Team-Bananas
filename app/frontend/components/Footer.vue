@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 .footer {
   @apply bg-gray-600 p-8 font-light text-xs text-gray-200;
+  @apply drop-shadow-lg shadow-lg;
 
   &-inner {
     @apply w-full max-w-screen-xl flex-grow m-auto;

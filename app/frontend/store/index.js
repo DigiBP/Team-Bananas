@@ -8,6 +8,7 @@ const initProcessInstance = {
   department: '',
   manager: '',
   jobAd: '',
+  numInternalCandidates: null,
   internalCandidates: [],
   externalApplicants: []
 }
@@ -103,6 +104,10 @@ export const mutations = {
 
   SET_PROCESS_INSTANCE_INTERNAL_CANIDATES: (state, internalCandidates) => {
     state.processInstance.internalCandidates = internalCandidates
+  },
+
+  SET_PROCESS_INSTANCE_NUM_INTERNAL_CANIDATES: (state, numInternalCandidates) => {
+    state.processInstance.numInternalCandidates = numInternalCandidates
   },
 
   /* instances mutations */
@@ -264,6 +269,7 @@ export const actions = {
   proceedWithInternalCandidates ({ commit, state }) {
     return new Promise((resolve, reject) => {
       const url = '/api/camunda/confirm-internal-candidates'
+      commit('SET_PROCESS_INSTANCE_NUM_INTERNAL_CANIDATES', state.processInstance.internalCandidates.length)
       axios.post(url, {
         ...state.processInstance
       }).then((response) => {

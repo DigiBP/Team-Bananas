@@ -80,6 +80,12 @@ app.all('/confirm-job-ad', async (req, res) => {
     return
   }
 
+  // generate a tweet text for the job ad
+  const title = req.body.title
+  const office = req.body.office
+  const url = `${req.protocol}://${req.headers.host}/applicant/lookup?key=${encodeURIComponent(processInstanceId)}`
+  const tweetText = `📣 We are hiring a ${title} for our ${office} office! Apply via ${url} #digisalors #career #job #hiring`
+
   // save jobAd as process variable
   const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
   console.log('POST', setVariableUrl) // eslint-disable-line no-console
@@ -88,6 +94,10 @@ app.all('/confirm-job-ad', async (req, res) => {
       modifications: {
         jobAd: {
           value: jobAd,
+          type: 'String'
+        },
+        tweet: {
+          value: tweetText,
           type: 'String'
         }
       }
