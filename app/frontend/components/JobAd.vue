@@ -1,5 +1,5 @@
 <template>
-  <div class="jobad">
+  <div :class="`jobad jobad-${type}`">
     <slot />
     <!-- avoid css removal in tree shaking as styling is used only run-time -->
     <div v-if="false">
@@ -17,16 +17,43 @@
 
 <script>
 export default {
-  name: 'JobAd'
+  name: 'JobAd',
+  props: {
+    type: {
+      type: String,
+      default: 'internal'
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .jobad {
-  @apply border border-digisailor-default;
-  @apply bg-digisailor-default bg-opacity-20;
-  @apply rounded-lg shadow-lg;
-  @apply p-4 my-4;
+  @apply my-4;
+
+  &-applicant {
+    @apply border-none;
+    @apply bg-digisailor-accent bg-opacity-0;
+
+    h1 {
+      @apply hidden;
+    }
+
+    p {
+      @apply text-base;
+    }
+
+    ul {
+      @apply text-base;
+    }
+  }
+
+  &-internal {
+    @apply border border-digisailor-default;
+    @apply bg-digisailor-default bg-opacity-20;
+    @apply rounded-lg shadow-lg;
+    @apply p-4;
+  }
 
   h1 {
     @apply text-lg text-digisailor-default;
