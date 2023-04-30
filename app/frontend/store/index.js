@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const processInstance = {
+const initProcessInstance = {
   processId: '', // camunda id
   businessKey: '',
   title: '',
@@ -8,10 +8,8 @@ const processInstance = {
   department: '',
   manager: '',
   jobAd: '',
-  _additional: {
-    id: '', // weaviate id
-    vector: []
-  }
+  internalCandidates: [],
+  externalApplicants: []
 }
 
 export const state = () => ({
@@ -25,7 +23,7 @@ export const state = () => ({
   },
 
   /* current process instance data for UI */
-  processInstance,
+  processInstance: initProcessInstance,
 
   /* employee data from store */
   employees: [],
@@ -67,11 +65,12 @@ export const mutations = {
   /* process instance mutations */
 
   RESET_PROCESS_INSTANCE: (state) => {
-    state.processInstance = processInstance
+    state.processInstance = initProcessInstance
   },
 
   SET_PROCESS_INSTANCE: (state, processInstance) => {
-    state.processInstance = processInstance
+    state.processInstance = initProcessInstance
+    state.processInstance = Object.assign(state.processInstance, processInstance)
   },
 
   SET_PROCESS_INSTANCE_ID: (state, id) => {
@@ -100,6 +99,10 @@ export const mutations = {
 
   SET_PROCESS_INSTANCE_JOB_AD: (state, jobAd) => {
     state.processInstance.jobAd = jobAd
+  },
+
+  SET_PROCESS_INSTANCE_INTERNAL_CANIDATES: (state, internalCandidates) => {
+    state.processInstance.internalCandidates = internalCandidates
   },
 
   /* instances mutations */
@@ -176,11 +179,11 @@ export const actions = {
     })
   },
 
-  confirmJobAd ({ commit }) {
+  confirmJobAd ({ commit, state }) {
     return new Promise((resolve, reject) => {
       const url = '/api/camunda/confirm-job-ad'
       axios.post(url, {
-        ...this.state.processInstance
+        ...state.processInstance
       }).then((response) => {
         resolve(response)
       }).catch((error) => {
@@ -189,11 +192,11 @@ export const actions = {
     })
   },
 
-  saveInstanceData ({ commit }) {
+  saveJobAdData ({ commit, state }) {
     return new Promise((resolve, reject) => {
-      const url = '/api/store/save-instance-data'
+      const url = '/api/store/save-job-ad'
       axios.post(url, {
-        ...this.state.processInstance
+        ...state.processInstance
       }).then((response) => {
         resolve(response)
       }).catch((error) => {
@@ -216,6 +219,20 @@ export const actions = {
     })
   },
 
+  fetchInstance ({ commit }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/get-instance'
+      axios.post(url, { processInstanceId })
+        .then((response) => {
+          commit('SET_PROCESS_INSTANCE', response.data)
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+
   fetchEmployees ({ commit }) {
     return new Promise((resolve, reject) => {
       const url = '/api/store/employees'
@@ -230,39 +247,25 @@ export const actions = {
     })
   },
 
-  fetchJobAds ({ commit }) {
-    return new Promise((resolve, reject) => {
-      const url = '/api/store/job-ads'
-      axios.get(url)
-        .then((response) => {
-          commit('SET_JOB_ADS', response.data)
-          resolve(response)
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
-  },
-
-  fetchJobAd ({ commit }, { processInstanceId }) {
-    return new Promise((resolve, reject) => {
-      const url = `/api/store/job-ads/${processInstanceId}`
-      axios.get(url)
-        .then((response) => {
-          commit('SET_PROCESS_INSTANCE', response.data)
-          resolve(response)
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
-  },
-
   matchEmployees ({ commit, state }) {
     return new Promise((resolve, reject) => {
       const url = '/api/store/match-employees'
       axios.post(url, {
-        vector: state.processInstance._additional.vector
+        ...state.processInstance
+      }).then((response) => {
+        commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', response.data)
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  proceedWithInternalCandidates ({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/confirm-internal-candidates'
+      axios.post(url, {
+        ...state.processInstance
       }).then((response) => {
         resolve(response)
       }).catch((error) => {

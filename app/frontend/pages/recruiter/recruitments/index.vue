@@ -17,9 +17,9 @@
             <th>Manager</th>
           </tr>
         </thead>
-        <tr v-for="position in instances" :key="position.id">
+        <tr v-for="position in instances" :key="position.processId">
           <td>
-            <NuxtLink :to="`/recruiter/recruitments/${position.id}`">
+            <NuxtLink :to="`/recruiter/recruitments/${position.processId}`">
               <Button color="main" size="small">
                 View
               </Button>
@@ -27,9 +27,9 @@
           </td>
           <td>
             <div>
-              {{ position.id }}
+              {{ position.processId }}
             </div>
-            <a target="_blank" :href="`https://digibp.herokuapp.com/camunda/app/cockpit/default/#/process-instance/${position.id}`" class="block p-1 text-xs text-red-500">
+            <a target="_blank" :href="`https://digibp.herokuapp.com/camunda/app/cockpit/default/#/process-instance/${position.processId}`" class="block p-1 text-xs text-red-500">
               Open in Camunda
               <font-awesome-icon :icon="['fas', 'square-arrow-up-right']" />
             </a>

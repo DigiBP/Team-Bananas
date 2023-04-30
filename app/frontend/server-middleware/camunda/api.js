@@ -6,6 +6,9 @@ app.use(bodyParser.json())
 // axios to make requests against Camunda REST Engine API
 const axios = require('axios')
 
+// shared helper methods
+const { generateBusinessKey, getProcessVariables, getAndLockExternalTask, completeExternalTask } = require('./helper')
+
 // Camunda API config
 const tenantId = 'bananas'
 const processKey = 'employee_recruitment_to_be'
@@ -17,34 +20,9 @@ const commonHeaders = {
 
 /* API endpoints */
 
-function generateBusinessKey (title, office) {
-  const today = new Date()
-  const date = today.toISOString().split('T')[0].replace(/-/g, '')
-  const acronym = title
-    .match(/[\p{Alpha}\p{Nd}]+/gu)
-    .reduce((previous, next) => previous + ((+next === 0 || parseInt(next)) ? parseInt(next) : next[0] || ''), '')
-    .toUpperCase()
-
-  let officeAcronym = 'ANY'
-  switch (office) {
-    case 'Basel':
-      officeAcronym = 'BSL'
-      break
-    case 'Bern':
-      officeAcronym = 'BRN'
-      break
-    case 'Olten':
-      officeAcronym = 'OLT'
-      break
-    case 'Zurich':
-      officeAcronym = 'ZRH'
-      break
-  }
-
-  return `${date}/${officeAcronym}/${acronym}`
-}
-
-// API endpoint 1: start new process instance in Camunda by passing the job title
+/**
+ * Start a new process instance and post variables to it.
+ */
 app.all('/start-instance', async (req, res) => {
   const url = `${baseUrl}/process-definition/key/${processKey}/tenant-id/${tenantId}/start`
 
@@ -88,55 +66,88 @@ app.all('/start-instance', async (req, res) => {
   })
 })
 
-// API endpoint 2: confirm the job ad step by locking then completing the external service task for "job_ad"
-// @see https://camunda.com/blog/2022/01/qa-how-can-i-complete-a-service-task-via-the-rest-api/
+/**
+ * Complete the external service task for "job_ad".
+ */
 app.all('/confirm-job-ad', async (req, res) => {
   const processInstanceId = req.body.processId
+  const jobAd = req.body.jobAd
 
-  // Step 1: get the external task ID for the processInstance's "job_ad" service task
-  const getExternalTaskUrl = `${baseUrl}/external-task?processInstanceId=${processInstanceId}&topicName=job_ad`
-  console.log('GET', getExternalTaskUrl) // eslint-disable-line no-console
-  const getExternalTaskResponse = await axios.get(getExternalTaskUrl, {
-    headers: commonHeaders
-  })
-  console.log(getExternalTaskResponse.data) // eslint-disable-line no-console
-  const externalTaskId = getExternalTaskResponse.data[0].id
+  // fetch and lock external task
+  const externalTaskId = await getAndLockExternalTask(baseUrl, commonHeaders, processInstanceId, 'job_ad')
+  if (!externalTaskId) {
+    res.json({ success: false, message: 'failed to fetch and lock external task' })
+    return
+  }
 
-  // Step 2: lock the external task
-  const lockExternalTaskUrl = `${baseUrl}/external-task/${externalTaskId}/lock`
-  console.log('POST', lockExternalTaskUrl) // eslint-disable-line no-console
+  // save jobAd as process variable
+  const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+  console.log('POST', setVariableUrl) // eslint-disable-line no-console
   try {
-    await axios.post(lockExternalTaskUrl, {
-      workerId: 'HR Buddy (digisailors.ch)',
-      lockDuration: 10000
+    await axios.post(setVariableUrl, {
+      modifications: {
+        jobAd: {
+          value: jobAd,
+          type: 'String'
+        }
+      }
     }, {
       headers: commonHeaders
     })
   } catch (error) {
     console.log(error.response.data) // eslint-disable-line no-console
-    res.json({ success: false, message: 'failed to lock external task id' })
+    res.json({ success: false, message: 'failed to set variable' })
     return
   }
 
-  // Step 3: complete the external task
-  const completeExternalTaskUrl = `${baseUrl}/external-task/${externalTaskId}/complete`
-  console.log('POST', completeExternalTaskUrl) // eslint-disable-line no-console
-  try {
-    await axios.post(completeExternalTaskUrl, {
-      workerId: 'HR Buddy (digisailors.ch)'
-    }, {
-      headers: commonHeaders
-    })
-  } catch (error) {
-    console.log(error.response.data) // eslint-disable-line no-console
-    res.json({ success: false, message: 'failed to complete external task id' })
-    return
-  }
-
+  // complete the external task
+  await completeExternalTask(baseUrl, commonHeaders, externalTaskId)
   res.json({ success: true })
 })
 
-// API endpoint 3: list all process instances
+/**
+ * Complete the external service task for "search_internal_candidates"
+ */
+app.all('/confirm-internal-candidates', async (req, res) => {
+  const processInstanceId = req.body.processId
+  const candidates = req.body.internalCandidates
+  const numInternalCandidates = candidates.length
+
+  // fetch and lock external task
+  const externalTaskId = await getAndLockExternalTask(baseUrl, commonHeaders, processInstanceId, 'internal_candidates')
+  if (!externalTaskId) {
+    res.json({ success: false, message: 'failed to fetch and lock external task' })
+    return
+  }
+
+  // save "numInternalCandidates" as process variable
+  const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+  console.log('POST', setVariableUrl) // eslint-disable-line no-console
+  try {
+    await axios.post(setVariableUrl, {
+      modifications: {
+        numInternalCandidates: {
+          value: numInternalCandidates,
+          type: 'Integer'
+        }
+      }
+    }, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error.response.data) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
+  // complete the external task
+  await completeExternalTask(baseUrl, commonHeaders, externalTaskId)
+  res.json({ success: true })
+})
+
+/**
+ * List all process instances for the current environment.
+ */
 app.all('/list-instances', async (req, res) => {
   // we filter by the env name to only show instances for the current environment
   const envName = process.env.ENV_NAME ?? 'dev'
@@ -151,22 +162,39 @@ app.all('/list-instances', async (req, res) => {
   // fetch the process variables for each process instance
   const processInstances = []
   for (const processInstance of response.data) {
-    const processVariablesUrl = `${baseUrl}/process-instance/${processInstance.id}/variables`
-    console.log('GET', processVariablesUrl) // eslint-disable-line no-console
-    const processVariablesResponse = await axios.get(processVariablesUrl, {
-      headers: commonHeaders
-    })
-
-    const variables = {}
-    for (const [key, variable] of Object.entries(processVariablesResponse.data)) {
-      variables[key] = variable.value
-    }
+    const variables = await getProcessVariables(baseUrl, commonHeaders, processInstance.id)
     const item = { ...processInstance, ...variables }
+
+    // rename id into processId
+    item.processId = processInstance.id
+    delete item.id
+
     processInstances.push(item)
   }
 
   console.log(processInstances) // eslint-disable-line no-console
   res.json(processInstances)
+})
+
+/**
+ * Get a process instance by process ID.
+ */
+app.all('/get-instance', async (req, res) => {
+  const processInstanceId = req.body.processInstanceId
+  const url = `${baseUrl}/process-instance/${processInstanceId}`
+  console.log('GET', url) // eslint-disable-line no-console
+  const response = await axios.get(url, {
+    headers: commonHeaders
+  })
+  const variables = await getProcessVariables(baseUrl, commonHeaders, processInstanceId)
+  const processInstance = { ...response.data, ...variables }
+
+  // rename id into processId
+  processInstance.processId = processInstance.id
+  delete processInstance.id
+
+  console.log(processInstance) // eslint-disable-line no-console
+  res.json(processInstance)
 })
 
 module.exports = app

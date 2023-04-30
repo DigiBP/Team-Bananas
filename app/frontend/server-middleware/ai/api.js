@@ -23,7 +23,7 @@ app.all('/generate-job-ad', async (req, res) => {
   // test mode
   if (skills === 'test') {
     const jobAd = `<h1>${title}</h1><h2>About Digisailors</h2><p>${about}</p><h2>Requirements</h2><ul><li>test</li><li>test</li><li>test</li><li>test</li></ul><p>Please apply online via "HR Buddy" on https://digisailors.ch/.</p>`
-    res.json({ message: jobAd })
+    return res.json({ message: jobAd })
   }
 
   const prompt = 'Please write a job ad with basic html formatting (allowd tags: h1, h2, ul, li, p). ' +

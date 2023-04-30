@@ -3,16 +3,43 @@
     <div v-if="!loadingProcess">
       <h1>Recruitment Drive for {{ processInstance.title }}</h1>
       <ProcessInstance />
-      <p>
-        <JobAd>
-          <div v-html="processInstance.jobAd" class="max-w-xl" />
-        </JobAd>
-      </p>
-      <div v-if="loadingEmployees">
-        <font-awesome-icon icon="spinner" spin />
-      </div>
-      <div v-else>
-        ...employees...
+      <div class="flex space-x-12">
+        <div class="w-1/2">
+          <JobAd>
+            <div v-html="processInstance.jobAd" />
+          </JobAd>
+        </div>
+        <div class="w-1/2">
+          <div v-if="loadingEmployees">
+            <font-awesome-icon icon="spinner" spin />
+          </div>
+          <div v-else>
+            <h2 class="mb-4">Internal Candidates</h2>
+            <div v-if="processInstance.internalCandidates.length > 0">
+              <ul>
+                <li v-for="candidate in processInstance.internalCandidates" :key="candidate._additional.id">
+                  {{ candidate.name }}
+                  <span class="rounded-full px-1 py-0.5 text-xs bg-digisailor-accent text-white">
+                    {{ (Math.round(candidate._additional.certainty * 10000) / 100) }}%
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div v-else>
+              <em>No internal candidates</em>
+            </div>
+            <div v-if="!processInstance.numInternalCandidates" class="mt-4">
+              <Button v-if="processInstance.internalCandidates.length > 0" color="main" @clicked="proceedWithCandidates">
+                Proceed with internal candidates
+                <font-awesome-icon icon="arrow-right" />
+              </Button>
+              <Button color="main" @clicked="proceedWithoutCandidates">
+                Proceed without internal candidates
+                <font-awesome-icon icon="arrow-right" />
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
       <p>
         <NuxtLink to="/recruiter/recruitments">
@@ -27,7 +54,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import Button from '~/components/Button.vue'
 import JobAd from '~/components/JobAd.vue'
 import ProcessInstance from '~/components/ProcessInstance.vue'
@@ -46,25 +73,34 @@ export default {
   data () {
     return {
       loadingProcess: true,
-      loadingEmployees: false
+      loadingEmployees: true
     }
   },
   computed: {
     ...mapState(['processInstance'])
   },
   mounted () {
-    this.$store.dispatch('fetchJobAd', {
+    this.$store.dispatch('fetchInstance', {
       processInstanceId: this.slug
     }).then(() => {
       this.loadingProcess = false
-      this.loadingEmployees = true
-      this.$store.dispatch('matchEmployees').then(() => {
+      if (!this.processInstance.numInternalCandidates || this.processInstance.numInternalCandidates > 0) {
+        this.$store.dispatch('matchEmployees').then(() => {
+          this.loadingEmployees = false
+        })
+      } else {
         this.loadingEmployees = false
-      })
+      }
     })
   },
   methods: {
-    ...mapGetters({})
+    proceedWithCandidates () {
+      this.$store.dispatch('proceedWithInternalCandidates')
+    },
+    proceedWithoutCandidates () {
+      this.$store.commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', [])
+      this.$store.dispatch('proceedWithInternalCandidates')
+    }
   }
 }
 </script>

@@ -67,7 +67,7 @@ export default {
       this.$store.dispatch('confirmJobAd', {}).catch(() => {
         this.confirmingJobAd = false
       }).then(() => {
-        this.$store.dispatch('saveInstanceData', {}).then(() => {
+        this.$store.dispatch('saveJobAdData', {}).then(() => {
           this.$emit('completed')
         }).finally(() => {
           this.confirmingJobAd = false

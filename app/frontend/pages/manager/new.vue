@@ -6,13 +6,8 @@
       </h1>
     </div>
     <Transition>
-      <div v-if="step >= 1" class="flex flex-start space-x-12">
-        <div class="w-1/2">
-          <ProcessInstance />
-        </div>
-        <div class="w-1/2">
-          &nbsp;
-        </div>
+      <div v-if="step >= 1">
+        <ProcessInstance />
       </div>
     </Transition>
     <div class="flex flex-start space-x-12">

@@ -1,3 +1,6 @@
+// config: similarity to reach in vector search to be condiered an internal candideate match
+const CERTAINTY_CUTOFF = 0.9
+
 // express app
 const bodyParser = require('body-parser')
 const app = require('express')()
@@ -31,25 +34,49 @@ app.all('/employees', (req, res) => {
     })
 })
 
-// API endpoint 1: find employees matching with a job ad's vector
+// API endpoint 1: find employees matching with a job ad
 app.all('/match-employees', (req, res) => {
-  const vector = req.body.vector
-
-  console.log('vector', vector) // eslint-disable-line no-console
-
+  // step 1: get the job ad vector for the process instance
+  const processId = req.body.processId
   client.graphql
-    .get()
-    .withClassName('Employee')
-    .withFields('_additional { id certainty } name age position degree level experience')
-    .withNearVector({ vector })
+    .get('JobAd')
+    .withClassName('JobAd')
+    .withFields('_additional { id vector } processId')
+    .withLimit(1)
+    .withWhere({
+      path: ['processId'],
+      operator: 'Equal',
+      valueText: processId
+    })
     .do()
     .then((result) => {
-      console.log(result.data.Get) // eslint-disable-line no-console
-      return res.json(result.data.Get)
+      const vector = result.data.Get.JobAd[0]._additional.vector
+      console.log('vector', vector) // eslint-disable-line no-console
+
+      // step 2: find employees matching with the job ad vector
+      client.graphql
+        .get()
+        .withClassName('Employee')
+        .withFields('_additional { id certainty } name age position degree level experience')
+        .withNearVector({ vector })
+        .do()
+        .then((result) => {
+          const employees = result.data.Get.Employee
+          console.log('employees', employees) // eslint-disable-line no-console
+          const matchingEmployees = employees.filter((employee) => {
+            return employee._additional.certainty > CERTAINTY_CUTOFF
+          })
+
+          return res.json(matchingEmployees)
+        })
+        .catch((err) => {
+          console.error(err) // eslint-disable-line no-console
+          return res.send('failed matching employees')
+        })
     })
     .catch((err) => {
       console.error(err) // eslint-disable-line no-console
-      return res.send('failed')
+      return res.send('failed getting job ad vector')
     })
 })
 
