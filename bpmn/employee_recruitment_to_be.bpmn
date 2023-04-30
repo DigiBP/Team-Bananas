@@ -30,7 +30,7 @@
         <bpmn:flowNodeRef>Activity_03xul49</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_018wwj9" name="HR Staff">
-        <bpmn:flowNodeRef>Gateway_10pintv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>has_internal_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00wrceu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1doqifq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1un204y</bpmn:flowNodeRef>
@@ -55,7 +55,10 @@
         <bpmn:flowNodeRef>search_internal_candidates</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:exclusiveGateway id="Gateway_10pintv" name="Potential candidates available?">
+    <bpmn:exclusiveGateway id="has_internal_candidates" name="Internal candidates available?">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="" event="start" />
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1mkl8p1</bpmn:incoming>
       <bpmn:outgoing>Flow_0mzh1lf</bpmn:outgoing>
       <bpmn:outgoing>Flow_1vcq9tr</bpmn:outgoing>
@@ -70,12 +73,12 @@
       <bpmn:outgoing>Flow_0afdzsn</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0zhv3g4" sourceRef="employee_recruitment_start" targetRef="generate_job_ad" />
-    <bpmn:sequenceFlow id="Flow_1mkl8p1" sourceRef="search_internal_candidates" targetRef="Gateway_10pintv" />
-    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Yes" sourceRef="Gateway_10pintv" targetRef="Activity_1doqifq">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_1mkl8p1" sourceRef="search_internal_candidates" targetRef="has_internal_candidates" />
+    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Has internal candidates" sourceRef="has_internal_candidates" targetRef="Activity_1doqifq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates &gt; 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No" sourceRef="Gateway_10pintv" targetRef="Activity_0i9xfx8">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No internal candidates" sourceRef="has_internal_candidates" targetRef="Activity_0i9xfx8">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates == 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0ntcx9k" sourceRef="Activity_00o8ytm" targetRef="Gateway_1qsofoq" />
     <bpmn:sequenceFlow id="Flow_17ythku" name="For candidates not considered further" sourceRef="Gateway_1qsofoq" targetRef="Activity_0vj6zr7" />
@@ -274,10 +277,10 @@
         <dc:Bounds x="150" y="860" width="3990" height="130" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_10pintv_di" bpmnElement="Gateway_10pintv" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="Gateway_10pintv_di" bpmnElement="has_internal_candidates" isMarkerVisible="true">
         <dc:Bounds x="663" y="495" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="661" y="443" width="54" height="40" />
+          <dc:Bounds x="662" y="443" width="54" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_00wrceu_di" bpmnElement="Gateway_00wrceu" isMarkerVisible="true">
@@ -406,14 +409,14 @@
         <di:waypoint x="688" y="650" />
         <di:waypoint x="796" y="650" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="641" y="570" width="18" height="14" />
+          <dc:Bounds x="621" y="591" width="59" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vcq9tr_di" bpmnElement="Flow_1vcq9tr">
         <di:waypoint x="713" y="520" />
         <di:waypoint x="1010" y="520" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="735" y="523" width="15" height="14" />
+          <dc:Bounds x="743" y="523" width="54" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ntcx9k_di" bpmnElement="Flow_0ntcx9k">
