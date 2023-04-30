@@ -3,7 +3,7 @@
   <bpmn:collaboration id="Collaboration_0xwygy9">
     <bpmn:participant id="Participant_0glx47l" name="Recruitment Platform" processRef="employee_recruitment_to_be" />
     <bpmn:participant id="Participant_1qke3h6" name="Applicant" />
-    <bpmn:messageFlow id="Flow_1rzr269" name="Clarify interest" sourceRef="Activity_1doqifq" targetRef="Participant_1qke3h6" />
+    <bpmn:messageFlow id="Flow_1rzr269" name="Clarify interest" sourceRef="clarify_internal_candidates" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_0cj86x8" name="Job Application" sourceRef="Participant_1qke3h6" targetRef="Event_1un204y" />
     <bpmn:messageFlow id="Flow_0z3fgg1" name="Rejection notice" sourceRef="Activity_0vj6zr7" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_1nwf0qu" name="Request to conduct time-delayed video interview (WePow) and/or language test" sourceRef="Activity_0b3ntry" targetRef="Participant_1qke3h6" />
@@ -11,14 +11,6 @@
     <bpmn:messageFlow id="Flow_14s6f0d" name="Appointment for interview" sourceRef="Activity_1vq2492" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_163jlsg" name="Personal acceptance (incl. offer) / rejection with reasons" sourceRef="Activity_1h8auxb" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_04q36s2" name="Acceptance / Confirmation" sourceRef="Participant_1qke3h6" targetRef="Event_0qonv08" />
-    <bpmn:textAnnotation id="TextAnnotation_0n48c4n">
-      <bpmn:text>The job ad is generated via Open AI API in the Digisailors HR Buddy App. Once the manager confirmed the job ad, it is published to the topic exchange.</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_01jhbat" sourceRef="generate_job_ad" targetRef="TextAnnotation_0n48c4n" />
-    <bpmn:textAnnotation id="TextAnnotation_187e84z">
-      <bpmn:text>The process is initiated by the hiring manager via the Digisailors HR Buddy App</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_0rm57xz" sourceRef="employee_recruitment_start" targetRef="TextAnnotation_187e84z" />
   </bpmn:collaboration>
   <bpmn:process id="employee_recruitment_to_be" isExecutable="true">
     <bpmn:laneSet id="LaneSet_07kj7c4">
@@ -32,7 +24,7 @@
       <bpmn:lane id="Lane_018wwj9" name="HR Staff">
         <bpmn:flowNodeRef>has_internal_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00wrceu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1doqifq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>clarify_internal_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1un204y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_152p9yw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1y0te3f</bpmn:flowNodeRef>
@@ -49,7 +41,7 @@
         <bpmn:flowNodeRef>Activity_1ixpalu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1qsofoq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1tumx18</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0i9xfx8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>advertise_position</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0b3ntry</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0fplu0u</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>search_internal_candidates</bpmn:flowNodeRef>
@@ -66,16 +58,16 @@
       <bpmn:outgoing>Flow_1ngoccn</bpmn:outgoing>
       <bpmn:outgoing>Flow_0zngeeh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_1doqifq" name="Clarify interest of potential candidates">
+    <bpmn:userTask id="clarify_internal_candidates" name="Clarify interest of potential candidates">
       <bpmn:incoming>Flow_0mzh1lf</bpmn:incoming>
       <bpmn:outgoing>Flow_0afdzsn</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0zhv3g4" sourceRef="employee_recruitment_start" targetRef="generate_job_ad" />
     <bpmn:sequenceFlow id="Flow_1mkl8p1" sourceRef="search_internal_candidates" targetRef="has_internal_candidates" />
-    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Has internal candidates" sourceRef="has_internal_candidates" targetRef="Activity_1doqifq">
+    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Has internal candidates" sourceRef="has_internal_candidates" targetRef="clarify_internal_candidates">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates &gt; 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No internal candidates" sourceRef="has_internal_candidates" targetRef="Activity_0i9xfx8">
+    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No internal candidates" sourceRef="has_internal_candidates" targetRef="advertise_position">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates == 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0ntcx9k" sourceRef="Activity_00o8ytm" targetRef="Gateway_1qsofoq" />
@@ -88,14 +80,14 @@
     <bpmn:sequenceFlow id="Flow_0pwpy01" name="No" sourceRef="Gateway_1jmxqrz" targetRef="Activity_1vq2492">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0afdzsn" sourceRef="Activity_1doqifq" targetRef="Gateway_00wrceu" />
-    <bpmn:sequenceFlow id="Flow_1ngoccn" name="No" sourceRef="Gateway_00wrceu" targetRef="Activity_0i9xfx8">
+    <bpmn:sequenceFlow id="Flow_0afdzsn" sourceRef="clarify_internal_candidates" targetRef="Gateway_00wrceu" />
+    <bpmn:sequenceFlow id="Flow_1ngoccn" name="No" sourceRef="Gateway_00wrceu" targetRef="advertise_position">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0zngeeh" name="Yes" sourceRef="Gateway_00wrceu" targetRef="Activity_1vq2492">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1kpdv48" sourceRef="Activity_0i9xfx8" targetRef="Event_1un204y" />
+    <bpmn:sequenceFlow id="Flow_1kpdv48" sourceRef="advertise_position" targetRef="Event_1un204y" />
     <bpmn:sequenceFlow id="Flow_16p58mg" sourceRef="Event_1un204y" targetRef="Activity_152p9yw" />
     <bpmn:sequenceFlow id="Flow_0xfxt1y" sourceRef="Activity_152p9yw" targetRef="Gateway_1y0te3f" />
     <bpmn:sequenceFlow id="Flow_09nz2j2" name="For unsuitable candidates" sourceRef="Gateway_1y0te3f" targetRef="Activity_0vj6zr7" />
@@ -113,6 +105,7 @@
     <bpmn:sequenceFlow id="Flow_1vy5itv" sourceRef="Activity_0bhbc1a" targetRef="Activity_03xul49" />
     <bpmn:sequenceFlow id="Flow_09t8df9" sourceRef="Activity_03xul49" targetRef="Activity_1h8auxb" />
     <bpmn:startEvent id="employee_recruitment_start" name="Request recruitment for position" camunda:formRef="" camunda:formRefBinding="latest">
+      <bpmn:documentation>The process is initiated by the hiring manager via the Digisailors HR Buddy App</bpmn:documentation>
       <bpmn:outgoing>Flow_0zhv3g4</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0yskkdq" sourceRef="Event_0bz2sid" targetRef="Activity_1fb7pmz" />
@@ -212,7 +205,8 @@
       <bpmn:outgoing>Flow_0oec268</bpmn:outgoing>
       <bpmn:outgoing>Flow_0egobai</bpmn:outgoing>
     </bpmn:inclusiveGateway>
-    <bpmn:serviceTask id="Activity_0i9xfx8" name="Advertise position">
+    <bpmn:serviceTask id="advertise_position" name="Advertise position">
+      <bpmn:documentation>Advertise the position on Twitter</bpmn:documentation>
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:connectorId>Advertise position</camunda:connectorId>
@@ -223,6 +217,7 @@
       <bpmn:outgoing>Flow_1kpdv48</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="generate_job_ad" name="Generate job ad" camunda:type="external" camunda:topic="job_ad">
+      <bpmn:documentation>The job ad is generated via OpenAI in the app. Once the manager confirmed the job ad, the external task is completed and jobAd variable saved to the process instance.</bpmn:documentation>
       <bpmn:extensionElements />
       <bpmn:incoming>Flow_0zhv3g4</bpmn:incoming>
       <bpmn:outgoing>Flow_0f4xv8c</bpmn:outgoing>
@@ -254,6 +249,7 @@
       <bpmn:outgoing>Flow_09t8df9</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:serviceTask id="search_internal_candidates" name="Identify potential internal candidates" camunda:type="external" camunda:topic="internal_candidates">
+      <bpmn:documentation>The HR Staff confirms in HR Buddy if there are internal candidates or not.</bpmn:documentation>
       <bpmn:incoming>Flow_0f4xv8c</bpmn:incoming>
       <bpmn:outgoing>Flow_1mkl8p1</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -287,7 +283,7 @@
           <dc:Bounds x="982" y="623" width="89" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1amgk2u_di" bpmnElement="Activity_1doqifq">
+      <bpmndi:BPMNShape id="Activity_1amgk2u_di" bpmnElement="clarify_internal_candidates">
         <dc:Bounds x="796" y="610" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="employee_recruitment_start">
@@ -369,7 +365,7 @@
       <bpmndi:BPMNShape id="Gateway_0me1s0z_di" bpmnElement="Gateway_1tumx18">
         <dc:Bounds x="2009" y="495" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0w2qceo_di" bpmnElement="Activity_0i9xfx8">
+      <bpmndi:BPMNShape id="Activity_0w2qceo_di" bpmnElement="advertise_position">
         <dc:Bounds x="1010" y="480" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -583,22 +579,6 @@
         <dc:Bounds x="120" y="80" width="4020" height="60" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0n48c4n_di" bpmnElement="TextAnnotation_0n48c4n">
-        <dc:Bounds x="520" y="1005" width="228.98519163763066" height="69.994918699187" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_187e84z_di" bpmnElement="TextAnnotation_187e84z">
-        <dc:Bounds x="310" y="1010" width="160" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_01jhbat_di" bpmnElement="Association_01jhbat">
-        <di:waypoint x="440" y="948" />
-        <di:waypoint x="543" y="1005" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0rm57xz_di" bpmnElement="Association_0rm57xz">
-        <di:waypoint x="263" y="932" />
-        <di:waypoint x="344" y="1010" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1rzr269_di" bpmnElement="Flow_1rzr269">
         <di:waypoint x="846" y="610" />
         <di:waypoint x="846" y="140" />
