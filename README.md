@@ -113,23 +113,26 @@ Our 4 longlist categories:
 
 <img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/service-architecture.png" style="width:100%; height:auto;" />
 
-### ✅ Scope of the process improvements and digitization:
+### ✅ Scope of the Process Improvements and Digitization:
 
-- Google Form to start the process: via Integromat and Camunda API a new process instance can be started
-  - form is prefilled with standard job description text
-  - hiring manager enters job title, job description
-  - hiring manager selects required skills, maturity level, proposed salary range from dropdowns or checkboxes in the form
-- Automate the internal candidate screening using a small database with test data and an API
-- Google Form to simulate the application of candidates: the Google Form submission triggers the event-base, multi-instance expanded subtask is triggered for the candidate 
-- Automate the job posting: we can simulate publishing the job ad by posting the job add via API to a Twitter account
-- We should add an extra step for the job advertisment: e.g., use ChatGTP to create the job add
-- Use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
-- Scheduling integration (e.g., Calendly)
-- Error handling scenario: job can not be posted on Twitter, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
-- Automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
-- If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process isntance is left without candidates 
-- iSaaS: Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
+- A small web app with the name "HR Buddy" is used by hiring managers to start a new process instance via filling in a form
+  - hiring manager enters job title, office, and department
+  - hiring manager adds a few required skills
+  - **Automation:** based on position title and skills, a job ad is automatically generated using OpenAI API ("ChatGPT")
+  - the hiring manager can adjust the job ad if needed before confirming
+- **Automation:** automate the internal candidate screening using neural search (i.e., vector representation of the job ad matched against vector representations of the employees)
+- **Automation:** automate the job posting: we simulate publishing the job ad by posting the job add via API to a Twitter account
+- **Error Handling Scenario:** job can not be posted on Twitter, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
+- Candidates can browse the job ads on the "HR Buddy" web app
+- Upon clicking on "Apply" in the web app, the candidates are taken to a pre-filled Google Form where they can enter their details
+- **iSaaS:** the Google Form submission triggers an event-based, multi-instance expanded subtask for each applicant via Integromat / MAKE.com
+- **Self-service:** scheduling integration (e.g., Calendly) for applicants to select suitable time window for interview
+- **iSaaS:** Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
+- **Chatbot**: use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
+- **Automation:** automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
 - Video interview: we only do a form for HR to leave the interview feedback (but do not automate the integration with video call tools)
+- If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process instance is left without candidates 
+
 
 ## ⚙️ Implementation
 
