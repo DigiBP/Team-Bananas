@@ -12,7 +12,7 @@
         <div class="w-1/2">
           <div class="mb-12">
             <h2 class="mb-4">Internal Candidates</h2>
-            <div v-if="processInstance.numInternalCandidates !== 0">
+            <div v-if="processInstance.numInternalCandidates === null || processInstance.numInternalCandidates !== 0">
               <div v-if="loadingEmployees">
                 <font-awesome-icon icon="spinner" spin />
               </div>
