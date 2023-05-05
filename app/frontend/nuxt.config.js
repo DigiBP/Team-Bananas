@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Digisailors aiHR Buddy',
+    title: 'Digisailors HR Buddy',
     htmlAttrs: {
       lang: 'en'
     },
@@ -19,7 +19,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Digisailors aiHR Buddy is a HR an assistant agent for a fictive company.'
+        content: 'Digisailors HR Buddy is a HR an assistant agent for a fictive company.'
       }
     ],
     link: [
