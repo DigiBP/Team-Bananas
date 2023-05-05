@@ -364,14 +364,14 @@
         <di:waypoint x="608" y="450" />
         <di:waypoint x="686" y="450" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="543" y="382" width="59" height="27" />
+          <dc:Bounds x="614" y="382" width="59" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vcq9tr_di" bpmnElement="Flow_1vcq9tr">
         <di:waypoint x="633" y="320" />
         <di:waypoint x="920" y="320" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="648" y="326" width="54" height="27" />
+          <dc:Bounds x="661" y="326" width="54" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0afdzsn_di" bpmnElement="Flow_0afdzsn">

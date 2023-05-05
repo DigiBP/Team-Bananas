@@ -77,7 +77,8 @@ export default {
     { path: '/api/camunda', handler: '~/server-middleware/camunda/api.js' },
     { path: '/api/store', handler: '~/server-middleware/store/api-init.js' },
     { path: '/api/store', handler: '~/server-middleware/store/api-employees.js' },
-    { path: '/api/store', handler: '~/server-middleware/store/api-job-ads.js' }
+    { path: '/api/store', handler: '~/server-middleware/store/api-job-ads.js' },
+    { path: '/api/publish', handler: '~/server-middleware/publish/api.js' }
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
