@@ -27,7 +27,7 @@ const commonHeaders = {
 app.all('/post', async (req, res) => {
   const url = `${baseUrl}/statuses`
   const message = req.body.message
-
+  console.log('PARAMS', req.params) // eslint-disable-line no-console
   console.log('PAYLOAD', req.body) // eslint-disable-line no-console
   console.log('POST', url) // eslint-disable-line no-console
   console.log('TOKEN', process.env.MASTODON_BEARER_TOKEN) // eslint-disable-line no-console
