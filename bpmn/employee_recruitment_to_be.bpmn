@@ -17,13 +17,13 @@
         <bpmn:flowNodeRef>clarify_internal_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00wrceu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1un204y</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>advertise_position</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1vq2492</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1h8auxb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0qonv08</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ixpalu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0d7zga7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>subp_candidate_selection</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>advertise_position</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_165lmxo" name="Hiring Manager">
         <bpmn:flowNodeRef>Activity_0bhbc1a</bpmn:flowNodeRef>
@@ -63,13 +63,6 @@
       <bpmn:outgoing>Flow_16p58mg</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_01ar447" messageRef="Message_0nhtitb" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:scriptTask id="advertise_position" name="Advertise position">
-      <bpmn:documentation>Advertise the position on Twitter</bpmn:documentation>
-      <bpmn:incoming>Flow_1ngoccn</bpmn:incoming>
-      <bpmn:incoming>Flow_1vcq9tr</bpmn:incoming>
-      <bpmn:outgoing>Flow_1kpdv48</bpmn:outgoing>
-      <bpmn:script></bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:serviceTask id="Activity_1vq2492" name="Interview Scheduling">
       <bpmn:extensionElements>
         <camunda:connector>
@@ -262,6 +255,28 @@
     <bpmn:sequenceFlow id="Flow_1vzkg2l" sourceRef="Activity_1ixpalu" targetRef="Event_0d7zga7" />
     <bpmn:sequenceFlow id="Flow_1vy5itv" sourceRef="Activity_0bhbc1a" targetRef="Activity_03xul49" />
     <bpmn:sequenceFlow id="Flow_0zhv3g4" sourceRef="employee_recruitment_start" targetRef="generate_job_ad" />
+    <bpmn:serviceTask id="advertise_position" name="Advertise position on social media">
+      <bpmn:documentation>Advertise the position on social media</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">JSON.stringify({
+  "businessKey": execution.getProcessBusinessKey(),
+  "tenant": execution.getTenantId(),
+  "message": execution.getVariable("tweet")
+});</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="url">https://digisailors.ch/api/publish/post</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vcq9tr</bpmn:incoming>
+      <bpmn:incoming>Flow_1ngoccn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kpdv48</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_0edq9hu" name="Acceptance / Confirmation" />
   <bpmn:message id="Message_2qechud" name="Results of video interviews / language tests" />
@@ -304,9 +319,6 @@
           <dc:Bounds x="1041" y="345" width="79" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rhko9c_di" bpmnElement="advertise_position">
-        <dc:Bounds x="920" y="280" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0hyiat7_di" bpmnElement="Activity_1vq2492">
         <dc:Bounds x="1330" y="280" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -345,6 +357,10 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="266" y="685" width="72" height="40" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16s7ulz_di" bpmnElement="advertise_position">
+        <dc:Bounds x="920" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fa9bsb_di" bpmnElement="subp_candidate_selection">
         <dc:Bounds x="1160" y="280" width="100" height="80" />
