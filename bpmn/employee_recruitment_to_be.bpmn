@@ -260,13 +260,15 @@
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="method">PUT</camunda:inputParameter>
             <camunda:inputParameter name="payload">
-              <camunda:script scriptFormat="JavaScript">JSON.stringify({
-  "businessKey": execution.getProcessBusinessKey(),
-  "tenant": execution.getTenantId(),
-  "message": execution.getVariable("tweet")
-});</camunda:script>
+              <camunda:script scriptFormat="JavaScript">var jsonData = {
+    "tweet": execution.getVariable('tweet'),
+    "title": execution.getVariable('title'),
+    "env": execution.getVariable('env')
+}
+
+JSON.stringify(jsonData);</camunda:script>
             </camunda:inputParameter>
             <camunda:inputParameter name="url">https://digisailors.ch/api/publish/post</camunda:inputParameter>
           </camunda:inputOutput>
@@ -287,12 +289,12 @@
         <dc:Bounds x="180" y="240" width="2180" height="490" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_018wwj9_di" bpmnElement="Lane_018wwj9" isHorizontal="true">
-        <dc:Bounds x="210" y="240" width="2150" height="350" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_165lmxo_di" bpmnElement="Lane_165lmxo" isHorizontal="true">
         <dc:Bounds x="210" y="590" width="2150" height="140" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_018wwj9_di" bpmnElement="Lane_018wwj9" isHorizontal="true">
+        <dc:Bounds x="210" y="240" width="2150" height="350" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nm24vn_di" bpmnElement="search_internal_candidates">
@@ -358,12 +360,12 @@
           <dc:Bounds x="266" y="685" width="72" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16s7ulz_di" bpmnElement="advertise_position">
-        <dc:Bounds x="920" y="280" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1fa9bsb_di" bpmnElement="subp_candidate_selection">
         <dc:Bounds x="1160" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16s7ulz_di" bpmnElement="advertise_position">
+        <dc:Bounds x="920" y="280" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0f4xv8c_di" bpmnElement="Flow_0f4xv8c">
@@ -455,20 +457,24 @@
         <di:waypoint x="318" y="660" />
         <di:waypoint x="360" y="660" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Participant_19uusfo_di" bpmnElement="Participant_1qke3h6" isHorizontal="true">
-        <dc:Bounds x="180" y="80" width="2180" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_01tfgta_di" bpmnElement="DataStoreReference_01tfgta">
         <dc:Bounds x="385" y="775" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="371" y="832" width="79" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_19uusfo_di" bpmnElement="Participant_1qke3h6" isHorizontal="true">
+        <dc:Bounds x="180" y="80" width="2180" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataInputAssociation_1g0tdh5_di" bpmnElement="DataInputAssociation_1g0tdh5">
         <di:waypoint x="435" y="800" />
         <di:waypoint x="530" y="800" />
         <di:waypoint x="530" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1wukx88_di" bpmnElement="DataOutputAssociation_1wukx88">
+        <di:waypoint x="410" y="700" />
+        <di:waypoint x="410" y="775" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1rzr269_di" bpmnElement="Flow_1rzr269">
         <di:waypoint x="736" y="410" />
@@ -504,10 +510,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1998" y="182" width="64" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_1wukx88_di" bpmnElement="DataOutputAssociation_1wukx88">
-        <di:waypoint x="410" y="700" />
-        <di:waypoint x="410" y="775" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
