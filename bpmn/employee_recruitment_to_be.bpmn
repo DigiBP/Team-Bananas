@@ -4,7 +4,6 @@
     <bpmn:participant id="Participant_0glx47l" name="Recruitment Platform" processRef="employee_recruitment_to_be" />
     <bpmn:participant id="Participant_1qke3h6" name="Applicant" />
     <bpmn:messageFlow id="Flow_1rzr269" name="Clarify interest" sourceRef="clarify_internal_candidates" targetRef="Participant_1qke3h6" />
-    <bpmn:messageFlow id="Flow_0cj86x8" name="Job Application" sourceRef="Participant_1qke3h6" targetRef="Event_1un204y" />
     <bpmn:messageFlow id="Flow_14s6f0d" name="Appointment for interview" sourceRef="Activity_1vq2492" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_163jlsg" name="Personal acceptance (incl. offer) / rejection with reasons" sourceRef="Activity_1h8auxb" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_04q36s2" name="Acceptance / Confirmation" sourceRef="Participant_1qke3h6" targetRef="Event_0qonv08" />
@@ -16,14 +15,14 @@
         <bpmn:flowNodeRef>has_internal_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>clarify_internal_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_00wrceu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1un204y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1vq2492</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1h8auxb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0qonv08</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1ixpalu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0d7zga7</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>subp_candidate_selection</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>advertise_position</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>subp_candidate_selection</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>JobAddDuration</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_165lmxo" name="Hiring Manager">
         <bpmn:flowNodeRef>Activity_0bhbc1a</bpmn:flowNodeRef>
@@ -33,6 +32,124 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:dataStoreReference id="DataStoreReference_01tfgta" name="Weaviate vector search engine" />
+    <bpmn:sequenceFlow id="Flow_0zhv3g4" sourceRef="employee_recruitment_start" targetRef="generate_job_ad" />
+    <bpmn:sequenceFlow id="Flow_1vy5itv" sourceRef="Activity_0bhbc1a" targetRef="Activity_03xul49" />
+    <bpmn:sequenceFlow id="Flow_1vzkg2l" sourceRef="Activity_1ixpalu" targetRef="Event_0d7zga7" />
+    <bpmn:sequenceFlow id="Flow_18qhkqb" sourceRef="Event_0qonv08" targetRef="Activity_1ixpalu" />
+    <bpmn:sequenceFlow id="Flow_08300rf" sourceRef="Activity_1h8auxb" targetRef="Event_0qonv08" />
+    <bpmn:sequenceFlow id="Flow_09t8df9" sourceRef="Activity_03xul49" targetRef="Activity_1h8auxb" />
+    <bpmn:sequenceFlow id="Flow_1xfsk7i" sourceRef="Activity_1vq2492" targetRef="Activity_0bhbc1a" />
+    <bpmn:sequenceFlow id="Flow_1k8f1d4" sourceRef="subp_candidate_selection" targetRef="Activity_1vq2492" />
+    <bpmn:sequenceFlow id="Flow_0zngeeh" name="Yes" sourceRef="Gateway_00wrceu" targetRef="Activity_1vq2492">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ngoccn" name="No" sourceRef="Gateway_00wrceu" targetRef="advertise_position">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0afdzsn" sourceRef="clarify_internal_candidates" targetRef="Gateway_00wrceu" />
+    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No internal candidates" sourceRef="has_internal_candidates" targetRef="advertise_position">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates == 0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Has internal candidates" sourceRef="has_internal_candidates" targetRef="clarify_internal_candidates">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates &gt; 0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1mkl8p1" sourceRef="search_internal_candidates" targetRef="has_internal_candidates" />
+    <bpmn:sequenceFlow id="Flow_0f4xv8c" sourceRef="generate_job_ad" targetRef="search_internal_candidates" />
+    <bpmn:serviceTask id="advertise_position" name="Advertise position on social media">
+      <bpmn:documentation>Advertise the position on social media</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">PUT</camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">var jsonData = {
+    "tweet": execution.getVariable('tweet'),
+    "title": execution.getVariable('title'),
+    "env": execution.getVariable('env')
+}
+
+JSON.stringify(jsonData);</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="url">https://digisailors.ch/api/publish/post</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vcq9tr</bpmn:incoming>
+      <bpmn:incoming>Flow_1ngoccn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cm9isv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="employee_recruitment_start" name="Request recruitment for position" camunda:formRef="" camunda:formRefBinding="latest">
+      <bpmn:documentation>The process is initiated by the hiring manager via the Digisailors HR Buddy App</bpmn:documentation>
+      <bpmn:outgoing>Flow_0zhv3g4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="generate_job_ad" name="Generate job ad" camunda:type="external" camunda:topic="job_ad">
+      <bpmn:documentation>The job ad is generated via OpenAI in the app. Once the manager confirmed the job ad, the external task is completed and jobAd variable saved to the process instance.</bpmn:documentation>
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0zhv3g4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0f4xv8c</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1wukx88">
+        <bpmn:targetRef>DataStoreReference_01tfgta</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_03xul49" name="Select Final candidate">
+      <bpmn:incoming>Flow_1vy5itv</bpmn:incoming>
+      <bpmn:outgoing>Flow_09t8df9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0bhbc1a" name="Conduct personal interview">
+      <bpmn:incoming>Flow_1xfsk7i</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vy5itv</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0d7zga7" name="Recruitment completed">
+      <bpmn:incoming>Flow_1vzkg2l</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_1ixpalu" name="Order employment contract">
+      <bpmn:incoming>Flow_18qhkqb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vzkg2l</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:intermediateCatchEvent id="Event_0qonv08" name="Acceptance / Confirmation received">
+      <bpmn:incoming>Flow_08300rf</bpmn:incoming>
+      <bpmn:outgoing>Flow_18qhkqb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1aku338" messageRef="Message_0edq9hu" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_1h8auxb" name="Communicate acceptances and rejections">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Communicate acceptances and rejections</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09t8df9</bpmn:incoming>
+      <bpmn:outgoing>Flow_08300rf</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1vq2492" name="Interview Scheduling">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:connectorId>Interview Scheduling</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zngeeh</bpmn:incoming>
+      <bpmn:incoming>Flow_1k8f1d4</bpmn:incoming>
+      <bpmn:incoming>Flow_0lkk3ra</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xfsk7i</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_00wrceu" name="Potential candidate(s) with interest available?">
+      <bpmn:incoming>Flow_0afdzsn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ngoccn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0zngeeh</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="clarify_internal_candidates" name="Clarify interest of potential candidates">
+      <bpmn:incoming>Flow_0mzh1lf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0afdzsn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="has_internal_candidates" name="Internal candidates available?">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1mkl8p1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mzh1lf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1vcq9tr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="search_internal_candidates" name="Identify potential internal candidates" camunda:type="external" camunda:topic="internal_candidates">
       <bpmn:documentation>The HR Staff confirms in HR Buddy if there are internal candidates or not.</bpmn:documentation>
       <bpmn:incoming>Flow_0f4xv8c</bpmn:incoming>
@@ -43,84 +160,14 @@
         <bpmn:targetRef>Property_0ymso3h</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="has_internal_candidates" name="Internal candidates available?">
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_1mkl8p1</bpmn:incoming>
-      <bpmn:outgoing>Flow_0mzh1lf</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1vcq9tr</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:userTask id="clarify_internal_candidates" name="Clarify interest of potential candidates">
-      <bpmn:incoming>Flow_0mzh1lf</bpmn:incoming>
-      <bpmn:outgoing>Flow_0afdzsn</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:exclusiveGateway id="Gateway_00wrceu" name="Potential candidate(s) with interest available?">
-      <bpmn:incoming>Flow_0afdzsn</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ngoccn</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0zngeeh</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:intermediateCatchEvent id="Event_1un204y" name="Job applications received">
-      <bpmn:incoming>Flow_1kpdv48</bpmn:incoming>
-      <bpmn:outgoing>Flow_16p58mg</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_01ar447" messageRef="Message_0nhtitb" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:serviceTask id="Activity_1vq2492" name="Interview Scheduling">
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:connectorId>Interview Scheduling</camunda:connectorId>
-        </camunda:connector>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0zngeeh</bpmn:incoming>
-      <bpmn:incoming>Flow_1k8f1d4</bpmn:incoming>
-      <bpmn:outgoing>Flow_1xfsk7i</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1h8auxb" name="Communicate acceptances and rejections">
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:connectorId>Communicate acceptances and rejections</camunda:connectorId>
-        </camunda:connector>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_09t8df9</bpmn:incoming>
-      <bpmn:outgoing>Flow_08300rf</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:intermediateCatchEvent id="Event_0qonv08" name="Acceptance / Confirmation received">
-      <bpmn:incoming>Flow_08300rf</bpmn:incoming>
-      <bpmn:outgoing>Flow_18qhkqb</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1aku338" messageRef="Message_0edq9hu" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Activity_1ixpalu" name="Order employment contract">
-      <bpmn:incoming>Flow_18qhkqb</bpmn:incoming>
-      <bpmn:outgoing>Flow_1vzkg2l</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:endEvent id="Event_0d7zga7" name="Recruitment completed">
-      <bpmn:incoming>Flow_1vzkg2l</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:userTask id="Activity_0bhbc1a" name="Conduct personal interview">
-      <bpmn:incoming>Flow_1xfsk7i</bpmn:incoming>
-      <bpmn:outgoing>Flow_1vy5itv</bpmn:outgoing>
-      <bpmn:multiInstanceLoopCharacteristics>
-        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">3</bpmn:loopCardinality>
-      </bpmn:multiInstanceLoopCharacteristics>
-    </bpmn:userTask>
-    <bpmn:userTask id="Activity_03xul49" name="Select Final candidate">
-      <bpmn:incoming>Flow_1vy5itv</bpmn:incoming>
-      <bpmn:outgoing>Flow_09t8df9</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:serviceTask id="generate_job_ad" name="Generate job ad" camunda:type="external" camunda:topic="job_ad">
-      <bpmn:documentation>The job ad is generated via OpenAI in the app. Once the manager confirmed the job ad, the external task is completed and jobAd variable saved to the process instance.</bpmn:documentation>
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_0zhv3g4</bpmn:incoming>
-      <bpmn:outgoing>Flow_0f4xv8c</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_1wukx88">
-        <bpmn:targetRef>DataStoreReference_01tfgta</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
-    </bpmn:serviceTask>
-    <bpmn:startEvent id="employee_recruitment_start" name="Request recruitment for position" camunda:formRef="" camunda:formRefBinding="latest">
-      <bpmn:documentation>The process is initiated by the hiring manager via the Digisailors HR Buddy App</bpmn:documentation>
-      <bpmn:outgoing>Flow_0zhv3g4</bpmn:outgoing>
-    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0lkk3ra" sourceRef="JobAddDuration" targetRef="Activity_1vq2492" />
+    <bpmn:sequenceFlow id="Flow_1cm9isv" sourceRef="advertise_position" targetRef="subp_candidate_selection" />
     <bpmn:subProcess id="subp_candidate_selection" name="Evaluate and select candidates">
-      <bpmn:incoming>Flow_16p58mg</bpmn:incoming>
+      <bpmn:incoming>Flow_1cm9isv</bpmn:incoming>
       <bpmn:outgoing>Flow_1k8f1d4</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">10</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
       <bpmn:businessRuleTask id="Activity_152p9yw" name="Perform screening (longlist)" camunda:resultVariable="Perform_Screening_for_longlist_Decision" camunda:decisionRef="Decision_Perform_Screening_for_longlist" camunda:mapDecisionResult="collectEntries">
         <bpmn:incoming>Flow_1piva8z</bpmn:incoming>
         <bpmn:outgoing>Flow_0m8dkfy</bpmn:outgoing>
@@ -193,6 +240,7 @@
         <bpmn:outgoing>Flow_0tqpy90</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:startEvent id="Event_1ii3h2w" name="Job applications received">
+        <bpmn:extensionElements />
         <bpmn:outgoing>Flow_1piva8z</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:endEvent id="Event_119i7yo" name="Shortlist Candidates selected">
@@ -230,55 +278,12 @@
       <bpmn:sequenceFlow id="Flow_18js21i" sourceRef="Activity_05cunyf" targetRef="Activity_1irelu2" />
       <bpmn:sequenceFlow id="Flow_1srro98" sourceRef="Activity_0ya9fgr" targetRef="Event_05h3xot" />
     </bpmn:subProcess>
-    <bpmn:sequenceFlow id="Flow_0f4xv8c" sourceRef="generate_job_ad" targetRef="search_internal_candidates" />
-    <bpmn:sequenceFlow id="Flow_1mkl8p1" sourceRef="search_internal_candidates" targetRef="has_internal_candidates" />
-    <bpmn:sequenceFlow id="Flow_0mzh1lf" name="Has internal candidates" sourceRef="has_internal_candidates" targetRef="clarify_internal_candidates">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates &gt; 0}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1vcq9tr" name="No internal candidates" sourceRef="has_internal_candidates" targetRef="advertise_position">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{numInternalCandidates == 0}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0afdzsn" sourceRef="clarify_internal_candidates" targetRef="Gateway_00wrceu" />
-    <bpmn:sequenceFlow id="Flow_1ngoccn" name="No" sourceRef="Gateway_00wrceu" targetRef="advertise_position">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0zngeeh" name="Yes" sourceRef="Gateway_00wrceu" targetRef="Activity_1vq2492">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Yes</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1kpdv48" sourceRef="advertise_position" targetRef="Event_1un204y" />
-    <bpmn:sequenceFlow id="Flow_16p58mg" sourceRef="Event_1un204y" targetRef="subp_candidate_selection" />
-    <bpmn:sequenceFlow id="Flow_1k8f1d4" sourceRef="subp_candidate_selection" targetRef="Activity_1vq2492" />
-    <bpmn:sequenceFlow id="Flow_1xfsk7i" sourceRef="Activity_1vq2492" targetRef="Activity_0bhbc1a" />
-    <bpmn:sequenceFlow id="Flow_09t8df9" sourceRef="Activity_03xul49" targetRef="Activity_1h8auxb" />
-    <bpmn:sequenceFlow id="Flow_08300rf" sourceRef="Activity_1h8auxb" targetRef="Event_0qonv08" />
-    <bpmn:sequenceFlow id="Flow_18qhkqb" sourceRef="Event_0qonv08" targetRef="Activity_1ixpalu" />
-    <bpmn:sequenceFlow id="Flow_1vzkg2l" sourceRef="Activity_1ixpalu" targetRef="Event_0d7zga7" />
-    <bpmn:sequenceFlow id="Flow_1vy5itv" sourceRef="Activity_0bhbc1a" targetRef="Activity_03xul49" />
-    <bpmn:sequenceFlow id="Flow_0zhv3g4" sourceRef="employee_recruitment_start" targetRef="generate_job_ad" />
-    <bpmn:serviceTask id="advertise_position" name="Advertise position on social media">
-      <bpmn:documentation>Advertise the position on social media</bpmn:documentation>
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:inputOutput>
-            <camunda:inputParameter name="method">PUT</camunda:inputParameter>
-            <camunda:inputParameter name="payload">
-              <camunda:script scriptFormat="JavaScript">var jsonData = {
-    "tweet": execution.getVariable('tweet'),
-    "title": execution.getVariable('title'),
-    "env": execution.getVariable('env')
-}
-
-JSON.stringify(jsonData);</camunda:script>
-            </camunda:inputParameter>
-            <camunda:inputParameter name="url">https://digisailors.ch/api/publish/post</camunda:inputParameter>
-          </camunda:inputOutput>
-          <camunda:connectorId>http-connector</camunda:connectorId>
-        </camunda:connector>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1vcq9tr</bpmn:incoming>
-      <bpmn:incoming>Flow_1ngoccn</bpmn:incoming>
-      <bpmn:outgoing>Flow_1kpdv48</bpmn:outgoing>
-    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="JobAddDuration" name="2 Weeks" attachedToRef="subp_candidate_selection">
+      <bpmn:outgoing>Flow_0lkk3ra</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1yz9c5v">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P14D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:message id="Message_0edq9hu" name="Acceptance / Confirmation" />
   <bpmn:message id="Message_2qechud" name="Results of video interviews / language tests" />
@@ -313,12 +318,6 @@ JSON.stringify(jsonData);</camunda:script>
         <dc:Bounds x="835" y="425" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="892" y="423" width="89" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_091uw15_di" bpmnElement="Event_1un204y">
-        <dc:Bounds x="1062" y="302" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1041" y="345" width="79" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0hyiat7_di" bpmnElement="Activity_1vq2492">
@@ -360,13 +359,19 @@ JSON.stringify(jsonData);</camunda:script>
           <dc:Bounds x="266" y="685" width="72" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1fa9bsb_di" bpmnElement="subp_candidate_selection">
-        <dc:Bounds x="1160" y="280" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16s7ulz_di" bpmnElement="advertise_position">
         <dc:Bounds x="920" y="280" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fa9bsb_di" bpmnElement="subp_candidate_selection">
+        <dc:Bounds x="1091" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0oz0afh_di" bpmnElement="JobAddDuration">
+        <dc:Bounds x="1153" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1149" y="385" width="44" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0f4xv8c_di" bpmnElement="Flow_0f4xv8c">
         <di:waypoint x="460" y="660" />
@@ -413,16 +418,8 @@ JSON.stringify(jsonData);</camunda:script>
           <dc:Bounds x="995" y="478" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1kpdv48_di" bpmnElement="Flow_1kpdv48">
-        <di:waypoint x="1020" y="320" />
-        <di:waypoint x="1062" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_16p58mg_di" bpmnElement="Flow_16p58mg">
-        <di:waypoint x="1098" y="320" />
-        <di:waypoint x="1160" y="320" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1k8f1d4_di" bpmnElement="Flow_1k8f1d4">
-        <di:waypoint x="1260" y="320" />
+        <di:waypoint x="1191" y="320" />
         <di:waypoint x="1330" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1xfsk7i_di" bpmnElement="Flow_1xfsk7i">
@@ -457,6 +454,16 @@ JSON.stringify(jsonData);</camunda:script>
         <di:waypoint x="318" y="660" />
         <di:waypoint x="360" y="660" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lkk3ra_di" bpmnElement="Flow_0lkk3ra">
+        <di:waypoint x="1191" y="360" />
+        <di:waypoint x="1285" y="360" />
+        <di:waypoint x="1285" y="320" />
+        <di:waypoint x="1330" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cm9isv_di" bpmnElement="Flow_1cm9isv">
+        <di:waypoint x="1020" y="320" />
+        <di:waypoint x="1091" y="320" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataStoreReference_01tfgta_di" bpmnElement="DataStoreReference_01tfgta">
         <dc:Bounds x="385" y="775" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -481,13 +488,6 @@ JSON.stringify(jsonData);</camunda:script>
         <di:waypoint x="736" y="140" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="743" y="183" width="71" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0cj86x8_di" bpmnElement="Flow_0cj86x8">
-        <di:waypoint x="1080" y="140" />
-        <di:waypoint x="1080" y="302" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1088" y="178" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14s6f0d_di" bpmnElement="Flow_14s6f0d">
