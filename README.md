@@ -121,13 +121,13 @@ Our 4 longlist categories:
   - **Automation:** based on position title and skills, a job ad is automatically generated using OpenAI API ("ChatGPT")
   - the hiring manager can adjust the job ad if needed before confirming
 - **Automation:** automate the internal candidate screening using neural search (i.e., vector representation of the job ad matched against vector representations of the employees)
-- **Automation:** automate the job posting: we simulate publishing the job ad by posting the job add via API to a Twitter account
-- **Error Handling Scenario:** job can not be posted on Twitter, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
+- **Automation:** automate the job posting: we simulate publishing the job ad by posting the job add via API to a Mastodon account
+- **Error Handling Scenario:** job can not be posted on Mastodon, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
 - Candidates can browse the job ads on the "HR Buddy" web app
 - Upon clicking on "Apply" in the web app, the candidates are taken to a pre-filled Google Form where they can enter their details
 - **iSaaS:** the Google Form submission triggers an event-based, multi-instance expanded subtask for each applicant via Integromat / MAKE.com
 - **Self-service:** scheduling integration (e.g., Calendly) for applicants to select suitable time window for interview
-- **iSaaS:** Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Twitter
+- **iSaaS:** Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Mastodon
 - **Chatbot**: use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
 - **Automation:** automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
 - Video interview: we only do a form for HR to leave the interview feedback (but do not automate the integration with video call tools)
@@ -191,7 +191,9 @@ The implementaion of the OpenAI API is in [./app/frontend/server-middleware/ai/a
 ```
 
 
-🔴 **TODO** Twitter API (Tim) 🔴
+#### Mastodon API
+
+We simulate posting the job ad to Mastodon social media network (free, open source alternative to Twitter). This task is fully automated through a poller that connects to Camunda and waits for new tasks in the topic ```publish_social_media```. As soon as a new message (respectively: external task) is published on this topic, the automation grabs and locks the tasks, posts the tweet text against the Mastodon REST API and completes the external tasks (so that the token moves to the next stage of accepting candidate applications).
 
 🔴 **TODO** Google API (Gabriela) 🔴
 
@@ -234,4 +236,4 @@ There are some considerations when we build and digitalize the new process:
 - the to-be-process is now good and sufficient
 - try to use MAKE instead of own Java-Codes
 - try to split the work balanced in the team
-- next steps and goal are to define by next week: register and open the "trello" board with the open assigned task, sceleton of the user interface (openAI API) and connect with camunda API, prepare 20 different profiles of people (IT Manager, DevOps Engineer,...), create a Twitter account with the Twitter API, open and register for the Google API (in the Google Cloud Console) and create there an empty google-excel-sheet with 3 tabs (questions, candidates, job add), implement the Longlist-Category in the to-be-process in Camunda, Define questions for the Precheck and try to have the Google Form ready that can trigger a new process instance. 
+- next steps and goal are to define by next week: register and open the "trello" board with the open assigned task, sceleton of the user interface (openAI API) and connect with camunda API, prepare 20 different profiles of people (IT Manager, DevOps Engineer,...), create a Mastodon account with the Mastodon API, open and register for the Google API (in the Google Cloud Console) and create there an empty google-excel-sheet with 3 tabs (questions, candidates, job add), implement the Longlist-Category in the to-be-process in Camunda, Define questions for the Precheck and try to have the Google Form ready that can trigger a new process instance. 
