@@ -197,6 +197,8 @@ We simulate posting the job ad to Mastodon social media network (free, open sour
 
 The implementation is in [./app/automation/entrypoint.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/automation/entrypoint.js)
 
+The Mastodon accounts with the tweets is to be found on [https://mstdn.social/@digisailors](https://mstdn.social/@digisailors)
+
 🔴 **TODO** Google API (Gabriela) 🔴
 
 ----
