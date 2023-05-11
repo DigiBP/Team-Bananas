@@ -1,0 +1,16 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "description": "Robotic process automation for Digisailors HR Buddy",
+  "main": "entrypoint.js",
+  "type": "module",
+  "scripts": {
+    "start": "node entrypoint.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "camunda-external-task-client-js": "^3.0.0"
+  }
+}

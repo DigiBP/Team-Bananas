@@ -50,7 +50,13 @@ app.all('/match-employees', (req, res) => {
     })
     .do()
     .then((result) => {
-      const vector = result.data.Get.JobAd[0]._additional.vector
+      const jobAd = result.data.Get.JobAd[0] ?? null
+      if (jobAd === null) {
+        res.status(204)
+        return res.send('no job ad found')
+      }
+
+      const vector = jobAd._additional.vector ?? []
       console.log('vector', vector) // eslint-disable-line no-console
 
       // step 2: find employees matching with the job ad vector
@@ -71,11 +77,13 @@ app.all('/match-employees', (req, res) => {
         })
         .catch((err) => {
           console.error(err) // eslint-disable-line no-console
+          res.status(204)
           return res.send('failed matching employees')
         })
     })
     .catch((err) => {
       console.error(err) // eslint-disable-line no-console
+      res.status(204)
       return res.send('failed getting job ad vector')
     })
 })

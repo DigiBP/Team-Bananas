@@ -78,6 +78,22 @@ services:
     networks:
       - front
 
+  ##### Camunda ROBOTIC PROCESS AUTOMATION #####
+  automation:
+    container_name: ds-automation
+    build:
+      context: ./
+      dockerfile: ./docker/automation/Dockerfile
+    restart: always
+    ports:
+      - 3200:3200
+    expose:
+      - '3200'
+    env_file:
+      - .env
+    networks:
+      - front
+
 volumes:
   ds_certs:
   ds_vhost:

@@ -247,7 +247,7 @@ export const actions = {
           resolve(response)
         })
         .catch((error) => {
-          reject(error)
+          resolve(error)
         })
     })
   },
