@@ -195,6 +195,8 @@ The implementaion of the OpenAI API is in [./app/frontend/server-middleware/ai/a
 
 We simulate posting the job ad to Mastodon social media network (free, open source alternative to Twitter). This task is fully automated through a poller that connects to Camunda and waits for new tasks in the topic ```publish_social_media```. As soon as a new message (respectively: external task) is published on this topic, the automation grabs and locks the tasks, posts the tweet text against the Mastodon REST API and completes the external tasks (so that the token moves to the next stage of accepting candidate applications).
 
+The implementation is in [./app/automation/entrypoint.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/automation/entrypoint.js)
+
 🔴 **TODO** Google API (Gabriela) 🔴
 
 ----
