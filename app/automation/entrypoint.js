@@ -57,11 +57,11 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
     // post to Mastodon
     let success = true
     try {
-        // const response = await axios.post(matodonUrl, { status: tweet }, { headers: mastodonHeaders })
-      } catch (error) {
-        success = false
-        console.log(error) // eslint-disable-line no-console
-      }
+      const response = await axios.post(matodonUrl, { status: tweet }, { headers: mastodonHeaders })
+    } catch (error) {
+      success = false
+      console.log(error) // eslint-disable-line no-console
+    }
     
     // Complete the task
     if (success) {
