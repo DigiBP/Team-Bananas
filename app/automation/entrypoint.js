@@ -57,7 +57,7 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
     // post to Mastodon
     let success = true
     try {
-        const response = await axios.post(matodonUrl, { status: tweet }, { headers: mastodonHeaders })
+        // const response = await axios.post(matodonUrl, { status: tweet }, { headers: mastodonHeaders })
       } catch (error) {
         success = false
         console.log(error) // eslint-disable-line no-console
@@ -65,13 +65,13 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
     
     // Complete the task
     if (success) {
-        await taskService.complete(task);
+      await taskService.complete(task);
     } else {
-        await taskService.handleFailure(task, {
-            errorMessage: 'Error posting to Mastodon',
-            errorDetails: 'Error posting to Mastodon',
-            retries: 0,
-            retryTimeout: 1000
-        });
+      await taskService.handleFailure(task, {
+        errorMessage: 'Error posting to Mastodon',
+        errorDetails: 'Error posting to Mastodon',
+        retries: 0,
+        retryTimeout: 1000
+      });
     }
 });
