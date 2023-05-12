@@ -92,10 +92,10 @@
       <bpmn:sequenceFlow id="Flow_0o8tesg" sourceRef="Event_0za9ry2" targetRef="has_category_abc" />
       <bpmn:sequenceFlow id="Flow_18t45ka" sourceRef="Activity_0mu0r6m" targetRef="Event_042agb7" />
       <bpmn:sequenceFlow id="Flow_1qt8zsf" name="Category C" sourceRef="has_category_abc" targetRef="Activity_0mu0r6m">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category = "C"}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "C"}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_0q1qq4i" name="Category B" sourceRef="has_category_abc" targetRef="Event_07i6teq">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category = "B"}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "B"}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_042agb7" name="Rejected">
         <bpmn:incoming>Flow_18t45ka</bpmn:incoming>
@@ -111,7 +111,7 @@
         <bpmn:outgoing>Flow_0r99cdg</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_05ccxei" name="Category A" sourceRef="has_category_abc" targetRef="Activity_09kenro">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category = "A"}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "A"}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_19sh1w0" name="Shortlisted">
         <bpmn:incoming>Flow_0r99cdg</bpmn:incoming>
