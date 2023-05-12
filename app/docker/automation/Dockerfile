@@ -5,7 +5,6 @@ WORKDIR /app
 COPY ./automation .
 
 RUN npm install
-RUN npm run build
 
 WORKDIR /app
 

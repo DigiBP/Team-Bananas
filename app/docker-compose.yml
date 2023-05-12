@@ -21,5 +21,19 @@ services:
     volumes:
       - ds_weviate_data:/var/lib/weaviate
 
+  ##### Camunda ROBOTIC PROCESS AUTOMATION #####
+  automation:
+    container_name: ds-automation
+    build:
+      context: ./
+      dockerfile: ./docker/automation/Dockerfile
+    restart: always
+    ports:
+      - 3200:3200
+    expose:
+      - '3200'
+    env_file:
+      - .env
+
 volumes:
   ds_weviate_data:

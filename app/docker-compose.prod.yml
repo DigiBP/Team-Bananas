@@ -91,8 +91,6 @@ services:
       - '3200'
     env_file:
       - .env
-    networks:
-      - front
 
 volumes:
   ds_certs:
