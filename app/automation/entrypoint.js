@@ -57,7 +57,8 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
     // post to Mastodon
     let success = true
     try {
-      const response = await axios.post(matodonUrl, { status: tweet }, { headers: mastodonHeaders })
+      // @todo reactiveate mastodon posting - for now we just log the tweet as the process might get stuck!
+      // const response = await axios.post(matodonUrl, { status: tweet }, { headers: mastodonHeaders })
     } catch (error) {
       success = false
       console.log(error) // eslint-disable-line no-console
