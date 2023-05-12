@@ -89,16 +89,14 @@
       <bpmn:startEvent id="Event_0za9ry2">
         <bpmn:outgoing>Flow_0o8tesg</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0o8tesg" sourceRef="Event_0za9ry2" targetRef="Gateway_1958zsb" />
-      <bpmn:inclusiveGateway id="Gateway_1958zsb" name="Pre-screen category?">
-        <bpmn:incoming>Flow_0o8tesg</bpmn:incoming>
-        <bpmn:outgoing>Flow_1qt8zsf</bpmn:outgoing>
-        <bpmn:outgoing>Flow_0q1qq4i</bpmn:outgoing>
-        <bpmn:outgoing>Flow_05ccxei</bpmn:outgoing>
-      </bpmn:inclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_0o8tesg" sourceRef="Event_0za9ry2" targetRef="has_category_abc" />
       <bpmn:sequenceFlow id="Flow_18t45ka" sourceRef="Activity_0mu0r6m" targetRef="Event_042agb7" />
-      <bpmn:sequenceFlow id="Flow_1qt8zsf" name="Category C" sourceRef="Gateway_1958zsb" targetRef="Activity_0mu0r6m" />
-      <bpmn:sequenceFlow id="Flow_0q1qq4i" name="Category B" sourceRef="Gateway_1958zsb" targetRef="Event_07i6teq" />
+      <bpmn:sequenceFlow id="Flow_1qt8zsf" name="Category C" sourceRef="has_category_abc" targetRef="Activity_0mu0r6m">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category = "C"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="Flow_0q1qq4i" name="Category B" sourceRef="has_category_abc" targetRef="Event_07i6teq">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category = "B"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_042agb7" name="Rejected">
         <bpmn:incoming>Flow_18t45ka</bpmn:incoming>
         <bpmn:messageEventDefinition id="MessageEventDefinition_1oozox9" />
@@ -112,7 +110,9 @@
         <bpmn:incoming>Flow_05ccxei</bpmn:incoming>
         <bpmn:outgoing>Flow_0r99cdg</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_05ccxei" name="Category A" sourceRef="Gateway_1958zsb" targetRef="Activity_09kenro" />
+      <bpmn:sequenceFlow id="Flow_05ccxei" name="Category A" sourceRef="has_category_abc" targetRef="Activity_09kenro">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category = "A"}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_19sh1w0" name="Shortlisted">
         <bpmn:incoming>Flow_0r99cdg</bpmn:incoming>
       </bpmn:endEvent>
@@ -121,6 +121,12 @@
         <bpmn:incoming>Flow_1qt8zsf</bpmn:incoming>
         <bpmn:outgoing>Flow_18t45ka</bpmn:outgoing>
       </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="has_category_abc" name="Pre-screen category?">
+        <bpmn:incoming>Flow_0o8tesg</bpmn:incoming>
+        <bpmn:outgoing>Flow_1qt8zsf</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0q1qq4i</bpmn:outgoing>
+        <bpmn:outgoing>Flow_05ccxei</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
     </bpmn:subProcess>
     <bpmn:endEvent id="Event_0d7zga7" name="Recruitment completed">
       <bpmn:incoming>Flow_1vzkg2l</bpmn:incoming>
@@ -302,15 +308,15 @@
       <bpmndi:BPMNShape id="Activity_19lje9w_di" bpmnElement="Activity_0mu0r6m" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1920" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1hstpwd" bpmnElement="Gateway_1958zsb">
+      <bpmndi:BPMNShape id="BPMNShape_0pnxr8l" bpmnElement="Activity_09kenro" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1210" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0sbxsox_di" bpmnElement="has_category_abc" isMarkerVisible="true">
         <dc:Bounds x="1055" y="345" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1004" y="423" width="54" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0pnxr8l" bpmnElement="Activity_09kenro" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1210" y="330" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0o8tesg_di" bpmnElement="Flow_0o8tesg">
         <di:waypoint x="1021" y="370" />
