@@ -3,7 +3,9 @@
   <bpmn:collaboration id="Collaboration_15igl2o">
     <bpmn:participant id="Participant_0glx47l" name="Recruitment Platform" processRef="Process_18v5axi" />
     <bpmn:participant id="Participant_1qke3h6" name="Applicant" />
-    <bpmn:messageFlow id="Flow_07ttf3k" name="Job application" sourceRef="Participant_1qke3h6" targetRef="Event_088n675" />
+    <bpmn:messageFlow id="Flow_07ttf3k" name="Job application" sourceRef="Participant_1qke3h6" targetRef="Event_088n675">
+      <bpmn:extensionElements />
+    </bpmn:messageFlow>
     <bpmn:messageFlow id="Flow_0hxai2p" name="Rejection letter" sourceRef="Event_1hx4ddo" targetRef="Participant_1qke3h6" />
   </bpmn:collaboration>
   <bpmn:process id="Process_18v5axi" isExecutable="true">
@@ -15,13 +17,13 @@
         <bpmn:flowNodeRef>Gateway_09si2su</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_088n675</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1kwye92</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_03jolpx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1rkhbil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_03jolpx</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:endEvent id="Event_1hx4ddo" name="Rejected">
       <bpmn:incoming>Flow_1mad466</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1wwi6gr" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1wwi6gr" messageRef="Message_095p3em" />
     </bpmn:endEvent>
     <bpmn:serviceTask id="Activity_07th9uo" name="Screen candidate" camunda:type="external" camunda:topic="screen_application">
       <bpmn:incoming>Flow_1n2a70a</bpmn:incoming>
@@ -40,15 +42,11 @@
     </bpmn:exclusiveGateway>
     <bpmn:startEvent id="Event_088n675" name="Application received">
       <bpmn:outgoing>Flow_1wam86z</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0gc8fit" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0gc8fit" messageRef="Message_1lir1l5" />
     </bpmn:startEvent>
     <bpmn:endEvent id="Event_1kwye92" name="2 Weeks">
       <bpmn:incoming>Flow_0igloqk</bpmn:incoming>
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_11hf99p" />
-    </bpmn:endEvent>
-    <bpmn:endEvent id="Event_03jolpx" name="(5 candidates) Shortlisted">
-      <bpmn:incoming>Flow_1jjbvy1</bpmn:incoming>
-      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0n1vpfd" />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1mad466" sourceRef="Activity_0cfuzbd" targetRef="Event_1hx4ddo" />
     <bpmn:sequenceFlow id="Flow_03qu6pz" name="Category B" sourceRef="Gateway_09si2su" targetRef="Event_1rkhbil">
@@ -66,10 +64,15 @@
     <bpmn:endEvent id="Event_1rkhbil" name="Waitlisted">
       <bpmn:incoming>Flow_03qu6pz</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:endEvent id="Event_03jolpx" name="(5 candidates) Shortlisted">
+      <bpmn:incoming>Flow_1jjbvy1</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0aqz2zx" messageRef="Message_0dnhrkf" />
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:message id="Message_0edq9hu" name="Acceptance / Confirmation" />
   <bpmn:message id="Message_0dnhrkf" name="bananas_enough_applications" />
   <bpmn:message id="Message_1lir1l5" name="bananas_application_received_event" />
+  <bpmn:message id="Message_095p3em" name="Rejection_letter_sent" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15igl2o">
       <bpmndi:BPMNShape id="Participant_0glx47l_di" bpmnElement="Participant_0glx47l" isHorizontal="true">
@@ -111,16 +114,16 @@
           <dc:Bounds x="1068" y="573" width="44" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_18kuwr8_di" bpmnElement="Event_03jolpx">
-        <dc:Bounds x="1072" y="342" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1055" y="385" width="71" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1u6in5g_di" bpmnElement="Event_1rkhbil">
         <dc:Bounds x="1072" y="432" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1067" y="475" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1772dtf_di" bpmnElement="Event_03jolpx">
+        <dc:Bounds x="1072" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1055" y="385" width="71" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_0jhhmpn" bpmnElement="Flow_1mad466">
