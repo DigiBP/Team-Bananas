@@ -75,6 +75,7 @@ export default {
     // Will register file from project server-middleware directory to handle /server-middleware/* requires
     { path: '/api/ai', handler: '~/server-middleware/ai/api.js' },
     { path: '/api/camunda', handler: '~/server-middleware/camunda/api.js' },
+    { path: '/api/camunda/message', handler: '~/server-middleware/camunda/api-message.js' },
     { path: '/api/store', handler: '~/server-middleware/store/api-init.js' },
     { path: '/api/store', handler: '~/server-middleware/store/api-employees.js' },
     { path: '/api/store', handler: '~/server-middleware/store/api-job-ads.js' },

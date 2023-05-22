@@ -35,6 +35,10 @@ app.all('/start-instance', async (req, res) => {
         value: process.env.ENV_NAME ?? 'dev',
         type: 'String'
       },
+      last_message: {
+        value: '',
+        type: 'String'
+      },
       title: {
         value: req.body.title,
         type: 'String'

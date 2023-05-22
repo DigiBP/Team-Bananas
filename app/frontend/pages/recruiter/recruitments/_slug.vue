@@ -51,6 +51,23 @@
             <p>
               ...todo...
             </p>
+            <p>
+              <!-- ENOUGH APPLICATIONS RECEIVED -->
+              <Button color="main" @clicked="postMessage('bananas_enough_applications')">
+                Enough Applications Received
+                <font-awesome-icon icon="arrow-right" />
+              </Button>
+              <!-- APPLICANT INTERVIEWS DONE -->
+              <Button color="main" @clicked="postMessage('bananas_interviews_done')">
+                Applicant Interviews Done
+                <font-awesome-icon icon="arrow-right" />
+              </Button>
+              <!-- APPLICANT INTERVIEWS DONE -->
+              <Button color="main" @clicked="postMessage('bananas_personal_interviews_done')">
+                Personal Interviews Done
+                <font-awesome-icon icon="arrow-right" />
+              </Button>
+            </p>
           </div>
         </div>
       </div>
@@ -113,6 +130,11 @@ export default {
     proceedWithoutCandidates () {
       this.$store.commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', [])
       this.$store.dispatch('proceedWithInternalCandidates')
+    },
+    postMessage (messageName) {
+      this.$store.dispatch('postMessageToProcessInstance', {
+        messageName
+      })
     }
   }
 }

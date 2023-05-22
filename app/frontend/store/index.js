@@ -20,7 +20,9 @@ export const state = () => ({
   /* auth flags */
   auth: {
     manager: false, // user is authenticated as hiring manager
-    managerFailed: false // user provided wrong password
+    managerFailed: false, // user provided wrong password
+    recruiter: false, // user is authenticated as recruiter
+    recruiterFailed: false // user provided wrong password
   },
 
   /* current process instance data for UI */
@@ -39,14 +41,17 @@ export const state = () => ({
 export const getters = {
   /* augh getters */
   isManagerAuthenticated: state => state.auth.manager === true,
-  isManagerAuthFailed: state => state.auth.managerFailed === true
+  isManagerAuthFailed: state => state.auth.managerFailed === true,
+  isRecruiterAuthenticated: state => state.auth.recruiter === true,
+  isRecruiterAuthFailed: state => state.auth.recruiterFailed === true
 }
 
 export const mutations = {
   RESET: (state) => {
-    state.hash = ''
-    state.publications = []
-    state.reviewers = []
+    state.processInstance = initProcessInstance
+    state.employees = []
+    state.instances = []
+    state.jobAds = []
   },
 
   SET_LOADING: (state, loading) => {
@@ -61,6 +66,14 @@ export const mutations = {
 
   SET_MANAGER_AUTH_FAILED: (state, failed) => {
     state.auth.managerFailed = (failed === true)
+  },
+
+  SET_RECRUITER_AUTHENTICATED: (state, authenticated) => {
+    state.auth.recruiter = (authenticated === true)
+  },
+
+  SET_RECRUITER_AUTH_FAILED: (state, failed) => {
+    state.auth.recruiterFailed = (failed === true)
   },
 
   /* process instance mutations */
@@ -137,6 +150,15 @@ export const actions = {
       commit('SET_MANAGER_AUTH_FAILED', false)
     } else {
       commit('SET_MANAGER_AUTH_FAILED', true)
+    }
+  },
+
+  loginRecruiter ({ commit }, { secret }) {
+    if (secret === 'secret') {
+      commit('SET_RECRUITER_AUTHENTICATED', true)
+      commit('SET_RECRUITER_AUTH_FAILED', false)
+    } else {
+      commit('SET_RECRUITER_AUTH_FAILED', true)
     }
   },
 
@@ -272,6 +294,20 @@ export const actions = {
       commit('SET_PROCESS_INSTANCE_NUM_INTERNAL_CANIDATES', state.processInstance.internalCandidates.length)
       axios.post(url, {
         ...state.processInstance
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  postMessageToProcessInstance ({ commit, state }, { messageName }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/message/post'
+      axios.post(url, {
+        ...state.processInstance,
+        messageName
       }).then((response) => {
         resolve(response)
       }).catch((error) => {
