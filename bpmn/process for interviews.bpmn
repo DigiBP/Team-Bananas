@@ -87,7 +87,7 @@
     <bpmn:sequenceFlow id="Flow_1vzkg2l" sourceRef="Activity_1ixpalu" targetRef="Event_0d7zga7" />
     <bpmn:sequenceFlow id="Flow_1vsnp6u" sourceRef="Event_09370y6" targetRef="Activity_1vq2492" />
   </bpmn:process>
-  <bpmn:message id="Message_0edq9hu" name="Acceptance / Confirmation" />
+  <bpmn:message id="Message_0edq9hu" name="bananas_acceptance" />
   <bpmn:message id="Message_0dnhrkf" name="bananas_enough_applications" />
   <bpmn:message id="Message_1jd4csl" name="bananas_application_received_event" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -96,12 +96,12 @@
         <dc:Bounds x="160" y="210" width="1060" height="420" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_018wwj9_di" bpmnElement="Lane_018wwj9" isHorizontal="true">
-        <dc:Bounds x="190" y="210" width="1030" height="270" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_165lmxo_di" bpmnElement="Lane_165lmxo" isHorizontal="true">
         <dc:Bounds x="190" y="480" width="1030" height="150" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_018wwj9_di" bpmnElement="Lane_018wwj9" isHorizontal="true">
+        <dc:Bounds x="190" y="210" width="1030" height="270" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pwrhdv_di" bpmnElement="Activity_0bhbc1a">
