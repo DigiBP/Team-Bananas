@@ -26,8 +26,8 @@ app.all('/post', async (req, res) => {
   const { messageName, processInstanceId } = req.body
 
   const processVariables = {
-    last_message: {
-      value: req.body.message,
+    lastMessage: {
+      value: messageName,
       type: 'String'
     }
   }
