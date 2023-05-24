@@ -10,7 +10,8 @@ const initProcessInstance = {
   jobAd: '',
   numInternalCandidates: null,
   internalCandidates: [],
-  externalApplicants: []
+  externalApplicants: [],
+  activities: []
 }
 
 export const state = () => ({
@@ -251,6 +252,7 @@ export const actions = {
       const url = '/api/camunda/get-instance'
       axios.post(url, { processInstanceId })
         .then((response) => {
+          commit('RESET_PROCESS_INSTANCE')
           commit('SET_PROCESS_INSTANCE', response.data)
           resolve(response)
         })

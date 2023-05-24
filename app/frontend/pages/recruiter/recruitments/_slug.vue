@@ -10,8 +10,10 @@
           </JobAd>
         </div>
         <div class="w-1/2">
-          <div class="mb-12">
-            <h2 class="mb-4">Internal Candidates</h2>
+          <div class="mb-4">
+            <h2 class="mb-2">
+              Internal Candidates
+            </h2>
             <div v-if="processInstance.numInternalCandidates === null || processInstance.numInternalCandidates !== 0">
               <div v-if="loadingEmployees">
                 <font-awesome-icon icon="spinner" spin />
@@ -48,28 +50,29 @@
             </div>
           </div>
           <div v-if="passedInternalCandidatesStage">
-            <h2 class="mb-4">
+            <hr class="border-digisailor-default my-4">
+            <h2 class="mb-2">
               External Applicants
             </h2>
             <p>
               ...todo...
             </p>
             <!-- ENOUGH APPLICATIONS RECEIVED -->
-            <div v-if="isOpenForApplications">
+            <div v-if="isWaitingForApplications">
               <Button color="main" @clicked="postMessage('bananas_enough_applications')">
                 Enough Applications Received
                 <font-awesome-icon icon="arrow-right" />
               </Button>
             </div>
+            <hr class="border-digisailor-default my-4">
+            <h2 class="mb-2">
+              Shortlist
+            </h2>
+            <p>
+              ...todo...
+            </p>
             <!-- APPLICANT INTERVIEWS DONE -->
-            <div v-if="isOpenForInterviews">
-              <Button color="main" @clicked="postMessage('bananas_interviews_done')">
-                Applicant Interviews Done
-                <font-awesome-icon icon="arrow-right" />
-              </Button>
-            </div>
-            <!-- APPLICANT INTERVIEWS DONE -->
-            <div v-if="isOpenForPersonalInterviews">
+            <div v-if="isWaitingForShortlist">
               <Button color="main" @clicked="postMessage('bananas_personal_interviews_done')">
                 Personal Interviews Done
                 <font-awesome-icon icon="arrow-right" />
@@ -118,14 +121,11 @@ export default {
     passedInternalCandidatesStage () {
       return this.processInstance.numInternalCandidates === 0 || this.processInstance.numInternalCandidates > 0
     },
-    isOpenForApplications () {
+    isWaitingForApplications () {
       return this.processInstance?.activities?.[0].activityId === 'wait_for_applicants'
     },
-    isOpenForInterviews () {
-      return this.processInstance?.activities?.[0].activityId === 'wait_for_interviews'
-    },
-    isOpenForPersonalInterviews () {
-      return this.processInstance?.activities?.[0].activityId === 'wait_for_personal_interviews'
+    isWaitingForShortlist () {
+      return this.processInstance?.activities?.[0].activityId === 'wait_for_shortlist'
     }
   },
   mounted () {
@@ -145,20 +145,20 @@ export default {
   methods: {
     proceedWithCandidates () {
       this.$store.dispatch('proceedWithInternalCandidates').then(() => {
-        window.location.reload()
+        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId })
       })
     },
     proceedWithoutCandidates () {
       this.$store.commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', [])
       this.$store.dispatch('proceedWithInternalCandidates').then(() => {
-        window.location.reload()
+        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId })
       })
     },
     postMessage (messageName) {
       this.$store.dispatch('postMessageToProcessInstance', {
         messageName
       }).then(() => {
-        window.location.reload()
+        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId })
       })
     }
   }

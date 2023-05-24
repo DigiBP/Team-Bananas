@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0hyzkt5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:collaboration id="Collaboration_15igl2o">
-    <bpmn:participant id="Participant_0glx47l" name="Recruitment Platform" processRef="Process_18v5axi" />
+    <bpmn:participant id="Participant_0glx47l" name="Recruitment Platform" processRef="employee_recruitment_applicants_process" />
     <bpmn:participant id="Participant_1qke3h6" name="Applicant" />
     <bpmn:messageFlow id="Flow_07ttf3k" name="Job application" sourceRef="Participant_1qke3h6" targetRef="Event_088n675">
       <bpmn:extensionElements />
@@ -10,7 +10,7 @@
     <bpmn:messageFlow id="Flow_0va0b99" name="Interview invitation" sourceRef="invite_for_interview" targetRef="Participant_1qke3h6" />
     <bpmn:messageFlow id="Flow_0oyb7n8" name="Interview booking" sourceRef="Participant_1qke3h6" targetRef="wait_for_booking" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_18v5axi" isExecutable="true">
+  <bpmn:process id="employee_recruitment_applicants_process" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1kj1jds">
       <bpmn:lane id="Lane_018wwj9" name="HR Staff">
         <bpmn:flowNodeRef>Gateway_09si2su</bpmn:flowNodeRef>
