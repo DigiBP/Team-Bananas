@@ -43,31 +43,38 @@
               </div>
             </div>
             <div v-else>
+              <font-awesome-icon icon="check" />
               Process instance proceeded with no internal candidates.
             </div>
           </div>
-          <div>
-            <h2 class="mb-4">External Applicants</h2>
+          <div v-if="passedInternalCandidatesStage">
+            <h2 class="mb-4">
+              External Applicants
+            </h2>
             <p>
               ...todo...
             </p>
-            <p>
-              <!-- ENOUGH APPLICATIONS RECEIVED -->
+            <!-- ENOUGH APPLICATIONS RECEIVED -->
+            <div v-if="isOpenForApplications">
               <Button color="main" @clicked="postMessage('bananas_enough_applications')">
                 Enough Applications Received
                 <font-awesome-icon icon="arrow-right" />
               </Button>
-              <!-- APPLICANT INTERVIEWS DONE -->
+            </div>
+            <!-- APPLICANT INTERVIEWS DONE -->
+            <div v-if="isOpenForInterviews">
               <Button color="main" @clicked="postMessage('bananas_interviews_done')">
                 Applicant Interviews Done
                 <font-awesome-icon icon="arrow-right" />
               </Button>
-              <!-- APPLICANT INTERVIEWS DONE -->
+            </div>
+            <!-- APPLICANT INTERVIEWS DONE -->
+            <div v-if="isOpenForPersonalInterviews">
               <Button color="main" @clicked="postMessage('bananas_personal_interviews_done')">
                 Personal Interviews Done
                 <font-awesome-icon icon="arrow-right" />
               </Button>
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -107,7 +114,19 @@ export default {
     }
   },
   computed: {
-    ...mapState(['processInstance'])
+    ...mapState(['processInstance']),
+    passedInternalCandidatesStage () {
+      return this.processInstance.numInternalCandidates === 0 || this.processInstance.numInternalCandidates > 0
+    },
+    isOpenForApplications () {
+      return this.processInstance?.activities?.[0].activityId === 'wait_for_applicants'
+    },
+    isOpenForInterviews () {
+      return this.processInstance?.activities?.[0].activityId === 'wait_for_interviews'
+    },
+    isOpenForPersonalInterviews () {
+      return this.processInstance?.activities?.[0].activityId === 'wait_for_personal_interviews'
+    }
   },
   mounted () {
     this.$store.dispatch('fetchInstance', {
@@ -125,15 +144,21 @@ export default {
   },
   methods: {
     proceedWithCandidates () {
-      this.$store.dispatch('proceedWithInternalCandidates')
+      this.$store.dispatch('proceedWithInternalCandidates').then(() => {
+        window.location.reload()
+      })
     },
     proceedWithoutCandidates () {
       this.$store.commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', [])
-      this.$store.dispatch('proceedWithInternalCandidates')
+      this.$store.dispatch('proceedWithInternalCandidates').then(() => {
+        window.location.reload()
+      })
     },
     postMessage (messageName) {
       this.$store.dispatch('postMessageToProcessInstance', {
         messageName
+      }).then(() => {
+        window.location.reload()
       })
     }
   }

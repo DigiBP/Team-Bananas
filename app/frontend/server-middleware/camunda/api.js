@@ -7,7 +7,7 @@ app.use(bodyParser.json())
 const axios = require('axios')
 
 // shared helper methods
-const { generateBusinessKey, getProcessVariables, getAndLockExternalTask, completeExternalTask } = require('./helper')
+const { generateBusinessKey, getProcessVariables, getProcessActivities, getAndLockExternalTask, completeExternalTask } = require('./helper')
 
 // Camunda API config
 const tenantId = 'bananas'
@@ -201,7 +201,10 @@ app.all('/get-instance', async (req, res) => {
     headers: commonHeaders
   })
   const variables = await getProcessVariables(baseUrl, commonHeaders, processInstanceId)
-  const processInstance = { ...response.data, ...variables }
+  const activities = await getProcessActivities(baseUrl, commonHeaders, processInstanceId)
+  const processInstance = { ...response.data, ...variables, activities }
+
+  console.log(processInstance) // eslint-disable-line no-console
 
   // rename id into processId
   processInstance.processId = processInstance.id

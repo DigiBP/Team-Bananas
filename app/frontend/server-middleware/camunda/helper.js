@@ -44,6 +44,17 @@ async function getProcessVariables (baseUrl, commonHeaders, processInstanceId) {
   return variables
 }
 
+// helper function to get the current activity for a process instance
+async function getProcessActivities (baseUrl, commonHeaders, processInstanceId) {
+  const processActivityUrl = `${baseUrl}/process-instance/${processInstanceId}/activity-instances`
+  console.log('GET', processActivityUrl) // eslint-disable-line no-console
+  const processActivityResponse = await axios.get(processActivityUrl, {
+    headers: commonHeaders
+  })
+
+  return processActivityResponse.data.childActivityInstances
+}
+
 // helper function to get and lock external task
 async function getAndLockExternalTask (baseUrl, commonHeaders, processInstanceId, taskName) {
   let externalTaskId = null
@@ -96,4 +107,4 @@ async function completeExternalTask (baseUrl, commonHeaders, externalTaskId) {
   return true
 }
 
-export { generateBusinessKey, getProcessVariables, getAndLockExternalTask, completeExternalTask }
+export { generateBusinessKey, getProcessVariables, getProcessActivities, getAndLockExternalTask, completeExternalTask }

@@ -8,7 +8,6 @@ const axios = require('axios')
 
 // Camunda API config
 const tenantId = 'bananas'
-const processKey = 'employee_recruitment_to_be'
 const baseUrl = 'https://digibp.herokuapp.com/engine-rest'
 const commonHeaders = {
   'Content-Type': 'application/json',
