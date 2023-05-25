@@ -54,6 +54,14 @@
             <h2 class="mb-2">
               External Applicants
             </h2>
+            <div v-if="isWaitingForApplications" class="bg-green-100 text-green-700 mb-2 p-2 rounded-lg">
+              <font-awesome-icon icon="envelope-open" />
+              Currently open for applications.
+            </div>
+            <div v-else  class="bg-red-100 text-red-700 mb-2 p-2 rounded-lg">
+              <font-awesome-icon icon="envelope-closed" />
+              Currently not open for applications.
+            </div>
             <p>
               ...todo...
             </p>
