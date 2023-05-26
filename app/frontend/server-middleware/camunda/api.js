@@ -163,9 +163,11 @@ app.all('/confirm-internal-candidates', async (req, res) => {
  * List all process instances for the current environment.
  */
 app.all('/list-instances', async (req, res) => {
+  const processKey = 'employee_recruitment_to_be'
+
   // we filter by the env name to only show instances for the current environment
   const envName = process.env.ENV_NAME ?? 'dev'
-  const url = `${baseUrl}/process-instance?tenantIdIn=${tenantId}&variables=env_eq_${envName}&active=true&sortBy=businessKey&sortOrder=desc&maxResults=200`
+  const url = `${baseUrl}/process-instance?processDefinitionKey=${processKey}&tenantIdIn=${tenantId}&variables=env_eq_${envName}&active=true&sortBy=businessKey&sortOrder=desc&maxResults=200`
 
   console.log('GET', url) // eslint-disable-line no-console
   const response = await axios.get(url, {
@@ -212,6 +214,38 @@ app.all('/get-instance', async (req, res) => {
 
   console.log(processInstance) // eslint-disable-line no-console
   res.json(processInstance)
+})
+
+/**
+ * List all applicants process instances for given main process isntance ID.
+ */
+app.all('/list-applicants', async (req, res) => {
+  const processKey = 'employee_recruitment_applicants_process'
+  const url = `${baseUrl}/process-instance?processDefinitionKey=${processKey}&tenantIdIn=${tenantId}&active=true&maxResults=200`
+  console.log('GET', url) // eslint-disable-line no-console
+  const response = await axios.get(url, {
+    headers: commonHeaders
+  })
+  console.log(response.data) // eslint-disable-line no-console
+
+  // fetch the process variables for each process instance
+  const processInstances = []
+  for (const processInstance of response.data) {
+    const variables = await getProcessVariables(baseUrl, commonHeaders, processInstance.id)
+    const item = { ...processInstance, ...variables }
+
+    // rename id into processId
+    item.processId = processInstance.id
+    delete item.id
+
+    // only keep applicants that match the position's process ID and that are of category A (interview track) or B (waitlist)
+    if (item.positionInstanceId === req.body.processId && ['A', 'B'].includes(item.category)) {
+      processInstances.push(item)
+    }
+  }
+
+  console.log(processInstances) // eslint-disable-line no-console
+  res.json(processInstances)
 })
 
 module.exports = app

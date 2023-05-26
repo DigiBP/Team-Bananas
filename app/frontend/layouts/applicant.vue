@@ -27,6 +27,7 @@ export default {
   },
   mounted () {
     this.$store.commit('SET_LOADING', false)
+    this.$store.commit('RESET_PROCESS_INSTANCE')
   }
 }
 </script>

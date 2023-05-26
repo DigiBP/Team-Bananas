@@ -14,6 +14,16 @@ const initProcessInstance = {
   activities: []
 }
 
+const initApplicantInstance = {
+  processId: '', // camunda id
+  businessKey: '',
+  category: '',
+  cv: '',
+  email: '',
+  name: '',
+  positionInstanceId: ''
+}
+
 export const state = () => ({
   /* loading flag */
   loading: true, // global lading flag on app init
@@ -28,6 +38,9 @@ export const state = () => ({
 
   /* current process instance data for UI */
   processInstance: initProcessInstance,
+
+  /* current applicant data for UI */
+  applicant: initApplicantInstance,
 
   /* employee data from store */
   employees: [],
@@ -50,6 +63,7 @@ export const getters = {
 export const mutations = {
   RESET: (state) => {
     state.processInstance = initProcessInstance
+    state.applicant = initApplicantInstance
     state.employees = []
     state.instances = []
     state.jobAds = []
@@ -81,6 +95,7 @@ export const mutations = {
 
   RESET_PROCESS_INSTANCE: (state) => {
     state.processInstance = initProcessInstance
+    state.applicant = initApplicantInstance
   },
 
   SET_PROCESS_INSTANCE: (state, processInstance) => {
@@ -134,6 +149,17 @@ export const mutations = {
 
   SET_EMPLOYEES: (state, employees) => {
     state.employees = employees
+  },
+
+  /* external applicants mutations */
+
+  SET_EXTERNAL_APPLICANTS: (state, externalApplicants) => {
+    state.processInstance.externalApplicants = externalApplicants
+  },
+
+  SET_APPLICANT: (state, applicant) => {
+    state.applicant = initApplicantInstance
+    state.applicant = Object.assign(state.applicant, applicant)
   },
 
   /* job ad mutations */
@@ -249,10 +275,10 @@ export const actions = {
 
   fetchInstance ({ commit }, { processInstanceId }) {
     return new Promise((resolve, reject) => {
+      commit('RESET_PROCESS_INSTANCE')
       const url = '/api/camunda/get-instance'
       axios.post(url, { processInstanceId })
         .then((response) => {
-          commit('RESET_PROCESS_INSTANCE')
           commit('SET_PROCESS_INSTANCE', response.data)
           resolve(response)
         })
@@ -316,6 +342,60 @@ export const actions = {
         reject(error)
       })
     })
-  }
+  },
 
+  fetchExternalApplicants ({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/list-applicants'
+      axios.post(url, {
+        ...state.processInstance
+      }).then((response) => {
+        commit('SET_EXTERNAL_APPLICANTS', response.data)
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  fetchApplicant ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/get-instance'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        console.log(response.data) // eslint-disable-line no-console
+        commit('SET_APPLICANT', response.data)
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  screeningInterviewProceed ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/screening-interview-proceed'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  screeningInterviewReject ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/screening-interview-reject'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  }
 }
