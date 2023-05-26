@@ -62,7 +62,7 @@ export default {
       return `${url}?usp=pp_url&entry.1110870665=${this.processInstance.processId}&entry.900296223=${this.processInstance.businessKey}&entry.2019870383=${this.processInstance.title}`
     },
     acceptsApplications () {
-      return this.processInstance?.activities?.[0].activityId === 'wait_for_applicants'
+      return this.processInstance?.activities?.[0]?.activityId === 'wait_for_applicants'
     }
   },
   mounted () {

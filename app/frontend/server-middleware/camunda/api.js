@@ -375,8 +375,49 @@ app.all('/book-second-interview', async (req, res) => {
   }
 
   const body = {
-    messageName,
     processInstanceId,
+    messageName,
+    processVariables
+  }
+
+  console.log('===================================') // eslint-disable-line no-console
+  console.log('POST', url) // eslint-disable-line no-console
+  console.log(body) // eslint-disable-line no-console
+
+  try {
+    await axios.post(url, body, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error.response.data) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
+  res.json({ success: true })
+})
+
+/**
+ * Update category on applicant process instance.
+ */
+app.all('/update-applicant', async (req, res) => {
+  const url = `${baseUrl}/message`
+  const messageName = 'bananas_waitlist_update'
+
+  const processInstanceId = req.body.processInstanceId
+  const category = req.body.category
+
+  // prepare new variables
+  const processVariables = {
+    category: {
+      value: category,
+      type: 'String'
+    }
+  }
+
+  const body = {
+    processInstanceId,
+    messageName,
     processVariables
   }
 

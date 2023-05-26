@@ -14,7 +14,7 @@
     <bpmn:laneSet id="LaneSet_1kj1jds">
       <bpmn:lane id="Lane_018wwj9" name="HR Staff">
         <bpmn:flowNodeRef>Gateway_09si2su</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1rj4jlo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>bananas_waitlist_update</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1lf4dfy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1w4klfd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>applicant_cancelled_0</bpmn:flowNodeRef>
@@ -28,12 +28,12 @@
         <bpmn:childLaneSet id="LaneSet_0gxxuip" />
       </bpmn:lane>
       <bpmn:lane id="Lane_0li03r9" name="Hiring Manager">
-        <bpmn:flowNodeRef>Activity_1euv3yz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0kupug8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>applicant_hired</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>personal_interview</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:sequenceFlow id="Flow_1oycsez" sourceRef="Activity_1euv3yz" targetRef="Gateway_0kupug8" />
+    <bpmn:sequenceFlow id="Flow_1oycsez" sourceRef="personal_interview" targetRef="Gateway_0kupug8" />
     <bpmn:sequenceFlow id="Flow_1tqdefs" name="Proceed" sourceRef="Gateway_1w4klfd" targetRef="invite_for_interview">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "A"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -41,7 +41,7 @@
     <bpmn:sequenceFlow id="Flow_061qbox" name="Proceed" sourceRef="Gateway_1lf4dfy" targetRef="screening_interview">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "A"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_12w8sep" sourceRef="Event_1rj4jlo" targetRef="Gateway_1lf4dfy" />
+    <bpmn:sequenceFlow id="Flow_12w8sep" sourceRef="bananas_waitlist_update" targetRef="Gateway_1lf4dfy" />
     <bpmn:sequenceFlow id="Flow_1akl8l5" name="Reject" sourceRef="Gateway_1lf4dfy" targetRef="reject_application">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "C"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -54,7 +54,7 @@
     <bpmn:sequenceFlow id="Flow_1n2a70a" name="Category A" sourceRef="Gateway_09si2su" targetRef="screening_interview">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "A"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_03qu6pz" name="Category B" sourceRef="Gateway_09si2su" targetRef="Event_1rj4jlo">
+    <bpmn:sequenceFlow id="Flow_03qu6pz" name="Category B" sourceRef="Gateway_09si2su" targetRef="bananas_waitlist_update">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "B"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1wam86z" sourceRef="Event_088n675" targetRef="Gateway_09si2su" />
@@ -63,7 +63,7 @@
       <bpmn:outgoing>Flow_1akl8l5</bpmn:outgoing>
       <bpmn:outgoing>Flow_061qbox</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:intermediateCatchEvent id="Event_1rj4jlo" name="Wait for waitlist update">
+    <bpmn:intermediateCatchEvent id="bananas_waitlist_update" name="Wait for waitlist update">
       <bpmn:incoming>Flow_03qu6pz</bpmn:incoming>
       <bpmn:outgoing>Flow_12w8sep</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1yu2654" messageRef="Message_3o4eofn" />
@@ -89,7 +89,7 @@
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1g5ix6b" sourceRef="invite_for_interview" targetRef="wait_for_booking" />
     <bpmn:sequenceFlow id="Flow_0567f5y" sourceRef="error_cancelled_interview" targetRef="applicant_cancelled_0" />
-    <bpmn:sequenceFlow id="Flow_15lzg55" sourceRef="wait_for_booking" targetRef="Activity_1euv3yz" />
+    <bpmn:sequenceFlow id="Flow_15lzg55" sourceRef="wait_for_booking" targetRef="personal_interview" />
     <bpmn:sequenceFlow id="Flow_04nbnd2" name="Reject" sourceRef="Gateway_0kupug8" targetRef="reject_application">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{category == "C"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -100,10 +100,6 @@
     <bpmn:endEvent id="applicant_rejected" name="Rejected">
       <bpmn:incoming>Flow_1mad466</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:task id="Activity_1euv3yz" name="Hold personal interview">
-      <bpmn:incoming>Flow_15lzg55</bpmn:incoming>
-      <bpmn:outgoing>Flow_1oycsez</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:exclusiveGateway id="Gateway_0kupug8" name="Decision on candidate?">
       <bpmn:incoming>Flow_1oycsez</bpmn:incoming>
       <bpmn:outgoing>Flow_04nbnd2</bpmn:outgoing>
@@ -135,6 +131,10 @@
       <bpmn:outgoing>Flow_0567f5y</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_06ixve3" />
     </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="personal_interview" name="Hold personal interview" camunda:type="external" camunda:topic="personal_interview">
+      <bpmn:incoming>Flow_15lzg55</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oycsez</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_17lytw3">
       <bpmn:text>automated via bot (polling)</bpmn:text>
     </bpmn:textAnnotation>
@@ -167,7 +167,7 @@
       <bpmndi:BPMNShape id="Gateway_1lf4dfy_di" bpmnElement="Gateway_1lf4dfy" isMarkerVisible="true">
         <dc:Bounds x="605" y="335" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0zrwc64_di" bpmnElement="Event_1rj4jlo">
+      <bpmndi:BPMNShape id="Event_0zrwc64_di" bpmnElement="bananas_waitlist_update">
         <dc:Bounds x="512" y="342" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="493" y="385" width="74" height="27" />
@@ -203,10 +203,6 @@
           <dc:Bounds x="1718" y="275" width="44" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1euv3yz_di" bpmnElement="Activity_1euv3yz" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1280" y="690" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0kupug8_di" bpmnElement="Gateway_0kupug8" isMarkerVisible="true">
         <dc:Bounds x="1435" y="705" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -233,6 +229,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0lo0d8n_di" bpmnElement="invite_for_interview" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="1010" y="440" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0azdp0h_di" bpmnElement="personal_interview" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1280" y="690" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_12e8fxb_di" bpmnElement="Association_12e8fxb">
         <di:waypoint x="1033" y="520" />

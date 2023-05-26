@@ -39,6 +39,9 @@ const client = new Client(config);
 
 // connect to the post_social_media external task topic
 client.subscribe('post_social_media', async function({ task, taskService }) {
+    // lock task
+    await taskService.lock(task, 60);
+
     // Get a process variable
     const title = task.variables.get('title');
     const tweet = task.variables.get('tweet');
@@ -51,9 +54,6 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
     console.log(`Business key: ${task.businessKey}`);
     console.log(`Posting job ad for ${title} on Mastodon...`);
     console.log('Tweet:', tweet);
-
-    // lock task
-    await taskService.lock(task, 30);
 
     // post to Mastodon
     let success = true
@@ -80,6 +80,9 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
 
 client.subscribe('invite_for_interview', async function({ task, taskService }) {
     const baseUrl = 'http://localhost:3000';
+
+    // lock task
+    await taskService.lock(task, 60);
   
     // Get a applicant details
     const name = task.variables.get('name');
@@ -93,9 +96,6 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     console.log(`[${new Date().toLocaleString('en-GB')}]`);
     console.log(`Applicant name: ${name}`);
     console.log(`Inviting ${email} to book slot for second interview...`);
-
-    // lock task
-    await taskService.lock(task, 30);
 
     // create reusable SMTP transporter
     let transporter = nodemailer.createTransport({

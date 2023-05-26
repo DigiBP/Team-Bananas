@@ -107,8 +107,7 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  @apply text-2xl pt-4 pb-2 mb-8 text-blue-700;
-  @apply border-b-4 border-blue-700;
+  @apply text-2xl pt-4 pb-2 mb-8;
 }
 
 h2 {

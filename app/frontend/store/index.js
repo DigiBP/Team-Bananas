@@ -413,6 +413,20 @@ export const actions = {
         reject(error)
       })
     })
+  },
+
+  updateApplicant ({ commit, state }, { processInstanceId, category }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/update-applicant'
+      axios.post(url, {
+        processInstanceId,
+        category
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
   }
 
 }
