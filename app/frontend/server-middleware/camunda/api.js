@@ -143,7 +143,7 @@ app.all('/confirm-internal-candidates', async (req, res) => {
 
   console.log('===================================') // eslint-disable-line no-console
   console.log('POST', setVariableUrl) // eslint-disable-line no-console
-  
+
   try {
     await axios.post(setVariableUrl, {
       modifications: {
@@ -368,7 +368,7 @@ app.all('/book-second-interview', async (req, res) => {
       value: slot,
       type: 'String'
     },
-    hadSecondInterview: {
+    hadSecondInterviewBooking: {
       value: true,
       type: 'Boolean'
     }

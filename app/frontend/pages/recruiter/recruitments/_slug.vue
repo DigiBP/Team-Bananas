@@ -102,6 +102,9 @@
                       <div v-if="applicant.hadScreeningInterview" class="text-green-700 mt-4">
                         <font-awesome-icon icon="check" /> Screening interview passed
                       </div>
+                      <div v-if="applicant.hadSecondInterviewBooking" class="text-green-700 mt-4">
+                        <font-awesome-icon icon="check" /> Has booked a slot for second interview
+                      </div>
                     </div>
                   </div>
                 </li>

@@ -24,23 +24,50 @@ const config = {
     tenantId
 };
 
-// Mastodon API config
-const matodonUrl = 'https://mstdn.social/api/v1/statuses'
-const mastodonHeaders = {
-  Authorization: `Bearer ${process.env.MASTODON_BEARER_TOKEN}`,
-  'Content-Type': 'application/json',
-  Accept: '*/*',
-  'Accept-Encoding': 'gzip, deflate, br',
-  Connection: 'keep-alive'
-}
-
 // create a Client instance with custom configuration
 const client = new Client(config);
 
-// connect to the post_social_media external task topic
+// helper function to get smtp mail transporter
+async function getTransporter() {
+      // create reusable SMTP transporter
+      let transporter = await nodemailer.createTransport({
+        host: 'ds-mailcatcher',
+        port: 1025,
+        secure: false,
+        tls: {
+          rejectUnauthorized: false
+        }
+      });
+  
+      // verify SMTP connection configuration
+      await transporter.verify(function(error, success) {
+        if (error) {
+          console.log(error); // eslint-disable-line no-console
+        } else {
+          console.log('✓ SMTP connection for sending emails is ready.'); // eslint-disable-line no-console
+        }
+      });
+
+      return transporter
+}
+
+
+/**
+ * This task is responsible for posting a job ad to Mastodon
+ */
 client.subscribe('post_social_media', async function({ task, taskService }) {
     // lock task
     await taskService.lock(task, 60);
+
+    // Mastodon API config
+    const matodonUrl = 'https://mstdn.social/api/v1/statuses'
+    const mastodonHeaders = {
+      Authorization: `Bearer ${process.env.MASTODON_BEARER_TOKEN}`,
+      'Content-Type': 'application/json',
+      Accept: '*/*',
+      'Accept-Encoding': 'gzip, deflate, br',
+      Connection: 'keep-alive'
+    }
 
     // Get a process variable
     const title = task.variables.get('title');
@@ -78,6 +105,11 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
     }
 });
 
+
+/**
+ * This task is responsible for sending an email to the applicant and requesting booking
+ * of a time slot for the second interview.
+ */
 client.subscribe('invite_for_interview', async function({ task, taskService }) {
     const baseUrl = 'https://digisailors.ch';
 
@@ -97,25 +129,6 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     console.log(`Applicant name: ${name}`);
     console.log(`Inviting ${email} to book slot for second interview...`);
 
-    // create reusable SMTP transporter
-    let transporter = await nodemailer.createTransport({
-      host: 'ds-mailcatcher',
-      port: 1025,
-      secure: false,
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
-
-    // verify SMTP connection configuration
-    await transporter.verify(function(error, success) {
-      if (error) {
-        console.log(error); // eslint-disable-line no-console
-      } else {
-        console.log('✓ SMTP connection for sending emails is ready.'); // eslint-disable-line no-console
-      }
-    });
-
     // send email with booking link
     let success = true
     try {
@@ -132,6 +145,62 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
           + `Digisailors`,
       };
 
+      let transporter = await getTransporter()
+      await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          success = false
+          console.log(error); // eslint-disable-line no-console
+        } else {
+          console.log('✓ Message sent: %s', info.messageId); // eslint-disable-line no-console
+          transporter.close();
+        }
+      });
+    } catch (error) {
+      success = false
+      console.log(error) // eslint-disable-line no-console
+    }
+
+    // Complete the task
+    await taskService.complete(task);
+});
+
+
+/**
+ * This task is responsible for sending the rejection emails to the applicants.
+ */
+client.subscribe('reject_application', async function({ task, taskService }) {
+    // lock task
+    await taskService.lock(task, 60);
+
+    // Get a applicant details
+    const name = task.variables.get('name');
+    const email = task.variables.get('email');
+
+    // leave log traces
+    console.log(`===================================`);
+
+    // log current date time in format 2022-12-31 22:05
+    console.log(`[${new Date().toLocaleString('en-GB')}]`);
+    console.log(`Applicant name: ${name}`);
+    console.log(`Sending rejection email to ${email}...`);
+
+    // send email with rejection message
+    let success = true
+    try {
+      console.log('Sending rejection email to', email)
+
+      let mailOptions = {
+        from: 'bot@digisailors.ch',
+        to: email,
+        subject: 'Digisailors - Your application was rejected',
+        text: `Dear ${name},\n\n`
+          + `Please note that your application has been rejected.\n\n`
+          + `We wish you all the best.\n\n`
+          + `Best regards,\n`
+          + `Digisailors`,
+      };
+
+      let transporter = await getTransporter()
       await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           success = false
