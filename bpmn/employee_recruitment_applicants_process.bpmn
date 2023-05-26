@@ -249,7 +249,7 @@
         <di:waypoint x="1645" y="290" />
         <di:waypoint x="1671" y="330" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_05h56l2_di" bpmnElement="error_cancelled_interview">
+      <bpmndi:BPMNShape id="Event_05h56l2_di" bpmnElement="error_cancelled_interview" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1062" y="502" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1085" y="541" width="49" height="27" />
