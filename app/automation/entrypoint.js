@@ -98,7 +98,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     console.log(`Inviting ${email} to book slot for second interview...`);
 
     // create reusable SMTP transporter
-    let transporter = nodemailer.createTransport({
+    let transporter = await nodemailer.createTransport({
       host: 'mail.digisailors.ch',
       port: 1025,
       secure: false,
@@ -108,7 +108,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     });
 
     // verify SMTP connection configuration
-    transporter.verify(function(error, success) {
+    await transporter.verify(function(error, success) {
       if (error) {
         console.log(error); // eslint-disable-line no-console
       } else {
@@ -122,7 +122,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
       console.log('Sending email to', email)
 
       let mailOptions = {
-        from: '"🤖 Digisailors Bot" <bot@digisailors.ch>"',
+        from: 'bot@digisailors.ch',
         to: email,
         subject: 'Digisailors - Invitation for second interview',
         text: `Dear ${name},\n\n`
@@ -132,7 +132,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
           + `Digisailors`,
       };
 
-      transporter.sendMail(mailOptions, (error, info) => {
+      await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           success = false
           console.log(error); // eslint-disable-line no-console
