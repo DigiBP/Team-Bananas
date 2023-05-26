@@ -76,3 +76,45 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
       });
     }
 });
+
+client.subscribe('invite_for_interview', async function({ task, taskService }) {
+    // Get a applicant details
+    const name = task.variables.get('name');
+    const email = task.variables.get('email');
+
+    // leave log traces
+    console.log(`===================================`);
+    
+    // log current date time in format 2022-12-31 22:05
+    console.log(`[${new Date().toLocaleString('en-GB')}]`);
+    console.log(`Applicant name: ${name}`);
+    console.log(`Inviting ${email} to book slot for second interview...`);
+
+    // lock task
+    await taskService.lock(task, 30);
+
+    // send email with booking link
+    let success = true
+    try {
+      console.log('Sending email to', email)
+    } catch (error) {
+      success = false
+      console.log(error) // eslint-disable-line no-console
+    }
+
+    
+    // Complete the task
+    if (success) {
+      // await taskService.complete(task);
+    } else {
+      await taskService.handleFailure(task, {
+        errorMessage: 'Error sending email',
+        errorDetails: 'Failed to send the email to applicanz with request to book slot for second interview',
+        retries: 0,
+        retryTimeout: 1000
+      });
+    }
+});
+
+client.start();
+

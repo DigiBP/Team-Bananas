@@ -23,7 +23,7 @@ services:
 
   ##### Camunda ROBOTIC PROCESS AUTOMATION #####
   automation:
-    container_name: ds-automation
+    container_name: ds_automation
     build:
       context: ./
       dockerfile: ./docker/automation/Dockerfile
@@ -34,6 +34,18 @@ services:
       - '3200'
     env_file:
       - .env
+
+  #### Mailcatcher email server simulation ####
+  mailcatcher:
+    container_name: ds_mailcatcher
+    image: rordi/docker-mailcatcher
+    restart: always
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+    expose:
+      - '1080'
+      - '1025'
 
 volumes:
   ds_weviate_data:

@@ -92,6 +92,22 @@ services:
     env_file:
       - .env
 
+  #### Mailcatcher email server simulation ####
+  mailcatcher:
+    container_name: ds-mailcatcher
+    image: rordi/docker-mailcatcher
+    restart: always
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+    expose:
+      - '1080'
+      - '1025'
+    environment:
+      - VIRTUAL_HOST=mail.digisailors.ch
+      - VIRTUAL_PORT=1080
+      - LETSENCRYPT_HOST=mail.digisailors.ch
+
 volumes:
   ds_certs:
   ds_vhost:
