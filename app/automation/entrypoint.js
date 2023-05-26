@@ -1,5 +1,25 @@
 import axios from 'axios';
 import { Client, logger } from "camunda-external-task-client-js";
+import nodemailer from 'nodemailer';
+
+// create reusable SMTP transporter
+let transporter = nodemailer.createTransport({
+  host: 'mail.digisailors.ch',
+  port: 1025,
+  secure: false,
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+// verify SMTP connection configuration
+transporter.verify(function(error, success) {
+  if (error) {
+    console.log(error); // eslint-disable-line no-console
+  } else {
+    console.log('✓ SMTP connection for sending emails is ready.'); // eslint-disable-line no-console
+  }
+});
 
 // Camunda API config
 const tenantId = 'bananas'
@@ -97,24 +117,29 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     let success = true
     try {
       console.log('Sending email to', email)
+
+      let mailOptions = {
+        from: '"🤖 Digisailors Bot" <bot@digisailors.ch>"',
+        to: email,
+        subject: 'Digisailors - Invitation for second interview',
+        text: `Dear ${name},\n\nYou passed the first screening interview! We would like to invite you for a second interview.\n\nPlease book a slot here: https://calendly.com/digisailors/second-interview\n\nBest regards,\nDigisailors`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          success = false
+          console.log(error); // eslint-disable-line no-console
+        } else {
+          console.log('✓ Message sent: %s', info.messageId); // eslint-disable-line no-console
+        }
+      });
     } catch (error) {
       success = false
       console.log(error) // eslint-disable-line no-console
     }
-
     
     // Complete the task
-    if (success) {
-      // await taskService.complete(task);
-    } else {
-      await taskService.handleFailure(task, {
-        errorMessage: 'Error sending email',
-        errorDetails: 'Failed to send the email to applicanz with request to book slot for second interview',
-        retries: 0,
-        retryTimeout: 1000
-      });
-    }
+    await taskService.complete(task);
 });
 
 client.start();
-
