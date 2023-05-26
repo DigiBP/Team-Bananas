@@ -17,7 +17,6 @@
         <bpmn:flowNodeRef>bananas_waitlist_update</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1lf4dfy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1w4klfd</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>applicant_cancelled_0</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>wait_for_booking</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>applicant_rejected</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_088n675</bpmn:flowNodeRef>
@@ -25,6 +24,7 @@
         <bpmn:flowNodeRef>screening_interview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>invite_for_interview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>error_cancelled_interview</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>applicant_cancelled_0</bpmn:flowNodeRef>
         <bpmn:childLaneSet id="LaneSet_0gxxuip" />
       </bpmn:lane>
       <bpmn:lane id="Lane_0li03r9" name="Hiring Manager">
@@ -79,9 +79,6 @@
       <bpmn:outgoing>Flow_1tqdefs</bpmn:outgoing>
       <bpmn:outgoing>Flow_0c855tp</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="applicant_cancelled_0" name="Cancelled">
-      <bpmn:incoming>Flow_0567f5y</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:intermediateCatchEvent id="wait_for_booking" name="Wait for booking">
       <bpmn:incoming>Flow_1g5ix6b</bpmn:incoming>
       <bpmn:outgoing>Flow_15lzg55</bpmn:outgoing>
@@ -127,7 +124,7 @@
       <bpmn:incoming>Flow_1tqdefs</bpmn:incoming>
       <bpmn:outgoing>Flow_1g5ix6b</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:boundaryEvent id="error_cancelled_interview" name="Cancelled interview" attachedToRef="invite_for_interview">
+    <bpmn:boundaryEvent id="error_cancelled_interview" name="Applicant withdraws" attachedToRef="invite_for_interview">
       <bpmn:outgoing>Flow_0567f5y</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_06ixve3" />
     </bpmn:boundaryEvent>
@@ -135,6 +132,9 @@
       <bpmn:incoming>Flow_15lzg55</bpmn:incoming>
       <bpmn:outgoing>Flow_1oycsez</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:endEvent id="applicant_cancelled_0" name="Winthdrawn">
+      <bpmn:incoming>Flow_0567f5y</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:textAnnotation id="TextAnnotation_17lytw3">
       <bpmn:text>automated via bot (polling)</bpmn:text>
     </bpmn:textAnnotation>
@@ -185,12 +185,6 @@
           <dc:Bounds x="886" y="512" width="50" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fd62si_di" bpmnElement="applicant_cancelled_0">
-        <dc:Bounds x="1122" y="572" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1116" y="615" width="49" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1mdfis6_di" bpmnElement="wait_for_booking">
         <dc:Bounds x="1162" y="462" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -233,6 +227,12 @@
       <bpmndi:BPMNShape id="Activity_0azdp0h_di" bpmnElement="personal_interview" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1280" y="690" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fd62si_di" bpmnElement="applicant_cancelled_0">
+        <dc:Bounds x="1122" y="577" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1111" y="620" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_12e8fxb_di" bpmnElement="Association_12e8fxb">
         <di:waypoint x="1033" y="520" />
         <di:waypoint x="1000" y="570" />
@@ -240,7 +240,7 @@
       <bpmndi:BPMNShape id="Event_05h56l2_di" bpmnElement="error_cancelled_interview">
         <dc:Bounds x="1062" y="502" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1058" y="545" width="49" height="27" />
+          <dc:Bounds x="1085" y="541" width="49" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1oycsez_di" bpmnElement="Flow_1oycsez">
@@ -319,8 +319,8 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0567f5y_di" bpmnElement="Flow_0567f5y">
         <di:waypoint x="1080" y="538" />
-        <di:waypoint x="1080" y="590" />
-        <di:waypoint x="1122" y="590" />
+        <di:waypoint x="1080" y="595" />
+        <di:waypoint x="1122" y="595" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15lzg55_di" bpmnElement="Flow_15lzg55">
         <di:waypoint x="1198" y="480" />

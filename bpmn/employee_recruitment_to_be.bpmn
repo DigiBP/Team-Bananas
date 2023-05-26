@@ -12,10 +12,10 @@
       <bpmn:lane id="Lane_165lmxo" name="Hiring Manager">
         <bpmn:flowNodeRef>generate_job_ad</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>employee_recruitment_start</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_03xul49</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0b2tzr4</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lg7gec</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0060lcp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_03xul49</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_018wwj9" name="HR Staff">
         <bpmn:flowNodeRef>advertise_position</bpmn:flowNodeRef>
@@ -51,6 +51,7 @@
       <bpmn:outgoing>Flow_1mkl8p1</bpmn:outgoing>
       <bpmn:property id="Property_0ymso3h" name="__targetRef_placeholder" />
       <bpmn:dataInputAssociation id="DataInputAssociation_1g0tdh5">
+        <bpmn:documentation>Loads employees embedding vecotrs and job ad embedding vectors to perform vector similarity search.</bpmn:documentation>
         <bpmn:sourceRef>DataStoreReference_01tfgta</bpmn:sourceRef>
         <bpmn:targetRef>Property_0ymso3h</bpmn:targetRef>
       </bpmn:dataInputAssociation>
@@ -60,7 +61,7 @@
       <bpmn:outgoing>Flow_1ngoccn</bpmn:outgoing>
       <bpmn:outgoing>Flow_12zdjuo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="clarify_internal_candidates" name="Clarify interest of potential candidate">
+    <bpmn:userTask id="clarify_internal_candidates" name="Clarify interest of internal candidate">
       <bpmn:incoming>Flow_0mzh1lf</bpmn:incoming>
       <bpmn:outgoing>Flow_0afdzsn</bpmn:outgoing>
     </bpmn:userTask>
@@ -69,6 +70,7 @@
       <bpmn:incoming>Flow_0zhv3g4</bpmn:incoming>
       <bpmn:outgoing>Flow_0f4xv8c</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1wukx88">
+        <bpmn:documentation>Saves embeddings to vector database</bpmn:documentation>
         <bpmn:targetRef>DataStoreReference_01tfgta</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:serviceTask>
@@ -136,11 +138,6 @@
       <bpmn:outgoing>Flow_0zu90so</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1ousy9h" messageRef="Message_0edq9hu" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:task id="Activity_03xul49" name="Confirm final candidate from shortlist">
-      <bpmn:incoming>Flow_1ug3mqa</bpmn:incoming>
-      <bpmn:incoming>Flow_0kl3s7e</bpmn:incoming>
-      <bpmn:outgoing>Flow_013scrw</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:task id="Activity_0b2tzr4" name="Select next candidate form shortlist">
       <bpmn:incoming>Flow_17keslp</bpmn:incoming>
       <bpmn:outgoing>Flow_0kl3s7e</bpmn:outgoing>
@@ -152,10 +149,19 @@
     <bpmn:endEvent id="Event_1lg7gec" name="Recruitment cancelled">
       <bpmn:incoming>Flow_12g6o3d</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:task id="Activity_03xul49" name="Confirm final candidate from shortlist">
+      <bpmn:incoming>Flow_1ug3mqa</bpmn:incoming>
+      <bpmn:incoming>Flow_0kl3s7e</bpmn:incoming>
+      <bpmn:outgoing>Flow_013scrw</bpmn:outgoing>
+    </bpmn:task>
     <bpmn:textAnnotation id="TextAnnotation_0wtozjb">
       <bpmn:text>automated via bot (polling); posts got to Mastodon</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0y68utc" sourceRef="advertise_position" targetRef="TextAnnotation_0wtozjb" />
+    <bpmn:textAnnotation id="TextAnnotation_0uzccyx">
+      <bpmn:text>Based on vector similarity search</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_03bt24k" sourceRef="search_internal_candidates" targetRef="TextAnnotation_0uzccyx" />
   </bpmn:process>
   <bpmn:message id="Message_0edq9hu" name="bananas_acceptance" />
   <bpmn:message id="Message_0dnhrkf" name="bananas_enough_applications" />
@@ -178,7 +184,11 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0wtozjb_di" bpmnElement="TextAnnotation_0wtozjb">
-        <dc:Bounds x="730" y="690" width="100" height="70" />
+        <dc:Bounds x="740" y="670" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0uzccyx_di" bpmnElement="TextAnnotation_0uzccyx">
+        <dc:Bounds x="350" y="400" width="120" height="45" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16s7ulz_di" bpmnElement="advertise_position" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
@@ -235,7 +245,7 @@
       <bpmndi:BPMNShape id="Event_15byh8p_di" bpmnElement="wait_for_shortlist">
         <dc:Bounds x="1202" y="502" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1181" y="472" width="79" height="14" />
+          <dc:Bounds x="1180" y="483" width="79" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18awqng_di" bpmnElement="Activity_1h8auxb">
@@ -248,10 +258,6 @@
           <dc:Bounds x="1758" y="545" width="64" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0jxlhmq_di" bpmnElement="Activity_03xul49">
-        <dc:Bounds x="1320" y="700" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0b2tzr4_di" bpmnElement="Activity_0b2tzr4">
         <dc:Bounds x="1580" y="700" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -262,9 +268,17 @@
           <dc:Bounds x="2110" y="805" width="60" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0jxlhmq_di" bpmnElement="Activity_03xul49">
+        <dc:Bounds x="1320" y="696" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0y68utc_di" bpmnElement="Association_0y68utc">
-        <di:waypoint x="819" y="560" />
-        <di:waypoint x="784" y="690" />
+        <di:waypoint x="820" y="560" />
+        <di:waypoint x="794" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_03bt24k_di" bpmnElement="Association_03bt24k">
+        <di:waypoint x="453" y="480" />
+        <di:waypoint x="428" y="445" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_06mkuyf_di" bpmnElement="Event_0060lcp">
         <dc:Bounds x="1662" y="762" width="36" height="36" />
@@ -291,20 +305,20 @@
         <di:waypoint x="1772" y="520" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_013scrw_di" bpmnElement="Flow_013scrw">
-        <di:waypoint x="1420" y="740" />
-        <di:waypoint x="1500" y="740" />
+        <di:waypoint x="1420" y="736" />
+        <di:waypoint x="1500" y="736" />
         <di:waypoint x="1500" y="560" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ug3mqa_di" bpmnElement="Flow_1ug3mqa">
         <di:waypoint x="1220" y="538" />
-        <di:waypoint x="1220" y="740" />
-        <di:waypoint x="1320" y="740" />
+        <di:waypoint x="1220" y="736" />
+        <di:waypoint x="1320" y="736" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0kl3s7e_di" bpmnElement="Flow_0kl3s7e">
         <di:waypoint x="1630" y="780" />
         <di:waypoint x="1630" y="820" />
         <di:waypoint x="1370" y="820" />
-        <di:waypoint x="1370" y="780" />
+        <di:waypoint x="1370" y="776" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0q4rer9_di" bpmnElement="Flow_0q4rer9">
         <di:waypoint x="1105" y="520" />

@@ -107,6 +107,8 @@ services:
       - VIRTUAL_HOST=mail.digisailors.ch
       - VIRTUAL_PORT=1080
       - LETSENCRYPT_HOST=mail.digisailors.ch
+    networks:
+      - front
 
 volumes:
   ds_certs:
