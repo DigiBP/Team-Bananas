@@ -2,25 +2,6 @@ import axios from 'axios';
 import { Client, logger } from "camunda-external-task-client-js";
 import nodemailer from 'nodemailer';
 
-// create reusable SMTP transporter
-let transporter = nodemailer.createTransport({
-  host: 'mail.digisailors.ch',
-  port: 1025,
-  secure: false,
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
-// verify SMTP connection configuration
-transporter.verify(function(error, success) {
-  if (error) {
-    console.log(error); // eslint-disable-line no-console
-  } else {
-    console.log('✓ SMTP connection for sending emails is ready.'); // eslint-disable-line no-console
-  }
-});
-
 // Camunda API config
 const tenantId = 'bananas'
 const processKey = 'employee_recruitment_to_be'
@@ -35,7 +16,7 @@ const config = {
     baseUrl,
     use: logger,
     asyncResponseTimeout: 10000,
-    workerId: 'job_ad_worker',
+    workerId: 'digisailor_robot_worker',
     maxTasks: 1,
     lockDuration: 10000,
     headers: commonHeaders,
@@ -98,10 +79,13 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
 });
 
 client.subscribe('invite_for_interview', async function({ task, taskService }) {
+    const baseUrl = 'http://localhost:3000';
+  
     // Get a applicant details
     const name = task.variables.get('name');
     const email = task.variables.get('email');
-
+    const processInstanceId = task.processInstanceId;
+    
     // leave log traces
     console.log(`===================================`);
     
@@ -113,6 +97,25 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     // lock task
     await taskService.lock(task, 30);
 
+    // create reusable SMTP transporter
+    let transporter = nodemailer.createTransport({
+      host: 'mail.digisailors.ch',
+      port: 1025,
+      secure: false,
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+
+    // verify SMTP connection configuration
+    transporter.verify(function(error, success) {
+      if (error) {
+        console.log(error); // eslint-disable-line no-console
+      } else {
+        console.log('✓ SMTP connection for sending emails is ready.'); // eslint-disable-line no-console
+      }
+    });
+
     // send email with booking link
     let success = true
     try {
@@ -122,8 +125,14 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
         from: '"🤖 Digisailors Bot" <bot@digisailors.ch>"',
         to: email,
         subject: 'Digisailors - Invitation for second interview',
-        text: `Dear ${name},\n\nYou passed the first screening interview! We would like to invite you for a second interview.\n\nPlease book a slot here: https://calendly.com/digisailors/second-interview\n\nBest regards,\nDigisailors`,
+        text: `Dear ${name},\n\n`
+          + `You passed the first screening interview! We would like to invite you for a second interview.\n\n`
+          + `Please book a slot here: ${baseUrl}/applicant/booking/${processInstanceId}\n\n`
+          + `Best regards,\n`
+          + `Digisailors`,
       };
+
+      console.log('Sending email with options', mailOptions)
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -137,9 +146,10 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
       success = false
       console.log(error) // eslint-disable-line no-console
     }
-    
+
     // Complete the task
-    await taskService.complete(task);
+    process.exit(0);
+    // await taskService.complete(task);
 });
 
 client.start();

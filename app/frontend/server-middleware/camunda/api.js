@@ -26,6 +26,7 @@ const commonHeaders = {
 app.all('/start-instance', async (req, res) => {
   const url = `${baseUrl}/process-definition/key/${processKey}/tenant-id/${tenantId}/start`
 
+  console.log('===================================') // eslint-disable-line no-console
   console.log('POST', url) // eslint-disable-line no-console
   const businessKey = generateBusinessKey(req.body.title, req.body.office)
   const response = await axios.post(url, {
@@ -63,7 +64,7 @@ app.all('/start-instance', async (req, res) => {
   }, {
     headers: commonHeaders
   })
-  console.log(response.data) // eslint-disable-line no-console
+
   res.json({
     id: response.data.id,
     businessKey: response.data.businessKey
@@ -92,7 +93,10 @@ app.all('/confirm-job-ad', async (req, res) => {
 
   // save jobAd as process variable
   const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+
+  console.log('===================================') // eslint-disable-line no-console
   console.log('POST', setVariableUrl) // eslint-disable-line no-console
+
   try {
     await axios.post(setVariableUrl, {
       modifications: {
@@ -136,7 +140,10 @@ app.all('/confirm-internal-candidates', async (req, res) => {
 
   // save "numInternalCandidates" as process variable
   const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+
+  console.log('===================================') // eslint-disable-line no-console
   console.log('POST', setVariableUrl) // eslint-disable-line no-console
+  
   try {
     await axios.post(setVariableUrl, {
       modifications: {
@@ -169,11 +176,12 @@ app.all('/list-instances', async (req, res) => {
   const envName = process.env.ENV_NAME ?? 'dev'
   const url = `${baseUrl}/process-instance?processDefinitionKey=${processKey}&tenantIdIn=${tenantId}&variables=env_eq_${envName}&active=true&sortBy=businessKey&sortOrder=desc&maxResults=200`
 
+  console.log('===================================') // eslint-disable-line no-console
   console.log('GET', url) // eslint-disable-line no-console
+
   const response = await axios.get(url, {
     headers: commonHeaders
   })
-  console.log(response.data) // eslint-disable-line no-console
 
   // fetch the process variables for each process instance
   const processInstances = []
@@ -188,7 +196,6 @@ app.all('/list-instances', async (req, res) => {
     processInstances.push(item)
   }
 
-  console.log(processInstances) // eslint-disable-line no-console
   res.json(processInstances)
 })
 
@@ -198,7 +205,10 @@ app.all('/list-instances', async (req, res) => {
 app.all('/get-instance', async (req, res) => {
   const processInstanceId = req.body.processInstanceId
   const url = `${baseUrl}/process-instance/${processInstanceId}`
+
+  console.log('===================================') // eslint-disable-line no-console
   console.log('GET', url) // eslint-disable-line no-console
+
   const response = await axios.get(url, {
     headers: commonHeaders
   })
@@ -206,13 +216,10 @@ app.all('/get-instance', async (req, res) => {
   const activities = await getProcessActivities(baseUrl, commonHeaders, processInstanceId)
   const processInstance = { ...response.data, ...variables, activities }
 
-  console.log(processInstance) // eslint-disable-line no-console
-
   // rename id into processId
   processInstance.processId = processInstance.id
   delete processInstance.id
 
-  console.log(processInstance) // eslint-disable-line no-console
   res.json(processInstance)
 })
 
@@ -222,11 +229,13 @@ app.all('/get-instance', async (req, res) => {
 app.all('/list-applicants', async (req, res) => {
   const processKey = 'employee_recruitment_applicants_process'
   const url = `${baseUrl}/process-instance?processDefinitionKey=${processKey}&tenantIdIn=${tenantId}&active=true&maxResults=200`
+
+  console.log('===================================') // eslint-disable-line no-console
   console.log('GET', url) // eslint-disable-line no-console
+
   const response = await axios.get(url, {
     headers: commonHeaders
   })
-  console.log(response.data) // eslint-disable-line no-console
 
   // fetch the process variables for each process instance
   const processInstances = []
@@ -244,7 +253,6 @@ app.all('/list-applicants', async (req, res) => {
     }
   }
 
-  console.log(processInstances) // eslint-disable-line no-console
   res.json(processInstances)
 })
 
@@ -264,7 +272,10 @@ app.all('/screening-interview-proceed', async (req, res) => {
 
   // save "notes" as process variable
   const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+
+  console.log('===================================') // eslint-disable-line no-console
   console.log('POST', setVariableUrl) // eslint-disable-line no-console
+
   try {
     await axios.post(setVariableUrl, {
       modifications: {
@@ -307,7 +318,10 @@ app.all('/screening-interview-reject', async (req, res) => {
 
   // save "notes" as process variable incl. downgrade to category C
   const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+
+  console.log('===================================') // eslint-disable-line no-console
   console.log('POST', setVariableUrl) // eslint-disable-line no-console
+
   try {
     await axios.post(setVariableUrl, {
       modifications: {
@@ -335,6 +349,51 @@ app.all('/screening-interview-reject', async (req, res) => {
 
   // complete the external task
   await completeExternalTask(baseUrl, commonHeaders, externalTaskId)
+  res.json({ success: true })
+})
+
+/**
+ * Post message to process instance including the selected slot.
+ */
+app.all('/book-second-interview', async (req, res) => {
+  const url = `${baseUrl}/message`
+  const messageName = 'bananas_interview_booking'
+
+  const processInstanceId = req.body.processInstanceId
+  const slot = req.body.slot
+
+  // prepare new variables
+  const processVariables = {
+    slot: {
+      value: slot,
+      type: 'String'
+    },
+    hadSecondInterview: {
+      value: true,
+      type: 'Boolean'
+    }
+  }
+
+  const body = {
+    messageName,
+    processInstanceId,
+    processVariables
+  }
+
+  console.log('===================================') // eslint-disable-line no-console
+  console.log('POST', url) // eslint-disable-line no-console
+  console.log(body) // eslint-disable-line no-console
+
+  try {
+    await axios.post(url, body, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error.response.data) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
   res.json({ success: true })
 })
 

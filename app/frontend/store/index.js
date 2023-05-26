@@ -399,5 +399,20 @@ export const actions = {
         reject(error)
       })
     })
+  },
+
+  bookSecondInterview ({ commit, state }, { processInstanceId, slot }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/book-second-interview'
+      axios.post(url, {
+        processInstanceId,
+        slot
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
   }
+
 }
