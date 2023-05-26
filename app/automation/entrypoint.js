@@ -99,7 +99,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
 
     // create reusable SMTP transporter
     let transporter = await nodemailer.createTransport({
-      host: 'mail.digisailors.ch',
+      host: 'ds-mailcatcher',
       port: 1025,
       secure: false,
       tls: {

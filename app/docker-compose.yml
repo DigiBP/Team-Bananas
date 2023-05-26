@@ -4,7 +4,7 @@ services:
 
   ##### Weviate VECTOR SEARCH ENGINE #####
   weaviate:
-    container_name: ds_weaviate
+    container_name: ds-weaviate
     image: semitechnologies/weaviate:1.17.3
     restart: always
     ports:
@@ -23,7 +23,7 @@ services:
 
   ##### Camunda ROBOTIC PROCESS AUTOMATION #####
   automation:
-    container_name: ds_automation
+    container_name: ds-automation
     build:
       context: ./
       dockerfile: ./docker/automation/Dockerfile
@@ -37,7 +37,7 @@ services:
 
   #### Mailcatcher email server simulation ####
   mailcatcher:
-    container_name: ds_mailcatcher
+    container_name: ds-mailcatcher
     image: rordi/docker-mailcatcher
     restart: always
     ports:
