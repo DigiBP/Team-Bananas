@@ -138,6 +138,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
           console.log(error); // eslint-disable-line no-console
         } else {
           console.log('✓ Message sent: %s', info.messageId); // eslint-disable-line no-console
+          transporter.close();
         }
       });
     } catch (error) {

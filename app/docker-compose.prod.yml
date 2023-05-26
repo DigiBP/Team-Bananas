@@ -57,6 +57,7 @@ services:
       - ds_weviate_data:/var/lib/weaviate 
     networks:
       - front
+      - ds-internal
 
   ##### Nuxt FRONTEND APPLICATION #####
   node:
@@ -77,6 +78,7 @@ services:
       - LETSENCRYPT_HOST=digisailors.ch
     networks:
       - front
+      - ds-internal
 
   ##### Camunda ROBOTIC PROCESS AUTOMATION #####
   automation:
@@ -91,6 +93,8 @@ services:
       - '3200'
     env_file:
       - .env
+    networks:
+      - ds-internal
 
   #### Mailcatcher email server simulation ####
   mailcatcher:
@@ -109,6 +113,7 @@ services:
       - LETSENCRYPT_HOST=mail.digisailors.ch
     networks:
       - front
+      - ds-internal
 
 volumes:
   ds_certs:
@@ -121,3 +126,6 @@ networks:
   front:
     external:
       name: front
+  ds-internal:
+    external:
+      name: ds-internal
