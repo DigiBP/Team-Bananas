@@ -58,11 +58,14 @@
               <font-awesome-icon icon="envelope-open" />
               Currently open for applications.
             </div>
-            <div v-else  class="bg-red-100 text-red-700 mb-2 p-2 rounded-lg">
+            <div v-else class="bg-red-100 text-red-700 mb-2 p-2 rounded-lg">
               <font-awesome-icon icon="envelope-closed" />
               Currently not open for applications.
             </div>
-            <div v-if="processInstance.externalApplicants.length > 0">
+            <div v-if="loadingApplicants">
+              <font-awesome-icon icon="spinner" spin />
+            </div>
+            <div v-else-if="processInstance.externalApplicants.length > 0">
               <ul class="my-4">
                 <li v-for="applicant in processInstance.externalApplicants" :key="applicant.processId" class="mb-2">
                   <div class="p-4 bg-gray-200 rounded-md">
@@ -76,21 +79,29 @@
                       Open in Camunda
                       <font-awesome-icon :icon="['fas', 'square-arrow-up-right']" />
                     </a>
-                    <NuxtLink :to="`/recruiter/interviews/${applicant.processId}`">
+                    <NuxtLink v-if="!applicant.hadScreeningInterview" :to="`/recruiter/interviews/${applicant.processId}`">
                       <Button size="small" color="blue-700">
                         Hold Interview
                       </Button>
                     </NuxtLink>
+                    <div>
+                      <div v-if="applicant.hadScreeningInterview" class="text-green-700 mt-4">
+                        <font-awesome-icon icon="check" /> Screening interview passed
+                      </div>
+                    </div>
                   </div>
                 </li>
               </ul>
+              <!-- ENOUGH APPLICATIONS RECEIVED -->
+              <div v-if="isWaitingForApplications">
+                <Button color="main" @clicked="postMessage('bananas_enough_applications')">
+                  Enough Applications Received
+                  <font-awesome-icon icon="arrow-right" />
+                </Button>
+              </div>
             </div>
-            <!-- ENOUGH APPLICATIONS RECEIVED -->
-            <div v-if="isWaitingForApplications">
-              <Button color="main" @clicked="postMessage('bananas_enough_applications')">
-                Enough Applications Received
-                <font-awesome-icon icon="arrow-right" />
-              </Button>
+            <div v-else>
+              There are currently no external applicants that match this position.
             </div>
             <hr class="border-digisailor-default my-4">
             <h2 class="mb-2">
@@ -141,7 +152,8 @@ export default {
   data () {
     return {
       loadingProcess: true,
-      loadingEmployees: true
+      loadingEmployees: true,
+      loadingApplicants: true
     }
   },
   computed: {
@@ -157,6 +169,7 @@ export default {
     }
   },
   mounted () {
+    this.$store.commit('RESET_PROCESS_INSTANCE')
     this.$store.dispatch('fetchInstance', {
       processInstanceId: this.slug
     }).then(() => {
@@ -168,7 +181,9 @@ export default {
       } else {
         this.loadingEmployees = false
       }
-      this.$store.dispatch('fetchExternalApplicants')
+      this.$store.dispatch('fetchExternalApplicants').then(() => {
+        this.loadingApplicants = false
+      })
     })
   },
   methods: {

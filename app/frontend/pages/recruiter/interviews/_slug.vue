@@ -15,9 +15,10 @@
           <div class="font-bold">Scoring Category</div>
           <div class="mb-4">{{ applicant.category }}</div>
 
-          <a :href="applicant.cv" target="_blank" class="inline rounded-md px-2 py-2 bg-gray-600 text-white">
-            <font-awesome-icon icon="file-pdf" />
-            View CV
+          <a :href="applicant.cv" target="_blank">
+            <Button size="small" color="gray-600">
+              View CV
+            </Button>
           </a>
         </div>
         <div class="w-1/2">
@@ -25,12 +26,12 @@
           <div>
             <textarea id="notes" v-model="notes" type="text" placeholder="Please enter notes from the screening interview" class="w-full h-32 border border-gray-600 p-2 rounded-md" />
           </div>
-          <div v-if="hasNotes">
-            <Button color="green-600" @clicked="proceed()">
-              <font-awesome-icon icon="check" />
+          <div v-if="hasNotes" class="flex space-x-4">
+            <Button color="digisailor-main" @clicked="proceed()" class="w-1/2">
               Proceed to next round
+              <font-awesome-icon icon="arrow-right" />
             </Button>
-            <Button color="red-600" @clicked="reject()">
+            <Button color="red-800" @clicked="reject()" class="w-1/2">
               <font-awesome-icon icon="ban" />
               Reject candidate
             </Button>
@@ -106,8 +107,8 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  @apply text-2xl p-4 mb-4 text-white;
-  @apply bg-blue-700 rounded-md;
+  @apply text-2xl pt-4 pb-2 mb-8 text-blue-700;
+  @apply border-b-4 border-blue-700;
 }
 
 h2 {

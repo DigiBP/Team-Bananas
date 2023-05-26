@@ -95,6 +95,7 @@ export const mutations = {
 
   RESET_PROCESS_INSTANCE: (state) => {
     state.processInstance = initProcessInstance
+    state.processInstance = Object.assign(state.processInstance, { internalCandidates: [], externalApplicants: [], activities: [] })
     state.applicant = initApplicantInstance
   },
 
@@ -373,11 +374,12 @@ export const actions = {
     })
   },
 
-  screeningInterviewProceed ({ commit, state }, { processInstanceId }) {
+  screeningInterviewProceed ({ commit, state }, { processInstanceId, notes }) {
     return new Promise((resolve, reject) => {
       const url = '/api/camunda/screening-interview-proceed'
       axios.post(url, {
-        processInstanceId
+        processInstanceId,
+        notes
       }).then((response) => {
         resolve(response)
       }).catch((error) => {
