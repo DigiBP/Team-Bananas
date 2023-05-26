@@ -176,10 +176,10 @@ export default {
       return this.processInstance.numInternalCandidates === 0 || this.processInstance.numInternalCandidates > 0
     },
     isWaitingForApplications () {
-      return this.processInstance?.activities?.[0].activityId === 'wait_for_applicants'
+      return this.processInstance?.activities?.[0]?.activityId === 'wait_for_applicants'
     },
     isWaitingForShortlist () {
-      return this.processInstance?.activities?.[0].activityId === 'wait_for_shortlist'
+      return this.processInstance?.activities?.[0]?.activityId === 'wait_for_shortlist'
     }
   },
   mounted () {

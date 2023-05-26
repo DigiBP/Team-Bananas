@@ -79,7 +79,7 @@ client.subscribe('post_social_media', async function({ task, taskService }) {
 });
 
 client.subscribe('invite_for_interview', async function({ task, taskService }) {
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = 'https://digisailors.ch';
 
     // lock task
     await taskService.lock(task, 60);
@@ -132,8 +132,6 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
           + `Digisailors`,
       };
 
-      console.log('Sending email with options', mailOptions)
-
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           success = false
@@ -148,8 +146,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     }
 
     // Complete the task
-    process.exit(0);
-    // await taskService.complete(task);
+    await taskService.complete(task);
 });
 
 client.start();
