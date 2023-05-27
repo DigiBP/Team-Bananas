@@ -427,6 +427,33 @@ export const actions = {
         reject(error)
       })
     })
+  },
+
+  managerInterviewProceed ({ commit, state }, { processInstanceId, notes }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/manager-interview-proceed'
+      axios.post(url, {
+        processInstanceId,
+        notes
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
+  managerInterviewReject ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/manager-interview-reject'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
   }
 
 }

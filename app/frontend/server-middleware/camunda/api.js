@@ -438,4 +438,100 @@ app.all('/update-applicant', async (req, res) => {
   res.json({ success: true })
 })
 
+/**
+ * Save manager interview notes and complete external service task 'personal_interview'
+ */
+app.all('/manager-interview-proceed', async (req, res) => {
+  const processInstanceId = req.body.processInstanceId
+  const notes = req.body.notes
+
+  // fetch and lock external task
+  const externalTaskId = await getAndLockExternalTask(baseUrl, commonHeaders, processInstanceId, 'personal_interview')
+  if (!externalTaskId) {
+    res.json({ success: false, message: 'failed to fetch and lock external task' })
+    return
+  }
+
+  // save "notes" as process variable
+  const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+
+  console.log('===================================') // eslint-disable-line no-console
+  console.log('POST', setVariableUrl) // eslint-disable-line no-console
+
+  try {
+    await axios.post(setVariableUrl, {
+      modifications: {
+        hadManagerInterview: {
+          value: true,
+          type: 'Boolean'
+        },
+        managerInterviewNotes: {
+          value: notes,
+          type: 'String'
+        }
+      }
+    }, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
+  // complete the external task
+  await completeExternalTask(baseUrl, commonHeaders, externalTaskId)
+  res.json({ success: true })
+})
+
+/**
+ * Save manager interview notes, downgrade to category C and complete external service task 'personal_interview'
+ */
+app.all('/manager-interview-reject', async (req, res) => {
+  const processInstanceId = req.body.processInstanceId
+  const notes = req.body.notes
+
+  // fetch and lock external task
+  const externalTaskId = await getAndLockExternalTask(baseUrl, commonHeaders, processInstanceId, 'personal_interview')
+  if (!externalTaskId) {
+    res.json({ success: false, message: 'failed to fetch and lock external task' })
+    return
+  }
+
+  // save "notes" as process variable incl. downgrade to category C
+  const setVariableUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+
+  console.log('===================================') // eslint-disable-line no-console
+  console.log('POST', setVariableUrl) // eslint-disable-line no-console
+
+  try {
+    await axios.post(setVariableUrl, {
+      modifications: {
+        category: {
+          value: 'C',
+          type: 'String'
+        },
+        hadManagerInterview: {
+          value: true,
+          type: 'Boolean'
+        },
+        managerInterviewNotes: {
+          value: notes,
+          type: 'String'
+        }
+      }
+    }, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
+  // complete the external task
+  await completeExternalTask(baseUrl, commonHeaders, externalTaskId)
+  res.json({ success: true })
+})
+
 module.exports = app

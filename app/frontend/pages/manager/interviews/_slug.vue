@@ -4,7 +4,7 @@
       <h1>Manager Interview for {{ applicant.name }}</h1>
       <ProcessInstance />
       <div class="flex space-x-12 mb-12">
-        <div class="w-1/2">
+        <div class="w-1/5">
           <h2>Candidate</h2>
           <div class="font-bold">Name</div>
           <div class="mb-2">{{ applicant.name }}</div>
@@ -21,7 +21,15 @@
             </Button>
           </a>
         </div>
-        <div class="w-1/2">
+        <div class="w-2/5">
+          <div v-if="applicant.screeningInterviewNotes">
+            <h2>Screening Interview Notes</h2>
+            <div>
+              {{ applicant.screeningInterviewNotes }}
+            </div>
+          </div>
+        </div>
+        <div class="w-2/5">
           <h2>Manager Interview Notes</h2>
           <div>
             <textarea id="notes" v-model="notes" type="text" placeholder="Please enter notes from the manager interview" class="w-full h-32 border border-gray-600 p-2 rounded-md" />
@@ -78,19 +86,19 @@ export default {
   },
   methods: {
     proceed () {
-      this.$store.dispatch('screeningInterviewProceed', {
+      this.$store.dispatch('managerInterviewProceed', {
         processInstanceId: this.slug,
         notes: this.notes
       }).then(() => {
-        this.$router.push(`/recruiter/recruitments/${this.processInstance.processId}`)
+        this.$router.push('/')
       })
     },
     reject () {
-      this.$store.dispatch('screeningInterviewReject', {
+      this.$store.dispatch('managerInterviewReject', {
         processInstanceId: this.slug,
         notes: this.notes
       }).then(() => {
-        this.$router.push(`/recruiter/recruitments/${this.processInstance.processId}`)
+        this.$router.push('/')
       })
     }
   }
