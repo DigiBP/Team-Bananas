@@ -157,7 +157,16 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     }
 
     // Complete the task
-    await taskService.complete(task);
+    if (success) {
+      await taskService.complete(task);
+    } else {
+      await taskService.handleFailure(task, {
+        errorMessage: 'Error sending email',
+        errorDetails: 'Error sending email',
+        retries: 0,
+        retryTimeout: 1000
+      });
+    }
 });
 
 
@@ -208,7 +217,16 @@ client.subscribe('reject_application', async function({ task, taskService }) {
     }
 
     // Complete the task
-    await taskService.complete(task);
+    if (success) {
+      await taskService.complete(task);
+    } else {
+      await taskService.handleFailure(task, {
+        errorMessage: 'Error sending rejection email',
+        errorDetails: 'Error sending rejection email',
+        retries: 0,
+        retryTimeout: 1000
+      });
+    }
 });
 
 
@@ -223,6 +241,7 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
   const name = task.variables.get('name');
   const email = task.variables.get('email');
   const slot = task.variables.get('slot');
+  const processInstanceId = task.processInstanceId;
 
   // @todo - get manager details via recruimtent process instance
   const managerName = 'Manager';
@@ -246,6 +265,7 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
         + `Applicant Name: ${name}\n`
         + `Applicant Email: ${email}\n`
         + `Interview Slot: ${slot}\n\n`
+        + `Please leave interview feedback here: ${baseUrl}/manager/interviews/${processInstanceId}\n\n`
         + `Best regards,\n`
         + `Digisailors`,
     };
@@ -266,7 +286,16 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
   }
 
   // Complete the task
-  await taskService.complete(task);
+  if (success) {
+    await taskService.complete(task);
+  } else {
+    await taskService.handleFailure(task, {
+      errorMessage: 'Error sending rejection email',
+      errorDetails: 'Error sending rejection email',
+      retries: 0,
+      retryTimeout: 1000
+    });
+  }
 });
 
 client.start();
