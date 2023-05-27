@@ -123,8 +123,6 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     
     // leave log traces
     console.log(`===================================`);
-    
-    // log current date time in format 2022-12-31 22:05
     console.log(`[${new Date().toLocaleString('en-GB')}]`);
     console.log(`Applicant name: ${name}`);
     console.log(`Inviting ${email} to book slot for second interview...`);
@@ -132,8 +130,6 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
     // send email with booking link
     let success = true
     try {
-      console.log('Sending email to', email)
-
       let mailOptions = {
         from: 'bot@digisailors.ch',
         to: email,
@@ -178,8 +174,6 @@ client.subscribe('reject_application', async function({ task, taskService }) {
 
     // leave log traces
     console.log(`===================================`);
-
-    // log current date time in format 2022-12-31 22:05
     console.log(`[${new Date().toLocaleString('en-GB')}]`);
     console.log(`Applicant name: ${name}`);
     console.log(`Sending rejection email to ${email}...`);
@@ -187,8 +181,6 @@ client.subscribe('reject_application', async function({ task, taskService }) {
     // send email with rejection message
     let success = true
     try {
-      console.log('Sending rejection email to', email)
-
       let mailOptions = {
         from: 'bot@digisailors.ch',
         to: email,
@@ -217,6 +209,64 @@ client.subscribe('reject_application', async function({ task, taskService }) {
 
     // Complete the task
     await taskService.complete(task);
+});
+
+
+/**
+ * This task is responsible for sending the rejection emails to the applicants.
+ */
+client.subscribe('inform_manager_slot', async function({ task, taskService }) {
+  // lock task
+  await taskService.lock(task, 60);
+
+  // Get a applicant details
+  const name = task.variables.get('name');
+  const email = task.variables.get('email');
+  const slot = task.variables.get('slot');
+
+  // @todo - get manager details via recruimtent process instance
+  const managerName = 'Manager';
+  const managerEmail = 'manager@digisailors.ch';
+
+  // leave log traces
+  console.log(`===================================`);
+  console.log(`[${new Date().toLocaleString('en-GB')}]`);
+  console.log(`Applicant name: ${name}`);
+  console.log(`Informing manager about interview slot by email to ${managerEmail}...`);
+
+  // send email with interview slot
+  let success = true
+  try {
+    let mailOptions = {
+      from: 'bot@digisailors.ch',
+      to: email,
+      subject: 'Digisailors - New intervew slot booked',
+      text: `Dear ${managerName},\n\n`
+        + `Please note that a candidate has booked an interview slot as follows:\n\n`
+        + `Applicant Name: ${name}\n`
+        + `Applicant Email: ${email}\n`
+        + `Interview Slot: ${slot}\n\n`
+        + `Best regards,\n`
+        + `Digisailors`,
+    };
+
+    let transporter = await getTransporter()
+    await transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        success = false
+        console.log(error); // eslint-disable-line no-console
+      } else {
+        console.log('✓ Message sent: %s', info.messageId); // eslint-disable-line no-console
+        transporter.close();
+      }
+    });
+  } catch (error) {
+    success = false
+    console.log(error) // eslint-disable-line no-console
+  }
+
+  // Complete the task
+  await taskService.complete(task);
 });
 
 client.start();
