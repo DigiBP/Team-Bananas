@@ -151,6 +151,12 @@ Our 4 longlist categories:
     - The first task ```generate_job_ad``` is waiting for message via topic brokerage
     - The Hiring Manager continues in the HR Buddy App by enter key skills for the position, which are fed into the OpenAI API to auto-generate a job ad text via GPT-4
     - The Hiring Manager can edit the generated job ad until satiefied. When confirming the job ad, this will fetch the external service task ```job_ad``` for given process instance from the Camdunda REST API, lock the external task, and mark it as completed.
+    - As soon as the job ad is defined, HR employees check whether there are suitable internal candidates. This check is based on vector similarity search in Weviate, where it compares document embeddings of the job ad with embeddings of employee's biographies.
+    - If potential internal candidates are available: the user task will be started by HR employees reaching out to these candidates to evaluate whether they should be considered for the open position, if there are no interested employees, the process goes on to advertise the position job ad on social media. 
+    - If there are no potential candidates available: the position job ad is being published and advertised, simulated by pushing to Mastodon social media (open source alternative to Twitter) and realized via automated polling via the node worker app and the process is waiting for applicants.
+    - The process waits to receive the message whether a candiate should be considered for the shortlist.
+    - 
+
     - 🔴 **TODO** to be continued... save business data to Google Sheet, publish job ad text to the topic exchange 🔴
 
 
