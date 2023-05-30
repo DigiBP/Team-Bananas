@@ -18,7 +18,7 @@
         Book Your Slot
       </div>
       <p class="mb-4">
-        The following slots are available next week. Please select one of the slots to book your second interview:
+        The following slots are available next week. Please select one of the slots and click on "Book" to book your second interview:
       </p>
       <div class="flex space-x-4">
         <div class="w-1/4 p-4 rounded-md bg-gray-200">
@@ -92,16 +92,19 @@
         </div>
       </div>
       <div class="mb-12">
-        <Button v-if="hasChosenSlot" color="accent" @clicked="book()">
+        <p>
+          Please select a slot and click the button below to book your second interview.
+        </p>
+        <Button color="accent" @clicked="book()">
           <font-awesome-icon icon="check" class="mr-2" />
           Book
         </Button>
       </div>
-      <div class="mt-8 mb-4 p-4 bg-red-200 rounded-lg">
+      <div class="mt-16 mb-4 p-6 bg-red-200 rounded-lg max-w-xl">
         <div class="mb-4">
           In case you are no longer interested in this position, please click the button below to withdraw your application.
         </div>
-        <Button color="red-700" size="small">
+        <Button color="red-700" size="small" @clicked="widthdraw()">
           <font-awesome-icon icon="times" class="mr-2" />
           Withdraw Application
         </Button>
@@ -144,9 +147,19 @@ export default {
   },
   methods: {
     book () {
+      if (!this.hasChosenSlot) {
+        return
+      }
       this.$store.dispatch('bookSecondInterview', {
         processInstanceId: this.slug,
         slot: this.slot
+      }).then(() => {
+        this.$router.push('/applicant')
+      })
+    },
+    widthdraw () {
+      this.$store.dispatch('withdrawApplication', {
+        processInstanceId: this.slug
       }).then(() => {
         this.$router.push('/applicant')
       })

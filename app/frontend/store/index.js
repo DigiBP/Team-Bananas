@@ -415,6 +415,19 @@ export const actions = {
     })
   },
 
+  withdrawApplication ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/withdraw-application'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  },
+
   updateApplicant ({ commit, state }, { processInstanceId, category }) {
     return new Promise((resolve, reject) => {
       const url = '/api/camunda/update-applicant'

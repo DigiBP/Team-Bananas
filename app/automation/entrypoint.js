@@ -137,6 +137,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
         text: `Dear ${name},\n\n`
           + `You passed the first screening interview! We would like to invite you for a second interview.\n\n`
           + `Please book a slot here: ${baseUrl}/applicant/booking/${processInstanceId}\n\n`
+          + `If you are no longer interested in this position, please withdraw your application on the booking page.\n\n`
           + `Best regards,\n`
           + `Digisailors`,
       };

@@ -398,6 +398,35 @@ app.all('/book-second-interview', async (req, res) => {
 })
 
 /**
+ * Withdraw application by throwing an error 'error_applicant_withdrawal' in Camunda.
+ */
+app.all('/withdraw-application', async (req, res) => {
+  const url = `${baseUrl}/message`
+  const messageName = 'bananas_applicant_withdrawal'
+
+  const processInstanceId = req.body.processInstanceId
+
+  const body = {
+    processInstanceId,
+    messageName
+  }
+
+  console.log('===================================') // eslint-disable-line no-console
+
+  try {
+    await axios.post(url, body, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error.response.data) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
+  res.json({ success: true })
+})
+
+/**
  * Update category on applicant process instance.
  */
 app.all('/update-applicant', async (req, res) => {
