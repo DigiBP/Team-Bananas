@@ -22,7 +22,9 @@ const commonHeaders = {
 app.all('/post', async (req, res) => {
   const url = `${baseUrl}/message`
 
-  const { messageName, processInstanceId } = req.body
+  console.log(req.body) // eslint-disable-line no-console
+
+  const { messageName } = req.body
 
   const processVariables = {
     lastMessage: {
@@ -31,14 +33,16 @@ app.all('/post', async (req, res) => {
     }
   }
 
+  const jsonBody = {
+    messageName,
+    processInstanceId: req.body.processId,
+    processVariables
+  }
+
   console.log('POST', url) // eslint-disable-line no-console
+  console.log('JSON', jsonBody) // eslint-disable-line no-console
   try {
-    await axios.post(url, {
-      messageName,
-      tenantId,
-      processInstanceId,
-      processVariables
-    }, {
+    await axios.post(url, jsonBody, {
       headers: commonHeaders
     })
   } catch (error) {

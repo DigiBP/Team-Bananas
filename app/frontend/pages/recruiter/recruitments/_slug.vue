@@ -10,10 +10,9 @@
           </JobAd>
         </div>
         <div class="w-1/2">
-          <div class="mb-4">
-            <h2 class="mb-2">
-              Internal Candidates
-            </h2>
+          <!-- INTERNAL CNADIDATES STAGE -->
+          <div v-if="!loadingEmployees" class="mb-4">
+            <h2 class="mb-2">Internal Candidates</h2>
             <div v-if="processInstance.numInternalCandidates !== null || processInstance.numInternalCandidates !== 0">
               <div v-if="loadingEmployees">
                 <font-awesome-icon icon="spinner" spin />
@@ -49,6 +48,7 @@
               Process instance proceeded with no internal candidates.
             </div>
           </div>
+          <!-- EXTERNAL APPLICANTS -->
           <div v-if="passedInternalCandidatesStage">
             <hr class="border-digisailor-default my-4">
             <h2 class="mb-2">
@@ -69,56 +69,51 @@
             <div v-if="loadingApplicants">
               <font-awesome-icon icon="spinner" spin />
             </div>
-            <div v-else-if="processInstance.externalApplicants.length > 0">
-              <ul class="my-4">
-                <li v-for="applicant in processInstance.externalApplicants" :key="applicant.processId" class="mb-2">
-                  <div class="p-4 bg-gray-200 rounded-md">
-                    <div class="mb-2">
-                      <strong>{{ applicant.name }}</strong>, {{ applicant.email }}
-                      <div class="float-right inline-block p-1 w-8 h-8 rounded-full text-center text-white text-sm font-bold bg-black">
-                        {{ applicant.category }}
-                      </div>
-                    </div>
-                    <a :href="applicant.cv" target="_blank" class="inline rounded-md px-2 py-2 mr-2 text-xs bg-gray-600 text-white">
-                      View CV
-                    </a>
-                    <!-- HOLD INTERVIEW -->
-                    <NuxtLink v-if="applicant.category === 'A' && !applicant.hadScreeningInterview" :to="`/recruiter/interviews/${applicant.processId}`">
-                      <Button size="small" color="blue-700">
-                        Hold Interview
-                      </Button>
-                    </NuxtLink>
-                    <!-- UPGRADE TO CATEGORY A -->
-                    <Button v-if="applicant.category === 'B' && !applicant.hadScreeningInterview" size="small" color="pink-700" @clicked="upgradeApplicant(applicant)">
-                      Upgrade to Category <span class="inline-block align-baseline bg-black text-xs text-white text-center rounded-full w-5 h-5">A</span>
-                    </Button>
-                    <div>
-                      <a target="_blank" :href="`https://digibp.herokuapp.com/camunda/app/cockpit/default/#/process-instance/${applicant.processId}`" class="inline text-xs text-red-500">
-                        Open in Camunda
-                        <font-awesome-icon :icon="['fas', 'square-arrow-up-right']" />
-                      </a>
-                    </div>
-                    <div>
-                      <div v-if="applicant.hadScreeningInterview" class="text-green-700 mt-4">
-                        <font-awesome-icon icon="check" /> Screening interview passed
-                      </div>
-                      <div v-if="applicant.hadSecondInterviewBooking" class="text-green-700 mt-4">
-                        <font-awesome-icon icon="check" /> Has booked a slot for second interview
-                      </div>
+            <ul v-else-if="processInstance.externalApplicants.length > 0" class="my-4">
+              <li v-for="applicant in processInstance.externalApplicants" :key="applicant.processId" class="mb-2">
+                <div class="p-4 bg-gray-200 rounded-md">
+                  <div class="mb-2">
+                    <strong>{{ applicant.name }}</strong>, {{ applicant.email }}
+                    <div class="float-right inline-block p-1 w-8 h-8 rounded-full text-center text-white text-sm font-bold bg-black">
+                      {{ applicant.category }}
                     </div>
                   </div>
-                </li>
-              </ul>
-              <!-- ENOUGH APPLICATIONS RECEIVED -->
-              <div v-if="isWaitingForApplications">
-                <Button color="main" @clicked="postMessage('bananas_enough_applications')">
-                  Enough Applications Received
-                  <font-awesome-icon icon="arrow-right" />
-                </Button>
-              </div>
-            </div>
-            <div v-else>
-              There are currently no external applicants that match this position.
+                  <a :href="applicant.cv" target="_blank" class="inline rounded-md px-2 py-2 mr-2 text-xs bg-gray-600 text-white">
+                    View CV
+                  </a>
+                  <!-- HOLD INTERVIEW -->
+                  <NuxtLink v-if="applicant.category === 'A' && !applicant.hadScreeningInterview" :to="`/recruiter/interviews/${applicant.processId}`">
+                    <Button size="small" color="blue-700">
+                      Hold Interview
+                    </Button>
+                  </NuxtLink>
+                  <!-- UPGRADE TO CATEGORY A -->
+                  <Button v-if="applicant.category === 'B' && !applicant.hadScreeningInterview" size="small" color="pink-700" @clicked="upgradeApplicant(applicant)">
+                    Upgrade to Category <span class="inline-block align-baseline bg-black text-xs text-white text-center rounded-full w-5 h-5">A</span>
+                  </Button>
+                  <div>
+                    <a target="_blank" :href="`https://digibp.herokuapp.com/camunda/app/cockpit/default/#/process-instance/${applicant.processId}`" class="inline text-xs text-red-500">
+                      Open in Camunda
+                      <font-awesome-icon :icon="['fas', 'square-arrow-up-right']" />
+                    </a>
+                  </div>
+                  <div>
+                    <div v-if="applicant.hadScreeningInterview" class="text-green-700 mt-4">
+                      <font-awesome-icon icon="check" /> Screening interview passed
+                    </div>
+                    <div v-if="applicant.hadSecondInterviewBooking" class="text-green-700 mt-4">
+                      <font-awesome-icon icon="check" /> Has booked a slot for second interview
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <!-- ENOUGH APPLICATIONS RECEIVED -->
+            <div v-if="isWaitingForApplications">
+              <Button color="main" @clicked="postMessage('bananas_enough_applications')">
+                Close for Applications
+                <font-awesome-icon icon="arrow-right" />
+              </Button>
             </div>
             <hr class="border-digisailor-default my-4">
             <h2 class="mb-2">

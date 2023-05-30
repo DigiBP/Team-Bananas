@@ -266,7 +266,7 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
         + `Applicant Name: ${name}\n`
         + `Applicant Email: ${email}\n`
         + `Interview Slot: ${slot}\n\n`
-        + `Please leave interview feedback here: ${baseUrl}/manager/interviews/${processInstanceId}\n\n`
+        + `Please leave interview feedback here: https://digisailors.ch/manager/interviews/${processInstanceId}\n\n`
         + `Best regards,\n`
         + `Digisailors`,
     };
