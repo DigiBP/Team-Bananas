@@ -182,7 +182,7 @@ export default {
       return this.processInstance?.activities?.[0]?.activityId === 'wait_for_applicants'
     },
     isWaitingForShortlist () {
-      return this.processInstance?.activities?.[0]?.activityId === 'wait_for_shortlist'
+      return this.processInstance?.activities?.[0]?.activityId === 'confirm_final_shortlist'
     }
   },
   mounted () {
