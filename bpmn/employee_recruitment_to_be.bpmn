@@ -28,10 +28,10 @@
         <bpmn:flowNodeRef>confirm_final_shortlist</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0d7zga7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>order_contract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1lg7gec</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1sxaemj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0060lcp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>candidate_declined</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1lg7gec</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:dataStoreReference id="DataStoreReference_01tfgta" name="Weaviate vector search engine" />
@@ -104,7 +104,7 @@
       <bpmn:outgoing>Flow_1nqf2bd</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:receiveTask id="wait_for_applicants" name="Wait for applications (and close)" messageRef="Message_0dnhrkf">
-      <bpmn:documentation>Process waits to receive the message "bananas_enough_applications". The message is issued when the HR staf clicks the button "Enough applications received" in the web app UI for a recruitment.</bpmn:documentation>
+      <bpmn:documentation>Process waits to receive the message "bananas_enough_applications". The message is issued when the HR staf clicks the button "Enough applications received" in the web app UI for a recruitment, i.e., the HR staff manually controls the timing to close the position for applications.</bpmn:documentation>
       <bpmn:incoming>Flow_1nqf2bd</bpmn:incoming>
       <bpmn:outgoing>Flow_1yq4hfo</bpmn:outgoing>
     </bpmn:receiveTask>
@@ -146,7 +146,7 @@
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_0xr4rt9" sourceRef="Activity_0x42s4z" targetRef="Event_1xwk1d5" />
       <bpmn:sequenceFlow id="Flow_0gi6bzl" sourceRef="Event_0fwjt41" targetRef="select_next_candidate" />
-      <bpmn:serviceTask id="select_next_candidate" name="Select next candidate form shortlist" camunda:type="external" camunda:topic="select_next_candidate">
+      <bpmn:serviceTask id="select_next_candidate" name="Select next candidate from shortlist" camunda:type="external" camunda:topic="select_next_candidate">
         <bpmn:incoming>Flow_0gi6bzl</bpmn:incoming>
         <bpmn:outgoing>Flow_0jw63uy</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -186,7 +186,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1td8u16">
       <bpmndi:BPMNShape id="Participant_0glx47l_di" bpmnElement="Participant_0glx47l" isHorizontal="true">
-        <dc:Bounds x="160" y="250" width="2120" height="660" />
+        <dc:Bounds x="160" y="250" width="2120" height="590" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_018wwj9_di" bpmnElement="Lane_018wwj9" isHorizontal="true">
@@ -194,7 +194,7 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_165lmxo_di" bpmnElement="Lane_165lmxo" isHorizontal="true">
-        <dc:Bounds x="190" y="650" width="2090" height="260" />
+        <dc:Bounds x="190" y="650" width="2090" height="190" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_10pintv_di" bpmnElement="has_internal_candidates" isMarkerVisible="true">
@@ -282,6 +282,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1r36ojs_di" bpmnElement="select_next_candidate" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1478" y="367" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18u45o6_di" bpmnElement="send_job_offer" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1622" y="367" width="100" height="80" />

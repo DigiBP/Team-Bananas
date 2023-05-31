@@ -13,11 +13,11 @@
           <!-- INTERNAL CNADIDATES STAGE -->
           <div v-if="!loadingEmployees" class="mb-4">
             <h2 class="mb-2">Internal Candidates</h2>
-            <div v-if="processInstance.numInternalCandidates !== null || processInstance.numInternalCandidates !== 0">
-              <div v-if="loadingEmployees">
-                <font-awesome-icon icon="spinner" spin />
-              </div>
-              <div v-else>
+            <div v-if="loadingEmployees">
+              <font-awesome-icon icon="spinner" spin />
+            </div>
+            <div v-else>
+              <div v-if="isWaitingInternalCandidates">
                 <div v-if="processInstance.internalCandidates.length > 0">
                   <ul>
                     <li v-for="candidate in processInstance.internalCandidates" :key="candidate._additional.id" class="mb-2">
@@ -31,7 +31,7 @@
                 <div v-else>
                   There are no internal candidates that match this position.
                 </div>
-                <div v-if="processInstance.numInternalCandidates === null" class="mt-4">
+                <div v-if="isWaitingInternalCandidates" class="mt-4">
                   <Button v-if="processInstance.internalCandidates.length > 0" color="main" @clicked="proceedWithCandidates">
                     Proceed with internal candidates
                     <font-awesome-icon icon="arrow-right" />
@@ -42,10 +42,10 @@
                   </Button>
                 </div>
               </div>
-            </div>
-            <div v-if="processInstance.numInternalCandidates === 0">
-              <font-awesome-icon icon="check" />
-              Process instance proceeded with no internal candidates.
+              <div v-else>
+                <font-awesome-icon icon="check" />
+                Process instance proceeded with no internal candidates.
+              </div>
             </div>
           </div>
           <!-- EXTERNAL APPLICANTS -->
@@ -170,6 +170,9 @@ export default {
   },
   computed: {
     ...mapState(['processInstance']),
+    isWaitingInternalCandidates () {
+      return this.processInstance?.activities?.[0]?.activityId === 'search_internal_candidates'
+    },
     passedInternalCandidatesStage () {
       return this.processInstance.numInternalCandidates === 0 || this.processInstance.numInternalCandidates > 0
     },
@@ -182,17 +185,16 @@ export default {
   },
   mounted () {
     this.$store.commit('RESET_PROCESS_INSTANCE')
+    this.loadingProcess = true
+    this.loadingEmployees = true
+    this.loadingApplicants = true
     this.$store.dispatch('fetchInstance', {
       processInstanceId: this.slug
     }).then(() => {
       this.loadingProcess = false
-      if (!this.processInstance.numInternalCandidates || this.processInstance.numInternalCandidates > 0) {
-        this.$store.dispatch('matchEmployees').then(() => {
-          this.loadingEmployees = false
-        })
-      } else {
+      this.$store.dispatch('matchEmployees').then(() => {
         this.loadingEmployees = false
-      }
+      })
       this.$store.dispatch('fetchExternalApplicants').then(() => {
         this.loadingApplicants = false
       })
@@ -207,14 +209,20 @@ export default {
     proceedWithoutCandidates () {
       this.$store.commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', [])
       this.$store.dispatch('proceedWithInternalCandidates').then(() => {
-        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId })
+        this.loadingProcess = true
+        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId }).then(() => {
+          this.loadingProcess = false
+        })
       })
     },
     postMessage (messageName) {
       this.$store.dispatch('postMessageToProcessInstance', {
         messageName
       }).then(() => {
-        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId })
+        this.loadingProcess = true
+        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId }).then(() => {
+          this.loadingProcess = false
+        })
       })
     },
     upgradeApplicant (applicant) {

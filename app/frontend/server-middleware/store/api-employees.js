@@ -7,8 +7,8 @@ const app = require('express')()
 app.use(bodyParser.json())
 
 // weaviate client
-const scheme = process.env.WEAVIATE_SCHEME ?? 'http'
-const host = process.env.WEAVIATE_HOST ?? 'localhost:8080'
+const scheme = process.env.WEAVIATE_SCHEME ?? 'https'
+const host = process.env.WEAVIATE_HOST ?? 'search.digisailors.ch'
 
 const weaviate = require('weaviate-ts-client')
 const client = weaviate.client({
