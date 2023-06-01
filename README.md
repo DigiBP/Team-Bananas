@@ -12,6 +12,10 @@
 
 Our marvellous coach is Charuta Pande.
 
+Access details:
+- Digisailors HR Buddy webpage: https://digisailors.ch/ & password: secret
+- Gmail account: digisailors.ch@gmail.com & password: TeamBananas
+
 ## HR Recruitment Process for Digisailors
 
 Digisailors is a fictive consulting company that provides digital transformation services to enterprise
