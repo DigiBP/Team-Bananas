@@ -15,6 +15,7 @@ Our marvellous coach is Charuta Pande.
 Access details:
 - Digisailors HR Buddy webpage: https://digisailors.ch/ & password: secret
 - Gmail account: digisailors.ch@gmail.com & password: TeamBananas
+- Trello Board: https://trello.com/invite/b/G4Uk94dh/ATTI3be25c0028e4857722711721c1c0eeb4BB827CC8/bananas
 
 ## HR Recruitment Process for Digisailors
 
@@ -27,13 +28,11 @@ proof-of-concept, the recruiting process shall be improved by means of digitaliz
 
 ## 🔁 Business Process
 
-### 🔍 As-Is Business Process
-
-🔴 **TODO** rewrite as a process profiles according to BPM lecture (Gabriela) 🔴
+### 🔍 As-Is Business Process (Gabriela)
 
 A company that wants to achieve success should demonstrate quality, high standards, and innovation in different ways. This depends on many factors, being one of them, its employees.
 
-Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, the vision, and the long-term goals of the organization.
+Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, vision, and long-term goals of the organization.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/c629f70c34942f9a79b2590a34978be624ba9e47/docs/Process%20Profile%20-%20Employee%20recruitment.png"/>
 
