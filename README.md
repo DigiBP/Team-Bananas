@@ -12,6 +12,11 @@
 
 Our marvellous coach is Charuta Pande.
 
+Access details:
+- Digisailors HR Buddy webpage: https://digisailors.ch/ & password: secret
+- Gmail account: digisailors.ch@gmail.com & password: TeamBananas
+- Trello Board: https://trello.com/invite/b/G4Uk94dh/ATTI3be25c0028e4857722711721c1c0eeb4BB827CC8/bananas
+
 ## HR Recruitment Process for Digisailors
 
 Digisailors is a fictive consulting company that provides digital transformation services to enterprise
@@ -23,13 +28,11 @@ proof-of-concept, the recruiting process shall be improved by means of digitaliz
 
 ## 🔁 Business Process
 
-### 🔍 As-Is Business Process
-
-🔴 **TODO** rewrite as a process profiles according to BPM lecture (Gabriela) 🔴
+### 🔍 As-Is Business Process (Gabriela)
 
 A company that wants to achieve success should demonstrate quality, high standards, and innovation in different ways. This depends on many factors, being one of them, its employees.
 
-Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, the vision, and the long-term goals of the organization.
+Employee recruitment is strategic and one of the core processes in a company. Therefore, it is important to be analyzed deeper through the development of its process profile, all while factoring in the alignment of the strategy, vision, and long-term goals of the organization.
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/c629f70c34942f9a79b2590a34978be624ba9e47/docs/Process%20Profile%20-%20Employee%20recruitment.png"/>
 
@@ -50,15 +53,8 @@ The process has 3 roles: Hiring Manager, HR Staff, and candidates.
 - some tasks like screening of CVs are standard tasks that can be automated
 - there is little support of the hiring manager in the current process (i.e., the hiring manager has to enter everything manually into a Word file for HR to process)
 
-### 🔍To-Be Process
+### 🔍To-Be Process (Tim & Afrodita)
 
-🔴 **TODO** draw the to be process (Tim) 🔴
-
-🔴 **TODO** describe the to-be process (Afrodita) 🔴
-
-🔴 **TODO** describe the rules that we can later use in decision table for candidate screening (Gezim) 🔴
-
-Description of ToBe Process:
 The process is initiated by the hiring manager, who requests a recruitment and clarifies the recruitment assignment. Then the following process steps are initialized:
 
 - Job Posting: The recruitment process starts with creating a job posting that outlines the job requirements, responsibilities, and qualifications. This job posting is then shared on the company's career website, job boards, and social media platforms.
@@ -87,7 +83,7 @@ In the DRD (Decision Requirements Diagram) are the "Longlist" and "Points" decis
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/drd_decision.png" style="width:50%; height:auto;" />
 
-Our 15 Business Rules are defined below:
+Our 15 Business Rules are defined below (Gezim):
 
 <img src="https://github.com/DigiBP/Team-Bananas/blob/main/docs/dmn_points_list.png" style="width:100%; height:auto;" />
 
@@ -128,7 +124,7 @@ Our 4 longlist categories:
 - Candidates can browse the job ads on the "HR Buddy" web app
 - Upon clicking on "Apply" in the web app, the candidates are taken to a pre-filled Google Form where they can enter their details
 - **iSaaS:** the Google Form submission triggers an event-based, multi-instance expanded subtask for each applicant via Integromat / MAKE.com
-- **Self-service:** scheduling integration (e.g., Calendly) for applicants to select suitable time window for interview
+- **Self-service:** scheduling integration for applicants to select suitable time window for interview
 - **iSaaS:** Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Mastodon
 - **Chatbot**: use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
 - **Automation:** automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
@@ -162,11 +158,7 @@ Our 4 longlist categories:
 
 ### Profiles of the internal candidates and questions for the precheck
 
-🔴 **TODO** internal candidates: prepare 20 different profiles of people (IT Manager, Engineer,...) (Gabriela) 🔴
-
-🔴 **TODO** questions for the precheck (Gezim) 🔴
-
-Here are a few pre-screening questions that we can use for the precheck:
+Here are a few pre-screening questions that we can use for the precheck (Gezim):
 1. Can you confirm your eligibility to work in [country/region]?
 2. Are you comfortable with the salary range provided in the job description?
 3. Are you available to work the required hours/schedule for this position?
@@ -206,8 +198,6 @@ We simulate posting the job ad to Mastodon social media network (free, open sour
 The implementation is in [./app/automation/entrypoint.js](https://github.com/DigiBP/Team-Bananas/blob/main/app/automation/entrypoint.js)
 
 The Mastodon accounts with the tweets is to be found on [https://mstdn.social/@digisailors](https://mstdn.social/@digisailors)
-
-🔴 **TODO** Google API (Gabriela) 🔴
 
 ----
 
@@ -249,3 +239,6 @@ There are some considerations when we build and digitalize the new process:
 - try to use MAKE instead of own Java-Codes
 - try to split the work balanced in the team
 - next steps and goal are to define by next week: register and open the "trello" board with the open assigned task, sceleton of the user interface (openAI API) and connect with camunda API, prepare 20 different profiles of people (IT Manager, DevOps Engineer,...), create a Mastodon account with the Mastodon API, open and register for the Google API (in the Google Cloud Console) and create there an empty google-excel-sheet with 3 tabs (questions, candidates, job add), implement the Longlist-Category in the to-be-process in Camunda, Define questions for the Precheck and try to have the Google Form ready that can trigger a new process instance. 
+
+#### ❓ Feedback from 3rd Coaching
+
