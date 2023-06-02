@@ -1,5 +1,5 @@
 // config: similarity to reach in vector search to be condiered an internal candideate match
-const CERTAINTY_CUTOFF = 0.9
+const CERTAINTY_CUTOFF = 0.88
 
 // express app
 const bodyParser = require('body-parser')

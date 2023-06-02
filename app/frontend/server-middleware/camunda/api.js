@@ -472,6 +472,7 @@ app.all('/update-applicant', async (req, res) => {
  */
 app.all('/manager-interview-proceed', async (req, res) => {
   const processInstanceId = req.body.processInstanceId
+  const positionInstanceId = req.body.positionInstanceId
   const notes = req.body.notes
 
   // fetch and lock external task
@@ -497,6 +498,72 @@ app.all('/manager-interview-proceed', async (req, res) => {
         managerInterviewNotes: {
           value: notes,
           type: 'String'
+        }
+      }
+    }, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to set variable' })
+    return
+  }
+
+  // fetch process variables and merge names and emails with new candidate
+  const shortlistUrl = `${baseUrl}/process-instance/${positionInstanceId}/variables`
+  console.log('GET', shortlistUrl) // eslint-disable-line no-console
+
+  let shortlistNames
+  let shortlistEmails
+
+  try {
+    const response = await axios.get(shortlistUrl, {
+      headers: commonHeaders
+    })
+    shortlistNames = response.data.filter(variable => variable.name === 'shortlistNames')[0].value
+    shortlistEmails = response.data.filter(variable => variable.name === 'shortlistEmails')[0].value
+  } catch (error) {
+    console.log(error) // eslint-disable-line no-console
+    shortlistNames = []
+    shortlistEmails = []
+  }
+
+  const candidateUrl = `${baseUrl}/process-instance/${processInstanceId}/variables`
+  console.log('GET', candidateUrl) // eslint-disable-line no-console
+
+  let candidateName
+  let candidateEmail
+
+  try {
+    const response = await axios.get(candidateUrl, {
+      headers: commonHeaders
+    })
+    candidateName = response.data.filter(variable => variable.name === 'name')[0].value
+    candidateEmail = response.data.filter(variable => variable.name === 'email')[0].value
+  } catch (error) {
+    console.log(error) // eslint-disable-line no-console
+    candidateName = ''
+    candidateEmail = ''
+  }
+
+  // merge names and emails
+  const newShortlistNames = shortlistNames.push(candidateName)
+  const newShortlistEmails = shortlistEmails.push(candidateEmail)
+
+  // save new shortlist names and emails
+  const setShortlistUrl = `${baseUrl}/process-instance/${positionInstanceId}/variables`
+  console.log('POST', setShortlistUrl) // eslint-disable-line no-console
+
+  try {
+    await axios.post(setShortlistUrl, {
+      modifications: {
+        shortlistNames: {
+          value: newShortlistNames,
+          type: 'Array'
+        },
+        shortlistEmails: {
+          value: newShortlistEmails,
+          type: 'Array'
         }
       }
     }, {

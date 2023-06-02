@@ -16,7 +16,11 @@
           </tr>
         </thead>
         <tr v-for="employee in employees" :key="employee._additional.id">
-          <td>{{ employee.name }}</td>
+          <td>
+            <NuxtLink :to="`/recruiter/employees/${employee._additional.id}`">
+              {{ employee.name }}
+            </NuxtLink>
+          </td>
           <td class="align-center">
             <img :src="pictureSlug(employee.name)" class="block w-40 border border-1 rounded-full" />
           </td>
@@ -82,5 +86,9 @@ td {
   @apply py-2 px-2 border border-gray-300;
   @apply text-sm;
   @apply align-top;
+
+  a {
+    @apply text-digisailor-main underline font-bold;
+  }
 }
 </style>

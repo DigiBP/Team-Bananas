@@ -21,9 +21,11 @@
                 <div v-if="processInstance.internalCandidates.length > 0">
                   <ul>
                     <li v-for="candidate in processInstance.internalCandidates" :key="candidate._additional.id" class="mb-2">
-                      {{ candidate.name }}
+                      <a :href="`/recruiter/employees/${candidate._additional.id}`" target="_blank" class="text-digisailor-main underline">
+                        {{ candidate.name }}<!--
+                      --></a>
                       <span class="rounded-full px-1 py-0.5 text-xs bg-digisailor-accent text-white">
-                        {{ (Math.round(candidate._additional.certainty * 10000) / 100) }}%
+                        {{ (Math.round(candidate._additional.certainty * 1000) / 10) }}%
                       </span>
                     </li>
                   </ul>
