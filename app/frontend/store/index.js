@@ -442,11 +442,12 @@ export const actions = {
     })
   },
 
-  managerInterviewProceed ({ commit, state }, { processInstanceId, notes }) {
+  managerInterviewProceed ({ commit, state }, { processInstanceId, positionInstanceId, notes }) {
     return new Promise((resolve, reject) => {
       const url = '/api/camunda/manager-interview-proceed'
       axios.post(url, {
         processInstanceId,
+        positionInstanceId,
         notes
       }).then((response) => {
         resolve(response)

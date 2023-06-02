@@ -520,10 +520,25 @@ app.all('/manager-interview-proceed', async (req, res) => {
     const response = await axios.get(shortlistUrl, {
       headers: commonHeaders
     })
-    shortlistNames = response.data.filter(variable => variable.name === 'shortlistNames')[0].value
-    shortlistEmails = response.data.filter(variable => variable.name === 'shortlistEmails')[0].value
+
+    // response.data is an object: loop the object keys to find the key "name"
+    Object.keys(response.data).forEach((key) => {
+      if (key === 'name') {
+        shortlistNames = response.data[key].value
+      }
+    })
+
+    // response.data is an object: loop the object keys to find the key "email"
+    Object.keys(response.data).forEach((key) => {
+      if (key === 'email') {
+        shortlistEmails = response.data[key].value
+      }
+    })
   } catch (error) {
     console.log(error) // eslint-disable-line no-console
+  }
+
+  if (!shortlistNames || !shortlistEmails) {
     shortlistNames = []
     shortlistEmails = []
   }
@@ -533,22 +548,37 @@ app.all('/manager-interview-proceed', async (req, res) => {
 
   let candidateName
   let candidateEmail
-
   try {
     const response = await axios.get(candidateUrl, {
       headers: commonHeaders
     })
-    candidateName = response.data.filter(variable => variable.name === 'name')[0].value
-    candidateEmail = response.data.filter(variable => variable.name === 'email')[0].value
+    Object.keys(response.data).forEach((key) => {
+      if (key === 'name') {
+        candidateName = response.data[key].value
+      }
+    })
+    Object.keys(response.data).forEach((key) => {
+      if (key === 'email') {
+        candidateEmail = response.data[key].value
+      }
+    })
   } catch (error) {
     console.log(error) // eslint-disable-line no-console
     candidateName = ''
     candidateEmail = ''
   }
 
+  console.log('===================================') // eslint-disable-line no-console
+  console.log('candidateName', candidateName) // eslint-disable-line no-console
+  console.log('candidateEmail', candidateEmail) // eslint-disable-line no-console
+
   // merge names and emails
-  const newShortlistNames = shortlistNames.push(candidateName)
-  const newShortlistEmails = shortlistEmails.push(candidateEmail)
+  shortlistNames.push(candidateName)
+  shortlistEmails.push(candidateEmail)
+
+  console.log('===================================') // eslint-disable-line no-console
+  console.log(shortlistNames) // eslint-disable-line no-console
+  console.log(shortlistEmails) // eslint-disable-line no-console
 
   // save new shortlist names and emails
   const setShortlistUrl = `${baseUrl}/process-instance/${positionInstanceId}/variables`
@@ -558,12 +588,12 @@ app.all('/manager-interview-proceed', async (req, res) => {
     await axios.post(setShortlistUrl, {
       modifications: {
         shortlistNames: {
-          value: newShortlistNames,
-          type: 'Array'
+          value: JSON.stringify(shortlistNames),
+          type: 'String'
         },
         shortlistEmails: {
-          value: newShortlistEmails,
-          type: 'Array'
+          value: JSON.stringify(shortlistEmails),
+          type: 'String'
         }
       }
     }, {

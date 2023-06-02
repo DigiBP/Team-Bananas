@@ -47,6 +47,10 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <font-awesome-icon icon="spinner" spin />
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -81,13 +85,18 @@ export default {
     this.$store.dispatch('fetchApplicant', {
       processInstanceId: this.slug
     }).then(() => {
-      this.loadingApplicant = false
+      this.$store.dispatch('fetchInstance', {
+        processInstanceId: this.applicant.positionInstanceId
+      }).then(() => {
+        this.loadingApplicant = false
+      })
     })
   },
   methods: {
     proceed () {
       this.$store.dispatch('managerInterviewProceed', {
         processInstanceId: this.slug,
+        positionInstanceId: this.applicant.positionInstanceId,
         notes: this.notes
       }).then(() => {
         this.$router.push('/')
