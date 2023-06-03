@@ -11,44 +11,13 @@
 | Tim Käser                   | <tim.kaeser@students.fhnw.ch>                 |
 
 
-## Coach
+## 🗣️ Coach
 
 Our marvellous coach is Charuta Pande.
 
-## Project Documentation
+## 📝 Project Documentation
 
-**The documentation of the project is in the [Wiki of this repository](https://github.com/DigiBP/Team-Bananas/wiki).**
-
-
-
-
-## 🚀 Change Project
-
-
-### Service Architecture
-
-<img src="https://raw.githubusercontent.com/DigiBP/Team-Bananas/main/docs/service-architecture.png" style="width:100%; height:auto;" />
-
-### ✅ Scope of the Process Improvements and Digitization:
-
-- A small web app with the name "HR Buddy" is used by hiring managers to start a new process instance via filling in a form
-  - hiring manager enters job title, office, and department
-  - hiring manager adds a few required skills
-  - **Automation:** based on position title and skills, a job ad is automatically generated using OpenAI API ("ChatGPT")
-  - the hiring manager can adjust the job ad if needed before confirming
-- **Automation:** automate the internal candidate screening using neural search (i.e., vector representation of the job ad matched against vector representations of the employees)
-- **Automation:** automate the job posting: we simulate publishing the job ad by posting the job add via API to a Mastodon account
-- **Error Handling Scenario:** job can not be posted on Mastodon, a human needs to intervene to post it manually otherwise there will be no candidates for the vacancy
-- Candidates can browse the job ads on the "HR Buddy" web app
-- Upon clicking on "Apply" in the web app, the candidates are taken to a pre-filled Google Form where they can enter their details
-- **iSaaS:** the Google Form submission triggers an event-based, multi-instance expanded subtask for each applicant via Integromat / MAKE.com
-- **Self-service:** scheduling integration for applicants to select suitable time window for interview
-- **iSaaS:** Integromat (MAKE.com) possibly for starting process instances via a Google Form and posting the job ad to Mastodon
-- **Chatbot**: use a chatbot to collect information from the candidate: do the screening of the candiates via the Chatbot
-- **Automation:** automate the rejection of candidates: after 14 days in the pipeline without anyone taking action, the candidates are rejected
-- Video interview: we only do a form for HR to leave the interview feedback (but do not automate the integration with video call tools)
-- If another error scenario is required: we can simulate "error" handling for the case the final candidate rejects the employment offer and the process instance is left without candidates 
-
+The documentation of the project is in the [Wiki of this repository](https://github.com/DigiBP/Team-Bananas/wiki).
 
 ## ⚙️ Implementation
 
@@ -120,21 +89,6 @@ The Mastodon accounts with the tweets is to be found on [https://mstdn.social/@d
 ----
 
 
-## 💡 Considerations
 
-There are some considerations when we build and digitalize the new process:
-
-- error handling in the process
-    - what error handling pattern to use
-    - interrupting vs. non-interrupting error events
-    - at least 1 error scenario should be covered (and we can elaborate in the paper further)
-- service tasks:
-    - are they synchronus or asynchronous
-    - are they message producers or consumers
-    - what data is exchanged
-    - webhook, REST API call, messaging, ...
-- how do we trigger a new process instance (e.g. via a ```POST``` on the Camunda REST API)
-- how do we glue different services together? (MAKE.com as middleware, self-scripted middleware)
-- how does the customer interact with the process, e.g. a chatbot or UI
 
 
