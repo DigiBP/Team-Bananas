@@ -137,26 +137,4 @@ There are some considerations when we build and digitalize the new process:
 - how do we glue different services together? (MAKE.com as middleware, self-scripted middleware)
 - how does the customer interact with the process, e.g. a chatbot or UI
 
-#### ❓ Feedback from 1st Coaching
-
-- the process should be extended a bit
-- the process is pretty standard now (it is the most commonly choosed by students), we should make it a bit more unique and innovative when we design the to-be process
-- we should add 1-2 more service tasks
-- next step is to define the to-be process
-- email communication can be done via MAKE / Integromat (Integromat can deal with emails sending, receiveing, saving attachments) 
-- update the as-is process:
-    - we have 3 roles (hiring manager, HR staff, candidate)
-    - for as-is process we do not identify the markers (service task, user task, etc) as this would indicate that we already use a workflow engine (use a simple task instead)
-- for parallel subtasks: ues expanded subprocess in Camunda and use parallel or sequential multi-instance (we need to check the Camunda 8 platform docs)
-- for CVs we can simply store into a Google Drive and use MAKE integration (in MAKE we can also use the HTTP and the Web Hook)
-- goal by next week: udpate the as-is process, define the to-be process, deploy to Camunda (we have a tenant ID for Team Bananas), business rules for the rules-based task, and may be try to have the Google Form ready that can trigger a new process instance. 
-
-#### ❓ Feedback from 2nd Coaching
-
-- the to-be-process is now good and sufficient
-- try to use MAKE instead of own Java-Codes
-- try to split the work balanced in the team
-- next steps and goal are to define by next week: register and open the "trello" board with the open assigned task, sceleton of the user interface (openAI API) and connect with camunda API, prepare 20 different profiles of people (IT Manager, DevOps Engineer,...), create a Mastodon account with the Mastodon API, open and register for the Google API (in the Google Cloud Console) and create there an empty google-excel-sheet with 3 tabs (questions, candidates, job add), implement the Longlist-Category in the to-be-process in Camunda, Define questions for the Precheck and try to have the Google Form ready that can trigger a new process instance. 
-
-#### ❓ Feedback from 3rd Coaching
 
