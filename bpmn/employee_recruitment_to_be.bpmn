@@ -25,13 +25,13 @@
         <bpmn:flowNodeRef>Gateway_00wrceu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>advertise_position</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>wait_for_applicants</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>confirm_final_shortlist</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0d7zga7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>order_contract</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1lg7gec</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1sxaemj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0060lcp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>candidate_declined</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>confirm_final_shortlist</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:dataStoreReference id="DataStoreReference_01tfgta" name="Weaviate vector search engine" />
@@ -108,11 +108,6 @@
       <bpmn:incoming>Flow_1nqf2bd</bpmn:incoming>
       <bpmn:outgoing>Flow_1yq4hfo</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:serviceTask id="confirm_final_shortlist" name="Confirm shortlisted candidates" camunda:type="external" camunda:topic="confirm_final_shortlist">
-      <bpmn:documentation>Process waits to receive the message "bananas_personal_interviews_done". The message is issued when the HR staf clicks the button "Interview process completed" in the web app UI for a recruitment.</bpmn:documentation>
-      <bpmn:incoming>Flow_0q4rer9</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ug3mqa</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:serviceTask id="confirm_shortlist_order" name="Finalize shortlist preference order" camunda:type="external" camunda:topic="confirm_shortlist_order">
       <bpmn:incoming>Flow_1ug3mqa</bpmn:incoming>
       <bpmn:outgoing>Flow_1052ii8</bpmn:outgoing>
@@ -167,6 +162,11 @@
     <bpmn:endEvent id="Event_1lg7gec" name="Recruitment cancelled">
       <bpmn:incoming>Flow_12g6o3d</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:receiveTask id="confirm_final_shortlist" name="Confirm shortlisted candidates" messageRef="Message_2lqgmu9">
+      <bpmn:documentation>Process waits to receive the message "bananas_personal_interviews_done". The message is issued when the HR staf clicks the button "Confirm shortlist" in the web app UI for a recruitment.</bpmn:documentation>
+      <bpmn:incoming>Flow_0q4rer9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ug3mqa</bpmn:outgoing>
+    </bpmn:receiveTask>
     <bpmn:textAnnotation id="TextAnnotation_0wtozjb">
       <bpmn:text>automated polling, posts to Mastodon</bpmn:text>
     </bpmn:textAnnotation>
@@ -220,14 +220,6 @@
           <dc:Bounds x="246" y="765" width="72" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0wtozjb_di" bpmnElement="TextAnnotation_0wtozjb">
-        <dc:Bounds x="740" y="670" width="99.99274099883856" height="53" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0uzccyx_di" bpmnElement="TextAnnotation_0uzccyx">
-        <dc:Bounds x="410" y="380" width="120" height="45" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0gazwp7_di" bpmnElement="Gateway_0gazwp7" isMarkerVisible="true">
         <dc:Bounds x="1080" y="495" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -245,9 +237,6 @@
         <dc:Bounds x="931" y="480" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1t2psmk_di" bpmnElement="confirm_final_shortlist" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1180" y="480" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0sfgisx_di" bpmnElement="confirm_shortlist_order" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1180" y="700" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -261,28 +250,14 @@
       <bpmndi:BPMNShape id="Activity_0wthi8r_di" bpmnElement="order_contract" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="2030" y="370" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1lg7gec_di" bpmnElement="Event_1lg7gec">
-        <dc:Bounds x="2202" y="552" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2190" y="595" width="60" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_00gwd9j_di" bpmnElement="confirm_final_shortlist" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1180" y="480" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0y68utc_di" bpmnElement="Association_0y68utc">
-        <di:waypoint x="812" y="560" />
-        <di:waypoint x="793" y="670" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_1sxaemj_di" bpmnElement="Activity_1sxaemj" isExpanded="true">
         <dc:Bounds x="1380" y="330" width="592" height="165" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xwk1d5_di" bpmnElement="Event_1xwk1d5">
-        <dc:Bounds x="1904" y="389" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0fwjt41_di" bpmnElement="Event_0fwjt41">
         <dc:Bounds x="1402" y="389" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1r36ojs_di" bpmnElement="select_next_candidate" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1478" y="367" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_18u45o6_di" bpmnElement="send_job_offer" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1622" y="367" width="100" height="80" />
@@ -290,6 +265,17 @@
       <bpmndi:BPMNShape id="Activity_1waicrr_di" bpmnElement="Activity_0x42s4z" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1764" y="367" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xwk1d5_di" bpmnElement="Event_1xwk1d5">
+        <dc:Bounds x="1904" y="389" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r36ojs_di" bpmnElement="select_next_candidate" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1478" y="367" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_00u3dog_di" bpmnElement="Flow_00u3dog">
+        <di:waypoint x="1722" y="407" />
+        <di:waypoint x="1764" y="407" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xr4rt9_di" bpmnElement="Flow_0xr4rt9">
         <di:waypoint x="1864" y="407" />
         <di:waypoint x="1904" y="407" />
@@ -302,20 +288,30 @@
         <di:waypoint x="1578" y="407" />
         <di:waypoint x="1622" y="407" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_00u3dog_di" bpmnElement="Flow_00u3dog">
-        <di:waypoint x="1722" y="407" />
-        <di:waypoint x="1764" y="407" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_1su5wr0_di" bpmnElement="Event_0060lcp" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1904" y="477" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_1lg7gec_di" bpmnElement="Event_1lg7gec">
+        <dc:Bounds x="2202" y="552" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1932" y="531" width="66" height="27" />
+          <dc:Bounds x="2190" y="595" width="60" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0wtozjb_di" bpmnElement="TextAnnotation_0wtozjb">
+        <dc:Bounds x="740" y="670" width="99.99274099883856" height="53" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0uzccyx_di" bpmnElement="TextAnnotation_0uzccyx">
+        <dc:Bounds x="410" y="380" width="120" height="45" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11ghur6_di" bpmnElement="candidate_declined" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1796" y="477" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1758" y="529" width="43" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1su5wr0_di" bpmnElement="Event_0060lcp" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1904" y="477" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1932" y="531" width="66" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1ug3mqa_di" bpmnElement="Flow_1ug3mqa">
@@ -381,10 +377,6 @@
         <di:waypoint x="298" y="740" />
         <di:waypoint x="340" y="740" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_03bt24k_di" bpmnElement="Association_03bt24k">
-        <di:waypoint x="475" y="480" />
-        <di:waypoint x="466" y="425" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1052ii8_di" bpmnElement="Flow_1052ii8">
         <di:waypoint x="1280" y="740" />
         <di:waypoint x="1330" y="740" />
@@ -409,6 +401,14 @@
         <di:waypoint x="1814" y="570" />
         <di:waypoint x="1420" y="570" />
         <di:waypoint x="1420" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_03bt24k_di" bpmnElement="Association_03bt24k">
+        <di:waypoint x="475" y="480" />
+        <di:waypoint x="466" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0y68utc_di" bpmnElement="Association_0y68utc">
+        <di:waypoint x="812" y="560" />
+        <di:waypoint x="793" y="670" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataStoreReference_01tfgta_di" bpmnElement="DataStoreReference_01tfgta">
         <dc:Bounds x="365" y="865" width="50" height="50" />

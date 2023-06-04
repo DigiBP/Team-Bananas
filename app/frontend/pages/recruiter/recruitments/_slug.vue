@@ -121,13 +121,20 @@
             <h2 class="mb-2">
               Shortlist
             </h2>
-            <p>
-              ...todo...
-            </p>
+            <div v-if="hasShortlist">
+              <ul>
+                <li v-for="item in getShortlist" :key="item.email">
+                  {{ item.name }} ({{ item.email  }})
+                </li>
+              </ul>
+            </div>
+            <div v-else>
+              No shortlisted candidates
+            </div>
             <!-- APPLICANT INTERVIEWS DONE -->
             <div v-if="isWaitingForShortlist">
               <Button color="main" @clicked="postMessage('bananas_personal_interviews_done')">
-                Personal Interviews Done
+                Confirm Shortlist
                 <font-awesome-icon icon="arrow-right" />
               </Button>
             </div>
@@ -183,6 +190,20 @@ export default {
     },
     isWaitingForShortlist () {
       return this.processInstance?.activities?.[0]?.activityId === 'confirm_final_shortlist'
+    },
+    hasShortlist () {
+      return this.processInstance?.shortlistNames?.length > 0
+    },
+    getShortlist () {
+      const names = JSON.parse(this.processInstance.shortlistNames)
+      const emails = JSON.parse(this.processInstance.shortlistEmails)
+
+      return names.map((name, index) => {
+        return {
+          name,
+          email: emails[index]
+        }
+      })
     }
   },
   mounted () {
