@@ -1,3 +1,4 @@
+import nodemailer from 'nodemailer'
 const axios = require('axios')
 
 // helper function to generate a business key
@@ -107,4 +108,50 @@ async function completeExternalTask (baseUrl, commonHeaders, externalTaskId) {
   return true
 }
 
-export { generateBusinessKey, getProcessVariables, getProcessActivities, getAndLockExternalTask, completeExternalTask }
+// function that exposes smtp mail transporter
+async function getTransporter () {
+  // create reusable SMTP transporter
+  const transporter = await nodemailer.createTransport({
+    host: 'ds-mailcatcher',
+    port: 1025,
+    secure: false,
+    tls: {
+      rejectUnauthorized: false
+    }
+  })
+
+  // verify SMTP connection configuration
+  await transporter.verify((error, success) => {
+    if (error) {
+      console.log(error) // eslint-disable-line no-console
+    } else {
+      console.log('✓ SMTP connection for sending emails is ready.') // eslint-disable-line no-console
+    }
+  })
+
+  return transporter
+}
+
+// helper function to send an email
+async function sendMail (mailOptions) {
+  let success = true
+  try {
+    const transporter = await getTransporter()
+    await transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        success = false
+        console.log(error) // eslint-disable-line no-console
+      } else {
+        console.log('✓ Message sent: %s', info.messageId) // eslint-disable-line no-console
+        transporter.close()
+      }
+    })
+  } catch (error) {
+    success = false
+    console.log(error) // eslint-disable-line no-console
+  }
+
+  return success
+}
+
+export { generateBusinessKey, getProcessVariables, getProcessActivities, getAndLockExternalTask, completeExternalTask, sendMail }

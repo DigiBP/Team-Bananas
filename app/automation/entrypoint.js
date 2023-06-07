@@ -259,7 +259,7 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
   try {
     let mailOptions = {
       from: 'bot@digisailors.ch',
-      to: email,
+      to: managerEmail,
       subject: 'Digisailors - New intervew slot booked',
       text: `Dear ${managerName},\n\n`
         + `Please note that a candidate has booked an interview slot as follows:\n\n`
