@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Client, logger } from "camunda-external-task-client-js";
+import { Client, Variables, logger } from "camunda-external-task-client-js";
 import nodemailer from 'nodemailer';
 
 // Camunda API config
@@ -133,7 +133,7 @@ client.subscribe('invite_for_interview', async function({ task, taskService }) {
       let mailOptions = {
         from: 'bot@digisailors.ch',
         to: email,
-        subject: 'Digisailors - Invitation for second interview',
+        subject: '✅ Digisailors - Invitation for second interview',
         text: `Dear ${name},\n\n`
           + `You passed the first screening interview! We would like to invite you for a second interview.\n\n`
           + `Please book a slot here: ${baseUrl}/applicant/booking/${processInstanceId}\n\n`
@@ -194,7 +194,7 @@ client.subscribe('reject_application', async function({ task, taskService }) {
       let mailOptions = {
         from: 'bot@digisailors.ch',
         to: email,
-        subject: 'Digisailors - Your application was rejected',
+        subject: '💩 Digisailors - Your application was rejected',
         text: `Dear ${name},\n\n`
           + `Please note that your application has been rejected.\n\n`
           + `We wish you all the best.\n\n`
@@ -260,7 +260,7 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
     let mailOptions = {
       from: 'bot@digisailors.ch',
       to: managerEmail,
-      subject: 'Digisailors - New intervew slot booked',
+      subject: '📅 Digisailors - New intervew slot booked',
       text: `Dear ${managerName},\n\n`
         + `Please note that a candidate has booked an interview slot as follows:\n\n`
         + `Applicant Name: ${name}\n`
@@ -297,6 +297,96 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
       retryTimeout: 1000
     });
   }
+});
+
+
+
+/**
+ * subscribe to task to send email to managerpick next candidate from shortlist
+ */
+client.subscribe('select_next_candidate', async function({ task, taskService }) {
+  // lock task
+  await taskService.lock(task, 60);
+
+  // Get a shortlist details
+  const processInstanceId = task.processInstanceId;
+  const positionTitle = task.variables.get('title');
+  const names = JSON.parse(task.variables.get('shortlistNames')) || [];
+  const emails = JSON.parse(task.variables.get('shortlistEmails')) || [];
+
+  // leave log traces
+  console.log(`===================================`);
+  console.log(`[${new Date().toLocaleString('en-GB')}]`);
+  console.log(`Process instance ID: ${processInstanceId}`);
+  console.log(`Position title: ${positionTitle}`);
+  console.log(`Getting next candidate from shortlist...`);
+
+  // save new variables on the process instance
+  const nextCandidateName = names.shift();
+  const nextCandidateEmail = emails.shift();
+  const processVariables = new Variables();
+  processVariables.set("nextCandidateName", nextCandidateName);
+  processVariables.set("nextCandidateEmail", nextCandidateEmail);
+  processVariables.set("nextCandidateAccepted", 0);
+
+  // Complete the task
+  await taskService.complete(task, processVariables);
+
+});
+
+/**
+ * subscribe to task to send job offer per email
+ */
+client.subscribe('send_job_offer', async function({ task, taskService }) {
+  // lock task
+  await taskService.lock(task, 60);
+
+  // Get a shortlist details
+  const processInstanceId = task.processInstanceId;
+  const positionTitle = task.variables.get('title');
+  const name = task.variables.get('nextCandidateName');
+  const email = task.variables.get('nextCandidateEmail');
+
+  // leave log traces
+  console.log(`===================================`);
+  console.log(`[${new Date().toLocaleString('en-GB')}]`);
+  console.log(`Process instance ID: ${processInstanceId}`);
+  console.log(`Position title: ${positionTitle}`);
+  console.log(`Sending job offer to ${name} by email to ${email}...`);
+
+    // send email with rejection message
+    let success = true
+    try {
+      let mailOptions = {
+        from: 'bot@digisailors.ch',
+        to: email,
+        subject: '🥇 Digisailors - Job Offer !',
+        text: `Dear ${name},\n\n`
+          + `Congratulations! We are pleased to offer you the position of ${positionTitle} at Digisailors.\n\n`
+          + `To accept the offer: https://digisailors.ch/applicant/accept/${processInstanceId}\n`
+          + `To reject the offer: https://digisailors.ch/applicant/reject/${processInstanceId}\n\n`
+          + `We look forward to hearing from you.\n\n`
+          + `Best regards,\n`
+          + `Digisailors`,
+      };
+
+      let transporter = await getTransporter()
+      await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          success = false
+          console.log(error); // eslint-disable-line no-console
+        } else {
+          console.log('✓ Message sent: %s', info.messageId); // eslint-disable-line no-console
+          transporter.close();
+        }
+      });
+    } catch (error) {
+      success = false
+      console.log(error) // eslint-disable-line no-console
+    }
+
+    // Complete the task
+    await taskService.complete(task);
 });
 
 client.start();
