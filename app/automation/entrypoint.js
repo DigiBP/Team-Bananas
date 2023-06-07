@@ -260,7 +260,7 @@ client.subscribe('inform_manager_slot', async function({ task, taskService }) {
     let mailOptions = {
       from: 'bot@digisailors.ch',
       to: managerEmail,
-      subject: '📅 Digisailors - New intervew slot booked',
+      subject: '📅 Digisailors - Manager Info - New intervew slot booked',
       text: `Dear ${managerName},\n\n`
         + `Please note that a candidate has booked an interview slot as follows:\n\n`
         + `Applicant Name: ${name}\n`
@@ -360,11 +360,20 @@ client.subscribe('send_job_offer', async function({ task, taskService }) {
       let mailOptions = {
         from: 'bot@digisailors.ch',
         to: email,
-        subject: '🥇 Digisailors - Job Offer !',
+        subject: '🥇 Digisailors - Here is your job offer',
         text: `Dear ${name},\n\n`
           + `Congratulations! We are pleased to offer you the position of ${positionTitle} at Digisailors.\n\n`
-          + `To accept the offer: https://digisailors.ch/applicant/accept/${processInstanceId}\n`
-          + `To reject the offer: https://digisailors.ch/applicant/reject/${processInstanceId}\n\n`
+          + 'This is your package:\n'
+          + ' - 📅 Start date: 01.10.2024\n'
+          + ' - 💰 Base Salary: 100,000 CHF\n'
+          + ' - 💰 13th Salary: 8,333 CHF\n'
+          + ' - 📈 Bonus: 10%\n'
+          + ' - 📝 Contract: Permanent\n'
+          + ' - 📝 Notice period: 3 months\n\n'
+          + ' - 🏖 Vacation: 25 days\n\n'
+          + `Please click on the link below to accept or reject the offer:\n\n`
+          + `✅ To accept the offer: https://digisailors.ch/applicant/accept/${processInstanceId}\n`
+          + `❌ To reject the offer: https://digisailors.ch/applicant/reject/${processInstanceId}\n\n`
           + `We look forward to hearing from you.\n\n`
           + `Best regards,\n`
           + `Digisailors`,

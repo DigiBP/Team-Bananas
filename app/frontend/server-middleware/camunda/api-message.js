@@ -51,7 +51,7 @@ app.all('/post', async (req, res) => {
       mailOptions = {
         from: 'bot@digisailors.ch',
         to: managerEmail,
-        subject: 'Digisailors - Please finalize shortlist order',
+        subject: '📶 Digisailors - Manager Info - Please finalize shortlist order',
         text: `Dear ${managerName},\n\n` +
           'The interviews have been completed. Please finalize the shortlist soon. \n\n' +
           `Please leave interview feedback here: https://digisailors.ch/manager/shortlist/${req.body.processId}\n\n` +
