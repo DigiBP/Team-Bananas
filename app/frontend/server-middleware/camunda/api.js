@@ -660,4 +660,22 @@ app.all('/manager-interview-reject', async (req, res) => {
   res.json({ success: true })
 })
 
+/**
+ * Confirm external service task for confirm_shortlist_order
+ */
+app.all('/confirm-shortlist-order', async (req, res) => {
+  const processInstanceId = req.body.processInstanceId
+
+  // fetch and lock external task
+  const externalTaskId = await getAndLockExternalTask(baseUrl, commonHeaders, processInstanceId, 'confirm_shortlist_order')
+  if (!externalTaskId) {
+    res.json({ success: false, message: 'failed to fetch and lock external task' })
+    return
+  }
+
+  // complete the external task
+  await completeExternalTask(baseUrl, commonHeaders, externalTaskId)
+  res.json({ success: true })
+})
+
 module.exports = app

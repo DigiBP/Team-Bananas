@@ -468,6 +468,19 @@ export const actions = {
         reject(error)
       })
     })
+  },
+
+  managerConfirmShortlistOrder ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/confirm-shortlist-order'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
   }
 
 }
