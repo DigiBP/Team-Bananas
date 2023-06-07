@@ -481,6 +481,19 @@ export const actions = {
         reject(error)
       })
     })
+  },
+
+  acceptJobOffer ({ commit, state }, { processInstanceId }) {
+    return new Promise((resolve, reject) => {
+      const url = '/api/camunda/accept-job-offer'
+      axios.post(url, {
+        processInstanceId
+      }).then((response) => {
+        resolve(response)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
   }
 
 }

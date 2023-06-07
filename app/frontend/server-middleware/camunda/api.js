@@ -678,4 +678,34 @@ app.all('/confirm-shortlist-order', async (req, res) => {
   res.json({ success: true })
 })
 
+/**
+ * Accept job offer by posting message "bananas_acceptance" with variable "nextCandidateAccepted" set to 1
+ */
+app.all('/accept-job-offer', async (req, res) => {
+  // post message
+  const messageUrl = `${baseUrl}/message`
+  console.log('POST', messageUrl) // eslint-disable-line no-console
+
+  try {
+    await axios.post(messageUrl, {
+      messageName: 'bananas_acceptance',
+      processInstanceId: req.body.processInstanceId,
+      processVariables: {
+        nextCandidateAccepted: {
+          value: 1,
+          type: 'Integer'
+        }
+      }
+    }, {
+      headers: commonHeaders
+    })
+  } catch (error) {
+    console.log(error) // eslint-disable-line no-console
+    res.json({ success: false, message: 'failed to post message' })
+    return
+  }
+
+  res.json({ success: true })
+})
+
 module.exports = app

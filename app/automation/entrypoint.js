@@ -322,8 +322,8 @@ client.subscribe('select_next_candidate', async function({ task, taskService }) 
   console.log(`Getting next candidate from shortlist...`);
 
   // save new variables on the process instance
-  const nextCandidateName = names.shift();
-  const nextCandidateEmail = emails.shift();
+  const nextCandidateName = names.shift() || '';
+  const nextCandidateEmail = emails.shift() || '';
   const processVariables = new Variables();
   processVariables.set("nextCandidateName", nextCandidateName);
   processVariables.set("nextCandidateEmail", nextCandidateEmail);
@@ -396,6 +396,35 @@ client.subscribe('send_job_offer', async function({ task, taskService }) {
 
     // Complete the task
     await taskService.complete(task);
+});
+
+
+/**
+ * subscribe to task "order_contract" to prepare and send contract
+ */
+client.subscribe('order_contract', async function({ task, taskService }) {
+  // lock task
+  await taskService.lock(task, 60);
+
+  // Get a shortlist details
+  const processInstanceId = task.processInstanceId;
+  const positionTitle = task.variables.get('title');
+  const name = task.variables.get('nextCandidateName');
+  const email = task.variables.get('nextCandidateEmail');
+
+  // leave log traces
+  console.log(`===================================`);
+  console.log(`[${new Date().toLocaleString('en-GB')}]`);
+  console.log(`Process instance ID: ${processInstanceId}`);
+  console.log(`Position title: ${positionTitle}`);
+  console.log(`Preparing contract for ${name}...`);
+
+  // save new variables on the process instance
+  const processVariables = new Variables();
+  processVariables.set("contractPrepared", 1);
+  
+  // Complete the task
+  await taskService.complete(task, processVariables);
 });
 
 client.start();
