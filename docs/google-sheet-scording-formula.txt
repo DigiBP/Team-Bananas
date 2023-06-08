@@ -32,7 +32,7 @@ This is the scoring formula used in Google Sheets to score the newly received jo
 # Step 2: Category
 ------------------
 
-The score is some number between -1000 and 140. Based on the score, the category A, B, or C is assigned using another formula in Google Sheets:
+The score is some number between -1000 and 145. Based on the score, the category A, B, or C is assigned using another formula in Google Sheets:
 
 
 =IF(P49>=90;"A"; IF(AND(P49>=30; P49<=89); "B"; "C"))
