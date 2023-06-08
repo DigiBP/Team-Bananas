@@ -325,6 +325,9 @@ client.subscribe('select_next_candidate', async function({ task, taskService }) 
   const nextCandidateName = names.shift() || '';
   const nextCandidateEmail = emails.shift() || '';
   const processVariables = new Variables();
+
+  processVariables.set("shortlistNames", JSON.stringify(names));
+  processVariables.set("shortlistEmails", JSON.stringify(emails));
   processVariables.set("nextCandidateName", nextCandidateName);
   processVariables.set("nextCandidateEmail", nextCandidateEmail);
   processVariables.set("nextCandidateAccepted", 0);
