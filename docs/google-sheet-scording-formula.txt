@@ -1,0 +1,38 @@
+# Step 1: Scoring
+-----------------
+
+This is the scoring formula used in Google Sheets to score the newly received job applications:
+
+=SUM( 
+
+    IF(AND(J49>=0; J49<=5); 0; 
+    IF(AND(J49>=6; J49<=20); 20; 
+    IF(J49>20; 40))); 
+
+    IF(OR(K49="Elementary school"; K49="Higher Technical School"); 0; 
+    IF(OR(K49="Bachelor"; K49="Master"); 20; 
+    IF(K49="Doctorate"; 40))); 
+
+    IF(AND(L49>=0; L49<=5); 0; 
+    IF(AND(L49>=6; L49<=20); 40; 
+    IF(L49>20; 10))); 
+
+    IF(M49<26; 0; 
+    IF(AND(M49>=26; M49<=45); 20; 
+    IF(AND(M49>=46; M49<=65);-10))); 
+
+
+    IF(N49="YES"; 0; -1000); 
+    IF(O48="Woman"; 5; 0) 
+
+)
+
+
+
+# Step 2: Category
+------------------
+
+The score is some number between -1000 and 140. Based on the score, the category A, B, or C is assigned using another formula in Google Sheets:
+
+
+=IF(P49>=90;"A"; IF(AND(P49>=30; P49<=89); "B"; "C"))
