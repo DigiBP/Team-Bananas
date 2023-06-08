@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { Client, Variables, logger } from "camunda-external-task-client-js";
 import nodemailer from 'nodemailer';
+import path from 'path';
+
 
 // Camunda API config
 const tenantId = 'bananas'
