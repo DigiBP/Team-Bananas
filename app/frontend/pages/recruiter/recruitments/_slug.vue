@@ -1,7 +1,9 @@
 <template>
   <div>
     <div v-if="!loadingProcess">
-      <h1>Recruitment Drive for {{ processInstance.title }}</h1>
+      <h1>
+        Recruitment Drive for {{ processInstance.title }}
+      </h1>
       <ProcessInstance />
       <div class="flex space-x-12">
         <div class="w-1/2">
@@ -150,6 +152,10 @@
         </NuxtLink>
       </p>
     </div>
+    <div v-else>
+      <font-awesome-icon icon="spinner" spin />
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -224,28 +230,37 @@ export default {
     })
   },
   methods: {
+    deferReloadingInstance () {
+      // wait for 2 seconds and refresh process instance data (to give the automation bot and Camunda some time)
+      this.loadingProcess = true
+      setTimeout(() => {
+        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId }).then(() => {
+          this.loadingProcess = false
+          this.$store.dispatch('matchEmployees').then(() => {
+            this.loadingEmployees = false
+          })
+          this.$store.dispatch('fetchExternalApplicants').then(() => {
+            this.loadingApplicants = false
+          })
+        })
+      }, 2000)
+    },
     proceedWithCandidates () {
       this.$store.dispatch('proceedWithInternalCandidates').then(() => {
-        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId })
+        this.deferReloadingInstance()
       })
     },
     proceedWithoutCandidates () {
       this.$store.commit('SET_PROCESS_INSTANCE_INTERNAL_CANIDATES', [])
       this.$store.dispatch('proceedWithInternalCandidates').then(() => {
-        this.loadingProcess = true
-        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId }).then(() => {
-          this.loadingProcess = false
-        })
+        this.deferReloadingInstance()
       })
     },
     postMessage (messageName) {
       this.$store.dispatch('postMessageToProcessInstance', {
         messageName
       }).then(() => {
-        this.loadingProcess = true
-        this.$store.dispatch('fetchInstance', { processInstanceId: this.processInstance.processId }).then(() => {
-          this.loadingProcess = false
-        })
+        this.deferReloadingInstance()
       })
     },
     upgradeApplicant (applicant) {
@@ -253,9 +268,7 @@ export default {
         processInstanceId: applicant.processId,
         category: 'A'
       }).then(() => {
-        this.$store.dispatch('fetchExternalApplicants').then(() => {
-          this.loadingApplicants = false
-        })
+        this.deferReloadingInstance()
       })
     }
   }
