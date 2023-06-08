@@ -364,7 +364,7 @@ client.subscribe('send_job_offer', async function({ task, taskService }) {
         text: `Dear ${name},\n\n`
           + `Congratulations! We are pleased to offer you the position of ${positionTitle} at Digisailors.\n\n`
           + 'This is your package:\n'
-          + ' - 📅 Start date: 01.10.2024\n'
+          + ' - 📅 Start date: 01.10.2023\n'
           + ' - 💰 Base Salary: 100,000 CHF\n'
           + ' - 💰 13th Salary: 8,333 CHF\n'
           + ' - 📈 Bonus: 10%\n'
@@ -417,11 +417,48 @@ client.subscribe('order_contract', async function({ task, taskService }) {
   console.log(`[${new Date().toLocaleString('en-GB')}]`);
   console.log(`Process instance ID: ${processInstanceId}`);
   console.log(`Position title: ${positionTitle}`);
-  console.log(`Preparing contract for ${name}...`);
+  console.log(`Sending contract for ${name}...`);
 
   // save new variables on the process instance
   const processVariables = new Variables();
   processVariables.set("contractPrepared", 1);
+  
+  // send email with contract
+  let success = true
+  try {
+    let mailOptions = {
+      from: 'bot@digisailors.ch',
+      to: email,
+      subject: '📝 Digisailors - Here is your contract',
+      text: `Dear ${name},\n\n`
+        + `Please find attached your contract for the position of ${positionTitle} at Digisailors.\n\n`
+        + 'Please sign the contract and send it back to us by mail as soon as possible.\n\n'
+        + `We look forward to welcoming you in our office on 01.10.2023.\n\n`
+        + `Best regards,\n`
+        + `Digisailors`,
+      attachments: [
+        {
+          filename: 'contract.pdf',
+          path: path.join(__dirname, 'contract.pdf'),
+          contentType: 'application/pdf'
+        }
+      ]
+    };
+
+    let transporter = await getTransporter()
+    await transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        success = false
+        console.log(error); // eslint-disable-line no-console
+      } else {
+        console.log('✓ Message sent: %s', info.messageId); // eslint-disable-line no-console
+        transporter.close();
+      } 
+    });
+  } catch (error) {
+    success = false
+    console.log(error) // eslint-disable-line no-console
+  }
   
   // Complete the task
   await taskService.complete(task, processVariables);

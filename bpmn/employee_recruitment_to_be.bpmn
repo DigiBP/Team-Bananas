@@ -9,6 +9,7 @@
     <bpmn:messageFlow id="Flow_0yipzfk" name="Acceptance / Confirmation" sourceRef="Participant_1qke3h6" targetRef="Activity_0x42s4z" />
     <bpmn:messageFlow id="Flow_0iey747" name="Applications (via separate proces)" sourceRef="Participant_1qke3h6" targetRef="wait_for_applicants" />
     <bpmn:messageFlow id="Flow_0sq1ky7" name="Generated job ad" sourceRef="Participant_1h0aiu7" targetRef="generate_job_ad" />
+    <bpmn:messageFlow id="Flow_1pppqv1" name="Send contract" sourceRef="order_contract" targetRef="Participant_1qke3h6" />
   </bpmn:collaboration>
   <bpmn:process id="employee_recruitment_to_be" name="employee_recruitment_to_be" isExecutable="true">
     <bpmn:laneSet id="LaneSet_0x7aknz">
@@ -126,7 +127,7 @@
         <bpmn:outgoing>Flow_00u3dog</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:receiveTask id="Activity_0x42s4z" name="Wait for acceptance" messageRef="Message_0edq9hu">
-        <bpmn:documentation>The process waits to receive a message from the applicant. The implementation is that the job offer email has two links: one to accept the job offer and one to reject it. This task is completed if the applicant clicks the *accept" link.</bpmn:documentation>
+        <bpmn:documentation>The process waits to receive a message from the applicant. The implementation is that the job offer email has two links: one to accept the job offer and one to reject it. This message task is completed if the applicant clicks the "accept" or "reject" links. The decision of the candidate is saved as a process variable "nextCandidateAccpeted" which is set ot 1 resp. 0. In the following gateway a decision is made based on wether the variable is 1 or 0. If 0, the error event "declined" is thrown and the embedded subprocess repeated for the next available candidate from the shortlist.</bpmn:documentation>
         <bpmn:incoming>Flow_00u3dog</bpmn:incoming>
         <bpmn:outgoing>Flow_0xr4rt9</bpmn:outgoing>
       </bpmn:receiveTask>
@@ -137,7 +138,7 @@
       <bpmn:sequenceFlow id="Flow_0xr4rt9" sourceRef="Activity_0x42s4z" targetRef="Gateway_1ajvv9u" />
       <bpmn:sequenceFlow id="Flow_0gi6bzl" sourceRef="Event_0fwjt41" targetRef="select_next_candidate" />
       <bpmn:serviceTask id="select_next_candidate" name="Select next candidate from shortlist" camunda:type="external" camunda:topic="select_next_candidate">
-        <bpmn:documentation>The automation worker bot is subscribed to this task. As soon as a task is avaialble, he bot locks the task and takes the next candidate from the shortlist and saves that candidate to "nextCandidate" variable on the process.</bpmn:documentation>
+        <bpmn:documentation>The automation worker bot is subscribed to this task. As soon as a task is avaialble, he bot locks the task and takes the next candidate from the shortlist and saves that candidate to "nextCandidate" variable on the process. In case there is no next cnadidate left, the variable stays empty. In the following gateway a decision is made based on wether the variable is empty or not. If empty, the error event "no candidate left" is thrown.</bpmn:documentation>
         <bpmn:incoming>Flow_0gi6bzl</bpmn:incoming>
         <bpmn:outgoing>Flow_0jw63uy</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -191,6 +192,7 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0dh6aia" errorRef="Error_1lsd0ug" />
     </bpmn:boundaryEvent>
     <bpmn:serviceTask id="order_contract" name="Order employment contract" camunda:type="external" camunda:topic="order_contract">
+      <bpmn:documentation>This is a simple external task that creates the contract and sends it to the applicant that accepted the job offer.</bpmn:documentation>
       <bpmn:incoming>Flow_1x9q3i4</bpmn:incoming>
       <bpmn:outgoing>Flow_1lbb0uf</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -544,6 +546,13 @@
         <di:waypoint x="390" y="700" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="397" y="183" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pppqv1_di" bpmnElement="Flow_1pppqv1">
+        <di:waypoint x="2280" y="370" />
+        <di:waypoint x="2280" y="137" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2296" y="200" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
