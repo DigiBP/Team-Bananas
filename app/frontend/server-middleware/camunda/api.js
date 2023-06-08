@@ -509,7 +509,7 @@ app.all('/manager-interview-proceed', async (req, res) => {
     return
   }
 
-  // fetch process variables and merge names and emails with new candidate
+  // fetch process variables from the position process and merge shortlistNames and shortlistEmails with new candidate
   const shortlistUrl = `${baseUrl}/process-instance/${positionInstanceId}/variables`
   console.log('GET', shortlistUrl) // eslint-disable-line no-console
 
@@ -521,17 +521,17 @@ app.all('/manager-interview-proceed', async (req, res) => {
       headers: commonHeaders
     })
 
-    // response.data is an object: loop the object keys to find the key "name"
+    // response.data is an object: loop the object keys to find the key "shortlistNames"
     Object.keys(response.data).forEach((key) => {
-      if (key === 'name') {
-        shortlistNames = response.data[key].value
+      if (key === 'shortlistNames') {
+        shortlistNames = JSON.parse(response.data[key].value)
       }
     })
 
-    // response.data is an object: loop the object keys to find the key "email"
+    // response.data is an object: loop the object keys to find the key "shortlistEmails"
     Object.keys(response.data).forEach((key) => {
-      if (key === 'email') {
-        shortlistEmails = response.data[key].value
+      if (key === 'shortlistEmails') {
+        shortlistEmails = JSON.parse(response.data[key].value)
       }
     })
   } catch (error) {
