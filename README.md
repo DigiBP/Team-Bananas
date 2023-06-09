@@ -18,3 +18,5 @@ Our marvellous coach is Charuta Pande.
 ## 📝 Project Documentation
 
 The documentation of the project is in the [Wiki of this repository](https://github.com/DigiBP/Team-Bananas/wiki).
+
+The [final semester presentation slides](https://github.com/DigiBP/Team-Bananas/blob/main/presentation/Presentation%20DigiBP.pdf) are in the repository.
